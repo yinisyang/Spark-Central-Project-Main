@@ -45,7 +45,7 @@ namespace SparkAPI
         }
         public Checkout getCheckouts(int member_id)
         {
-            String sqlString = "SELECT * FROM ITEM_CHECKOUT WHERE item_id = " + member_id.ToString() + ";";
+            String sqlString = "SELECT * FROM ITEM_CHECKOUT WHERE member_id = " + member_id.ToString() + ";";
             SqlCommand cmd = new SqlCommand(sqlString, conn);
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -54,7 +54,7 @@ namespace SparkAPI
                 Checkout c = new Checkout();
                 c.ItemId = reader.GetInt32(reader.GetOrdinal("item_id"));
                 c.MemberId = reader.GetInt32(reader.GetOrdinal("member_id"));
-                c.ItemType = reader.GetString(reader.GetOrdinal("item_id"));
+                c.ItemType = reader.GetString(reader.GetOrdinal("item_type"));
                 c.dueDate = reader.GetDate(reader.GetOrdinal("due_date"));
 
                 return c;
