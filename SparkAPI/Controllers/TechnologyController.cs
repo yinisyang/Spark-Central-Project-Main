@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -11,24 +12,28 @@ namespace SparkAPI.Controllers
     public class TechnologyController : ApiController
     {
         // GET api/<controller>
-        public IEnumerable<Technology> Get()
+        public ArrayList Get()
         {
-            return null; // new string[] { "value1", "value2" };
+            TechnologyPersistence tp = new TechnologyPersistence();
+            return tp.getTechnology(); 
         }
 
         // GET api/<controller>/5
         public Technology Get(int id)
         {
-            Technology tech = new Technology();
-            tech.ItemId = 1;
-            tech.Name = "Test Name";
-
-            return tech;
+            TechnologyPersistence tp = new TechnologyPersistence();
+            return tp.getTechnology(id);
         }
 
         // POST api/<controller>
-        public void Post([FromBody]Technology value)
+        public HttpResponseMessage Post([FromBody]Technology value)
         {
+            TechnologyPersistence tp = new TechnologyPersistence();
+            int id = tp.saveTechnology(value);
+            value.ItemId = id;
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
+            response.Headers.Location = new Uri(Request.RequestUri, String.Format("technology/{0}", id));
+            return response;
         }
 
         // PUT api/<controller>/5

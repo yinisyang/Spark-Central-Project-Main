@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -11,26 +12,28 @@ namespace SparkAPI.Controllers
     public class DVDController : ApiController
     {
         // GET api/<controller>
-        public IEnumerable<DVD> Get()
+        public ArrayList Get()
         {
-            return null; // new string[] { "value1", "value2" };
+            DVDPersistence dvdp = new DVDPersistence();
+            return dvdp.getDVDS();
         }
 
         // GET api/<controller>/5
         public DVD Get(int id)
         {
-            DVD dvd = new DVD();
-            dvd.ItemId = id;
-            dvd.Rating = "PG-13";
-            dvd.ReleaseYear = 2013;
-            dvd.Title = "A Midsummer's Dream";
-
-            return dvd;
+            DVDPersistence dvdp = new DVDPersistence();
+            return dvdp.getDVD(id);
         }
 
         // POST api/<controller>
-        public void Post([FromBody]DVD value)
+        public HttpResponseMessage Post([FromBody]DVD value)
         {
+            DVDPersistence dvdp = new DVDPersistence();
+            int id = dvdp.saveDVD(value);
+            value.ItemId = id;
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
+            response.Headers.Location = new Uri(Request.RequestUri, String.Format("dvd/{0}", id));
+            return response;
         }
 
         // PUT api/<controller>/5
