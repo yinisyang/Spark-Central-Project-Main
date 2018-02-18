@@ -53,7 +53,7 @@ namespace SparkAPI
                 Checkout c = new Checkout();
                 c.ItemId = reader.GetInt32(reader.GetOrdinal("item_id"));
                 c.MemberId = reader.GetInt32(reader.GetOrdinal("member_id"));
-                c.ItemType = reader.GetString(reader.GetOrdinal("item_id"));
+                c.ItemType = reader.GetString(reader.GetOrdinal("item_type"));
                 c.dueDate = reader.GetDateTime(reader.GetOrdinal("due_date"));
 
                 return c;
