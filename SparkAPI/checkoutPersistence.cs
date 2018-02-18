@@ -8,15 +8,14 @@ using System.Collections;
 
 namespace SparkAPI
 {
-    public class checkoutPersistence
+    public class CheckoutPersistence
     {
         private SqlConnection conn;
-        public checkoutPersistence()
+        public CheckoutPersistence()
         {
             try
             {
-                conn = new SqlConnection(System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("/SparkAPI")
-                                         .ConnectionStrings.ConnectionStrings["SparkCentralConnectionString"].ConnectionString);
+                conn = new SqlConnection(System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("/SparkAPI").ConnectionStrings.ConnectionStrings["SparkCentralConnectionString"].ConnectionString);
                 conn.Open();
             }
             catch (SqlException ex)
@@ -38,7 +37,7 @@ namespace SparkAPI
                 c.ItemId = reader.GetInt32(reader.GetOrdinal("item_id"));
                 c.MemberId = reader.GetInt32(reader.GetOrdinal("member_id"));
                 c.ItemType = reader.GetString(reader.GetOrdinal("item_id"));
-                c.dueDate = reader.GetDate(reader.GetOrdinal("due_date"));
+                c.dueDate = reader.GetDateTime(reader.GetOrdinal("due_date"));
                 checkoutArray.Add(c);
             }
             return checkoutArray;
@@ -55,7 +54,7 @@ namespace SparkAPI
                 c.ItemId = reader.GetInt32(reader.GetOrdinal("item_id"));
                 c.MemberId = reader.GetInt32(reader.GetOrdinal("member_id"));
                 c.ItemType = reader.GetString(reader.GetOrdinal("item_id"));
-                c.dueDate = reader.GetDate(reader.GetOrdinal("due_date"));
+                c.dueDate = reader.GetDateTime(reader.GetOrdinal("due_date"));
 
                 return c;
             }

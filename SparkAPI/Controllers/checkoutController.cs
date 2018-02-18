@@ -9,34 +9,25 @@ using SparkAPI.Models;
 
 namespace SparkAPI.Controllers
 {
-    public class checkoutController : ApiController
+    public class CheckoutController : ApiController
     {
         public ArrayList Get()
         {
-            checkoutPersistence checkp = new checkoutPersistance();
+            CheckoutPersistence checkp = new CheckoutPersistence();
             return checkp.getCheckouts();
         }
-        public Checkouts Get(int item_id)
+        public Checkout Get(int item_id)
         {
-            checkoutPersistence checkp = new checkoutPersistance();
+            CheckoutPersistence checkp = new CheckoutPersistence();
             return checkp.getCheckouts(item_id);
         }
-        public Checkouts Get(int member_id)
+
+        public HttpResponseMessage Post([FromBody]Checkout value)
         {
-            checkoutPersistence checkp = new checkoutPersistance();
-            return checkp.getCheckouts(member_id);
-        }
-        public Checkouts Get(int item_type)
-        {
-            checkoutPersistence checkp = new checkoutPersistance();
-            return checkp.getCheckouts(item_type);
-        }
-        public HttpResponseMessage Post([FromBody]Checkouts value)
-        {
-            checkoutPersistence checkp = new checkoutPersistance();
+            CheckoutPersistence checkp = new CheckoutPersistence();
             int item_id = checkp.saveCheckout(value);
             value.ItemId = item_id;
-            HttpResponseMessage response = WebRequest.CreateResponse(HttpStatusCode.Created);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
             response.Headers.Location = new Uri(Request.RequestUri, String.Format("checkout/{0}", item_id));
             return response;
         }

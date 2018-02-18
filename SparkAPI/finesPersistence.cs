@@ -8,15 +8,14 @@ using System.Collections;
 
 namespace SparkAPI
 {
-    public class finesPersistence
+    public class FinesPersistence
     {
         private SqlConnection conn;
-        public checkoutPersistence()
+        public FinesPersistence()
         {
             try
             {
-                conn = new SqlConnection(System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("/SparkAPI")
-                                         .ConnectionStrings.ConnectionStrings["SparkCentralConnectionString"].ConnectionString);
+                conn = new SqlConnection(System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("/SparkAPI").ConnectionStrings.ConnectionStrings["SparkCentralConnectionString"].ConnectionString);
                 conn.Open();
             }
             catch (SqlException ex)
@@ -34,14 +33,14 @@ namespace SparkAPI
 
             while (reader.Read())
             {
-                Fines f = new Fines();
+                Fine f = new Fine();
                 f.memberId = reader.GetInt32(reader.GetOrdinal("member_id"));
                 f.amount = reader.GetFloat(reader.GetOrdinal("amount"));
                 finesArray.Add(f);
             }
             return finesArray;
         }
-        public Checkout getCheckouts(int member_id)
+        public Fine getFine(int member_id)
         {
             String sqlString = "SELECT * FROM FINES WHERE member_id = " + member_id.ToString() + ";";
             SqlCommand cmd = new SqlCommand(sqlString, conn);
@@ -49,7 +48,7 @@ namespace SparkAPI
 
             while (reader.Read())
             {
-                Fines f = new Fines();
+                Fine f = new Fine();
                 f.memberId = reader.GetInt32(reader.GetOrdinal("member_id"));
                 f.amount = reader.GetFloat(reader.GetOrdinal("amount"));
 
@@ -57,7 +56,7 @@ namespace SparkAPI
             }
             return null;
         }
-        public int saveCheckout(Fines fineToSave)
+        public int saveFine(Fine fineToSave)
         {
             String sqlString = "INSERT INTO FINES (amount) OUTPUT INSERTED.member_id VALUES(@amount)";
             SqlParameter amountParam = new SqlParameter("@amount", System.Data.SqlDbType.Float, 8);

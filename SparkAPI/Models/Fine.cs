@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SparkAPI.Models
 {
-    public class Fines
+    public class Fine
     {
         public int memberId { get; set; }
         public float amount { get; set; }
