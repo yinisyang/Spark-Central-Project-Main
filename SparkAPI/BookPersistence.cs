@@ -59,6 +59,7 @@ namespace SparkAPI
 
                 bookList.Add(b);
             }
+            con.Close();
             return bookList;
         }
 
@@ -91,8 +92,10 @@ namespace SparkAPI
                 ret.Title = reader.GetString(reader.GetOrdinal("title"));
                 ret.Isbn13 = reader.GetString(reader.GetOrdinal("isbn_13"));
 
+                con.Close();
                 return ret;
             }
+            con.Close();
             return null;
         }
 
@@ -133,6 +136,7 @@ namespace SparkAPI
             cmd.Prepare();
             //cmd.ExecuteNonQuery();
             int id = (int)cmd.ExecuteScalar();
+            con.Close();
             return id;
         }
     }

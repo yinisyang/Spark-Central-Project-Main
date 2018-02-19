@@ -65,6 +65,7 @@ namespace SparkAPI
                 MemberArray.Add(member);
 
             }
+            conn.Close();
             return MemberArray;
         }
 
@@ -103,8 +104,10 @@ namespace SparkAPI
                 toReturn.restricted_to_tech = reader.GetBoolean(reader.GetOrdinal("restricted_to_tech"));
                 toReturn.west_central_resident = reader.GetBoolean(reader.GetOrdinal("west_central_resident"));
 
+                conn.Close();
                 return toReturn;
             }
+            conn.Close();
             return null;
         }
 
@@ -168,6 +171,7 @@ namespace SparkAPI
             cmd.Prepare();
             //cmd.ExecuteNonQuery();
             int id = (int)cmd.ExecuteScalar();
+            conn.Close();
             return id;
         }
     }

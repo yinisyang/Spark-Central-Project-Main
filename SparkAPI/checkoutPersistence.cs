@@ -40,6 +40,8 @@ namespace SparkAPI
                 c.dueDate = reader.GetDateTime(reader.GetOrdinal("due_date"));
                 checkoutArray.Add(c);
             }
+
+            conn.Close();
             return checkoutArray;
         }
         public ArrayList getCheckouts(int member_id)
@@ -60,6 +62,7 @@ namespace SparkAPI
 
                 checkoutArray.Add(c);
             }
+            conn.Close();
             return checkoutArray;
         }
         public int saveCheckout(Checkout checkoutToSave)
@@ -84,6 +87,7 @@ namespace SparkAPI
             cmd.Prepare();
             //cmd.ExecuteNonQuery();
             int id = (int)cmd.ExecuteScalar();
+            conn.Close();
             return id;
         }
     }
