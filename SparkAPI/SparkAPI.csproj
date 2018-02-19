@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BookPersistence.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="CheckoutPersistence.cs" />
     <Compile Include="Controllers\MemberController.cs" />

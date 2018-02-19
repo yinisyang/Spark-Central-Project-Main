@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,20 +12,28 @@ namespace SparkAPI.Controllers
     public class BookController : ApiController
     {
         // GET: api/Book
-        public IEnumerable<string> Get()
+        public ArrayList Get()
         {
-            return new string[] { "value1", "value2" };
+            BookPersistence bookp = new BookPersistence();
+            return bookp.GetBooks();
         }
 
         // GET: api/Book/5
-        public string Get(int id)
+        public Book Get(int id)
         {
-            return "BOOOOK";
+            BookPersistence bookp = new BookPersistence();
+            return bookp.GetBook(id);
         }
 
         // POST: api/Book
-        public void Post([FromBody]string value)
+        public HttpResponseMessage Post([FromBody]Book value)
         {
+            BookPersistence bookp = new BookPersistence();
+            int id = bookp.SaveBook(value);
+            value.Id = id;
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
+            response.Headers.Location = new Uri(Request.RequestUri, String.Format("book/{0}", id));
+            return response;
         }
 
         // PUT: api/Book/5
