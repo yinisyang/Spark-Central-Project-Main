@@ -113,7 +113,7 @@ namespace SparkAPI
         {
             String sqlString = "INSERT INTO Members (first_name, last_name, guardian_name, email, dob, phone, " +
                 "street_address, city, state, zip, quota, member_group, ethnicity, restricted_to_tech, west_central_resident) " +
-                "OUTPUT INSERTED.item_id VALUES (@first_name, @last_name, @guardian_name, @email, @dob, @phone, " +
+                "OUTPUT INSERTED.member_id VALUES (@first_name, @last_name, @guardian_name, @email, @dob, @phone, " +
                 "@street_address, @city, @state, @zip, @quota, @member_group, @ethnicity, @restricted_to_tech, @west_central_resident)";
 
             SqlParameter first_nameParam = new SqlParameter("@first_name", System.Data.SqlDbType.VarChar, 50);
@@ -134,7 +134,7 @@ namespace SparkAPI
 
             first_nameParam.Value = memberToSave.first_name;
             last_nameParam.Value = memberToSave.last_name;
-            guardian_nameParam.Value = memberToSave.guardian_name;
+            guardian_nameParam.Value = (object)memberToSave.guardian_name ?? DBNull.Value;
             emailParam.Value = memberToSave.email;
             dobParam.Value = memberToSave.dob;
             phoneParam.Value = memberToSave.phone;
@@ -167,7 +167,7 @@ namespace SparkAPI
             cmd.Parameters.Add(west_central_residentParam);
 
             cmd.Prepare();
-            cmd.ExecuteNonQuery();
+            //cmd.ExecuteNonQuery();
             int id = (int)cmd.ExecuteScalar();
             return id;
         }

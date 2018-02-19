@@ -38,7 +38,7 @@ namespace SparkAPI
                 Book b = new Book();
                 b.Id = reader.GetInt32(reader.GetOrdinal("item_id"));
                 b.Author = reader.GetString(reader.GetOrdinal("author"));
-                b.Isbn10 = reader.GetString(reader.GetOrdinal("isbn-10"));
+                b.Isbn10 = reader.GetString(reader.GetOrdinal("isbn_10"));
                 b.Category = reader.GetString(reader.GetOrdinal("category"));
                 b.Publisher = reader.GetString(reader.GetOrdinal("publisher"));
                 b.Year = reader.GetInt32(reader.GetOrdinal("publication_year"));
@@ -55,7 +55,7 @@ namespace SparkAPI
                 }
 
                 b.Title = reader.GetString(reader.GetOrdinal("title"));
-                b.Isbn13 = reader.GetString(reader.GetOrdinal("isbn-13"));
+                b.Isbn13 = reader.GetString(reader.GetOrdinal("isbn_13"));
 
                 bookList.Add(b);
             }
@@ -123,7 +123,7 @@ namespace SparkAPI
             cmd.Parameters.Add(isbn13Param);
 
             cmd.Prepare();
-            cmd.ExecuteNonQuery();
+            //cmd.ExecuteNonQuery();
             int id = (int)cmd.ExecuteScalar();
             return id;
         }

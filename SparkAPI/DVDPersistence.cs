@@ -56,28 +56,6 @@ namespace SparkAPI
             }
             return dvdArray;
         }
-        /*
-        public ArrayList getDVDS(string title, int? releaseYear, string rating) {
-            String sqlString = "SELECT * FROM DVDS;";
-
-
-
-            SqlCommand cmd = new SqlCommand(sqlString, conn);
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            ArrayList dvdArray = new ArrayList();
-
-            while (reader.Read())
-            {
-                DVD d = new DVD();
-                d.ItemId = reader.GetInt32(reader.GetOrdinal("item_id"));
-                d.Title = reader.GetString(reader.GetOrdinal("title"));
-                d.Rating = reader.GetString(reader.GetOrdinal("rating"));
-                d.ReleaseYear = reader.GetInt32(reader.GetOrdinal("release_year"));
-                dvdArray.Add(d);
-            }
-            return dvdArray;
-        }*/
 
         public DVD getDVD(int id)
         {
@@ -115,7 +93,7 @@ namespace SparkAPI
             cmd.Parameters.Add(releaseYearParam);
 
             cmd.Prepare();
-            cmd.ExecuteNonQuery();
+            //cmd.ExecuteNonQuery();
             int id = (int)cmd.ExecuteScalar();
             return id;
         }

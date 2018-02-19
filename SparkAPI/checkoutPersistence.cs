@@ -36,7 +36,7 @@ namespace SparkAPI
                 Checkout c = new Checkout();
                 c.ItemId = reader.GetInt32(reader.GetOrdinal("item_id"));
                 c.MemberId = reader.GetInt32(reader.GetOrdinal("member_id"));
-                c.ItemType = reader.GetString(reader.GetOrdinal("item_id"));
+                c.ItemType = reader.GetString(reader.GetOrdinal("item_type"));
                 c.dueDate = reader.GetDateTime(reader.GetOrdinal("due_date"));
                 checkoutArray.Add(c);
             }
@@ -62,22 +62,25 @@ namespace SparkAPI
         }
         public int saveCheckout(Checkout checkoutToSave)
         {
-            String sqlString = "INSERT INTO ITEM_CHECKOUT (member_id, item_type, due_date) OUTPUT INSERTED.item_id VALUES(@member_id, @item_type, @due_date)";
+            String sqlString = "INSERT INTO ITEM_CHECKOUT (item_id, member_id, item_type, due_date) OUTPUT INSERTED.item_id VALUES(@item_id, @member_id, @item_type, @due_date)";
+            SqlParameter itemParam = new SqlParameter("@item_id", System.Data.SqlDbType.Int, 4);
             SqlParameter memberParam = new SqlParameter("@member_id", System.Data.SqlDbType.Int, 4);
             SqlParameter ItemTypeParam = new SqlParameter("@item_type", System.Data.SqlDbType.VarChar, 50);
             SqlParameter dueDateParam = new SqlParameter("@due_date", System.Data.SqlDbType.Date, 3);
 
+            itemParam.Value = checkoutToSave.ItemId;
             memberParam.Value = checkoutToSave.MemberId;
             ItemTypeParam.Value = checkoutToSave.ItemType;
             dueDateParam.Value = checkoutToSave.dueDate;
 
             SqlCommand cmd = new SqlCommand(sqlString, conn);
+            cmd.Parameters.Add(itemParam);
             cmd.Parameters.Add(memberParam);
             cmd.Parameters.Add(ItemTypeParam);
             cmd.Parameters.Add(dueDateParam);
 
             cmd.Prepare();
-            cmd.ExecuteNonQuery();
+            //cmd.ExecuteNonQuery();
             int id = (int)cmd.ExecuteScalar();
             return id;
         }

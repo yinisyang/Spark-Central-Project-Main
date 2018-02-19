@@ -67,7 +67,7 @@ namespace SparkAPI
             cmd.Parameters.Add(amountParam);
 
             cmd.Prepare();
-            cmd.ExecuteNonQuery();
+            //cmd.ExecuteNonQuery();
             int id = (int)cmd.ExecuteScalar();
             return id;
         }
