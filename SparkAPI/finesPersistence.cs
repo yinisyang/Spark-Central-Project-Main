@@ -58,13 +58,16 @@ namespace SparkAPI
         }
         public int saveFine(Fine fineToSave)
         {
-            String sqlString = "INSERT INTO FINES (amount) OUTPUT INSERTED.member_id VALUES(@amount)";
+            String sqlString = "INSERT INTO FINES (member_id, amount) OUTPUT INSERTED.member_id VALUES(@membeR_id, @amount)";
             SqlParameter amountParam = new SqlParameter("@amount", System.Data.SqlDbType.Float, 8);
+            SqlParameter memberIdParam = new SqlParameter("@member_id", System.Data.SqlDbType.VarChar, 50);
 
             amountParam.Value = fineToSave.amount;
+            memberIdParam.Value = fineToSave.memberId;
 
             SqlCommand cmd = new SqlCommand(sqlString, conn);
             cmd.Parameters.Add(amountParam);
+            cmd.Parameters.Add(memberIdParam);
 
             cmd.Prepare();
             //cmd.ExecuteNonQuery();
