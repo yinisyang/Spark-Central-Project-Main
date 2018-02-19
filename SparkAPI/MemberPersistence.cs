@@ -39,6 +39,7 @@ namespace SparkAPI
 
                 member.member_id = reader.GetInt32(reader.GetOrdinal("member_id"));
                 member.first_name = reader.GetString(reader.GetOrdinal("first_name"));
+                member.last_name = reader.GetString(reader.GetOrdinal("last_name"));
                 //guardian_name is a nullable data field
                 if (reader["guardian_name"] != DBNull.Value)
                 {
@@ -60,7 +61,6 @@ namespace SparkAPI
                 member.ethnicity = reader.GetString(reader.GetOrdinal("ethnicity"));
                 member.restricted_to_tech = reader.GetBoolean(reader.GetOrdinal("restricted_to_tech"));
                 member.west_central_resident = reader.GetBoolean(reader.GetOrdinal("west_central_resident"));
-                member.last_name = reader.GetString(reader.GetOrdinal("last_name"));
 
                 MemberArray.Add(member);
 
@@ -80,6 +80,7 @@ namespace SparkAPI
 
                 toReturn.member_id = reader.GetInt32(reader.GetOrdinal("member_id"));
                 toReturn.first_name = reader.GetString(reader.GetOrdinal("first_name"));
+                toReturn.last_name = reader.GetString(reader.GetOrdinal("last_name"));
                 toReturn.guardian_name = reader.GetString(reader.GetOrdinal("guardian_name"));
                 //guardian_name is a nullable data field
                 if (reader["guardian_name"] != DBNull.Value)
@@ -102,7 +103,6 @@ namespace SparkAPI
                 toReturn.ethnicity = reader.GetString(reader.GetOrdinal("ethnicity"));
                 toReturn.restricted_to_tech = reader.GetBoolean(reader.GetOrdinal("restricted_to_tech"));
                 toReturn.west_central_resident = reader.GetBoolean(reader.GetOrdinal("west_central_resident"));
-                toReturn.last_name = reader.GetString(reader.GetOrdinal("last_name"));
 
                 return toReturn;
             }
@@ -111,12 +111,13 @@ namespace SparkAPI
 
         public int saveMember(Member memberToSave)
         {
-            String sqlString = "INSERT INTO Members (first_name, guardian_name, email, dob, phone, " +
-                "street_address, city, state, zip, quota, member_group, ethnicity, restricted_to_tech, west_central_resident, last_name) " +
-                "OUTPUT INSERTED.item_id VALUES (@first_name, @guardian_name, @email, @dob, @phone, " +
-                "@street_address, @city, @state, @zip, @quota, @member_group, @ethnicity, @restricted_to_tech, @west_central_resident, @last_name)";
+            String sqlString = "INSERT INTO Members (first_name, last_name, guardian_name, email, dob, phone, " +
+                "street_address, city, state, zip, quota, member_group, ethnicity, restricted_to_tech, west_central_resident) " +
+                "OUTPUT INSERTED.item_id VALUES (@first_name, @last_name, @guardian_name, @email, @dob, @phone, " +
+                "@street_address, @city, @state, @zip, @quota, @member_group, @ethnicity, @restricted_to_tech, @west_central_resident)";
 
             SqlParameter first_nameParam = new SqlParameter("@first_name", System.Data.SqlDbType.VarChar, 50);
+            SqlParameter last_nameParam = new SqlParameter("@last_name", System.Data.SqlDbType.VarChar, 50);
             SqlParameter guardian_nameParam = new SqlParameter("@guardian_name", System.Data.SqlDbType.VarChar, 50);
             SqlParameter emailParam = new SqlParameter("@email", System.Data.SqlDbType.VarChar, 50);
             SqlParameter dobParam = new SqlParameter("@dob", System.Data.SqlDbType.Date, 3);
@@ -130,9 +131,9 @@ namespace SparkAPI
             SqlParameter ethnicityParam = new SqlParameter("@ethnicity", System.Data.SqlDbType.VarChar, 50);
             SqlParameter restricted_to_techParam = new SqlParameter("@restricted_to_tech", System.Data.SqlDbType.Bit, 1);
             SqlParameter west_central_residentParam = new SqlParameter("@west_central_resident", System.Data.SqlDbType.Bit, 1);
-            SqlParameter last_nameParam = new SqlParameter("@last_name", System.Data.SqlDbType.VarChar, 50);
 
             first_nameParam.Value = memberToSave.first_name;
+            last_nameParam.Value = memberToSave.last_name;
             guardian_nameParam.Value = memberToSave.guardian_name;
             emailParam.Value = memberToSave.email;
             dobParam.Value = memberToSave.dob;
@@ -146,11 +147,11 @@ namespace SparkAPI
             ethnicityParam.Value = memberToSave.ethnicity;
             restricted_to_techParam.Value = memberToSave.restricted_to_tech;
             west_central_residentParam.Value = memberToSave.west_central_resident;
-            last_nameParam.Value = memberToSave.last_name;
 
             SqlCommand cmd = new SqlCommand(sqlString, conn);
 
             cmd.Parameters.Add(first_nameParam);
+            cmd.Parameters.Add(last_nameParam);
             cmd.Parameters.Add(guardian_nameParam);
             cmd.Parameters.Add(emailParam);
             cmd.Parameters.Add(dobParam);
@@ -164,7 +165,6 @@ namespace SparkAPI
             cmd.Parameters.Add(ethnicityParam);
             cmd.Parameters.Add(restricted_to_techParam);
             cmd.Parameters.Add(west_central_residentParam);
-            cmd.Parameters.Add(last_nameParam);
 
             cmd.Prepare();
             cmd.ExecuteNonQuery();
