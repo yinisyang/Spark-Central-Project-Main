@@ -81,7 +81,6 @@ namespace SparkAPI
                 toReturn.member_id = reader.GetInt32(reader.GetOrdinal("member_id"));
                 toReturn.first_name = reader.GetString(reader.GetOrdinal("first_name"));
                 toReturn.last_name = reader.GetString(reader.GetOrdinal("last_name"));
-                toReturn.guardian_name = reader.GetString(reader.GetOrdinal("guardian_name"));
                 //guardian_name is a nullable data field
                 if (reader["guardian_name"] != DBNull.Value)
                 {
