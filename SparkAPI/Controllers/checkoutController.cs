@@ -16,7 +16,7 @@ namespace SparkAPI.Controllers
             CheckoutPersistence checkp = new CheckoutPersistence();
             return checkp.getCheckouts();
         }
-        public Checkout Get(int member_id)
+        public ArrayList Get(int member_id)
         {
             CheckoutPersistence checkp = new CheckoutPersistence();
             return checkp.getCheckouts(member_id);

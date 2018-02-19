@@ -42,13 +42,15 @@ namespace SparkAPI
             }
             return checkoutArray;
         }
-        public Checkout getCheckouts(int member_id)
+        public ArrayList getCheckouts(int member_id)
         {
-            String sqlString = "SELECT * FROM ITEM_CHECKOUT WHERE item_id = " + member_id.ToString() + ";";
+            String sqlString = "SELECT * FROM ITEM_CHECKOUT WHERE member_id = " + member_id.ToString() + ";";
             SqlCommand cmd = new SqlCommand(sqlString, conn);
             SqlDataReader reader = cmd.ExecuteReader();
 
-            if(reader.Read())
+            ArrayList checkoutArray = new ArrayList();
+
+            while(reader.Read())
             {
                 Checkout c = new Checkout();
                 c.ItemId = reader.GetInt32(reader.GetOrdinal("item_id"));
@@ -56,9 +58,9 @@ namespace SparkAPI
                 c.ItemType = reader.GetString(reader.GetOrdinal("item_type"));
                 c.dueDate = reader.GetDateTime(reader.GetOrdinal("due_date"));
 
-                return c;
+                checkoutArray.Add(c);
             }
-            return null;
+            return checkoutArray;
         }
         public int saveCheckout(Checkout checkoutToSave)
         {
