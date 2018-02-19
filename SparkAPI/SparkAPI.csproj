@@ -86,12 +86,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
+    <Compile Include="CheckoutPersistence.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\BookController.cs" />
+    <Compile Include="Controllers\DVDController.cs" />
+    <Compile Include="Controllers\TechnologyController.cs" />
+    <Compile Include="MemberPersistence.cs" />
+    <Compile Include="DVDPersistence.cs" />
+    <Compile Include="Controllers\FinesController.cs" />
+    <Compile Include="FinesPersistence.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Book.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TechnologyPersistence.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
