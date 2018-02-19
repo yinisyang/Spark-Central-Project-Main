@@ -115,9 +115,9 @@ namespace SparkAPI
             publisherParam.Value = b.Publisher;
             publicationYearParam.Value = b.Year;
             pagesParam.Value = b.Pages;
-            descriptionParam.Value = b.Description;
+            descriptionParam.Value = (object)b.Description ?? DBNull.Value;
             titleParam.Value = b.Title;
-            isbn13Param.Value = b.Isbn13;
+            isbn13Param.Value = (object)b.Isbn13 ?? DBNull.Value;
 
             SqlCommand cmd = new SqlCommand(sqlString, con);
             cmd.Parameters.Add(authorParam);
