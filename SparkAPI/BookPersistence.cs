@@ -38,7 +38,7 @@ namespace SparkAPI
                 Book b = new Book();
                 b.Id = reader.GetInt32(reader.GetOrdinal("item_id"));
                 b.Author = reader.GetString(reader.GetOrdinal("author"));
-                b.Isbn10 = reader.GetString(reader.GetOrdinal("isbn-10"));
+                b.Isbn10 = reader.GetString(reader.GetOrdinal("isbn_10"));
                 b.Category = reader.GetString(reader.GetOrdinal("category"));
                 b.Publisher = reader.GetString(reader.GetOrdinal("publisher"));
                 b.Year = reader.GetInt32(reader.GetOrdinal("publication_year"));
@@ -55,7 +55,7 @@ namespace SparkAPI
                 }
 
                 b.Title = reader.GetString(reader.GetOrdinal("title"));
-                b.Isbn13 = reader.GetString(reader.GetOrdinal("isbn-13"));
+                b.Isbn13 = reader.GetString(reader.GetOrdinal("isbn_13"));
 
                 bookList.Add(b);
             }
@@ -74,14 +74,22 @@ namespace SparkAPI
                 Book ret = new Book();
                 ret.Id = reader.GetInt32(reader.GetOrdinal("item_id"));
                 ret.Author = reader.GetString(reader.GetOrdinal("author"));
-                ret.Isbn10 = reader.GetString(reader.GetOrdinal("isbn-10"));
+                ret.Isbn10 = reader.GetString(reader.GetOrdinal("isbn_10"));
                 ret.Category = reader.GetString(reader.GetOrdinal("category"));
                 ret.Publisher = reader.GetString(reader.GetOrdinal("publisher"));
                 ret.Year = reader.GetInt32(reader.GetOrdinal("publication_year"));
                 ret.Pages = reader.GetInt32(reader.GetOrdinal("pages"));
-                ret.Description = reader.GetString(reader.GetOrdinal("description"));
+
+                if (reader["description"] != DBNull.Value)
+                {
+                    ret.Description = reader.GetString(reader.GetOrdinal("description"));
+                }
+                else
+                {
+                    ret.Description = null;
+                }
                 ret.Title = reader.GetString(reader.GetOrdinal("title"));
-                ret.Isbn13 = reader.GetString(reader.GetOrdinal("isbn-13"));
+                ret.Isbn13 = reader.GetString(reader.GetOrdinal("isbn_13"));
 
                 return ret;
             }
@@ -90,16 +98,16 @@ namespace SparkAPI
 
         public int SaveBook(Book b)
         {
-            String sqlString = "INSERT INTO Books (author, isbn-10, category, publisher, publication_year, pages, description, title, isbn-13) OUTPUT INSERTED.item_id VALUES (@author, @isbn-10, @category, @publisher, @publication_year, @pages, @description, @title, @isbn-13)";
+            String sqlString = "INSERT INTO Books (author, isbn_10, category, publisher, publication_year, pages, description, title, isbn_13) OUTPUT INSERTED.item_id VALUES (@author, @isbn_10, @category, @publisher, @publication_year, @pages, @description, @title, @isbn_13)";
             SqlParameter authorParam = new SqlParameter("@author", System.Data.SqlDbType.VarChar, 50);
-            SqlParameter isbn10Param = new SqlParameter("@isbn-10", System.Data.SqlDbType.VarChar, 20);
+            SqlParameter isbn10Param = new SqlParameter("@isbn_10", System.Data.SqlDbType.VarChar, 20);
             SqlParameter categoryParam = new SqlParameter("@category", System.Data.SqlDbType.VarChar, 50);
             SqlParameter publisherParam = new SqlParameter("@publisher", System.Data.SqlDbType.VarChar, 50);
             SqlParameter publicationYearParam = new SqlParameter("@publication_year", System.Data.SqlDbType.Int, 4);
             SqlParameter pagesParam = new SqlParameter("@pages", System.Data.SqlDbType.Int, 4);
             SqlParameter descriptionParam = new SqlParameter("@description", System.Data.SqlDbType.VarChar, 500);
             SqlParameter titleParam = new SqlParameter("@title", System.Data.SqlDbType.VarChar, 50);
-            SqlParameter isbn13Param = new SqlParameter("@isbn-13", System.Data.SqlDbType.VarChar, 50);
+            SqlParameter isbn13Param = new SqlParameter("@isbn_13", System.Data.SqlDbType.VarChar, 50);
 
             authorParam.Value = b.Author;
             isbn10Param.Value = b.Isbn10;
