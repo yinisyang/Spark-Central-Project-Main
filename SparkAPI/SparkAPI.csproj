@@ -92,6 +92,7 @@
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\DVDController.cs" />
     <Compile Include="Controllers\TechnologyController.cs" />
+    <Compile Include="MemberPersistence.cs" />
     <Compile Include="DVDPersistence.cs" />
     <Compile Include="Controllers\FinesController.cs" />
     <Compile Include="FinesPersistence.cs" />
