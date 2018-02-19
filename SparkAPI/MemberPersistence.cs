@@ -39,7 +39,15 @@ namespace SparkAPI
 
                 member.member_id = reader.GetInt32(reader.GetOrdinal("member_id"));
                 member.first_name = reader.GetString(reader.GetOrdinal("first_name"));
-                member.guardian_name = reader.GetString(reader.GetOrdinal("guardian_name"));
+                //guardian_name is a nullable data field
+                if (reader["guardian_name"] != DBNull.Value)
+                {
+                    member.guardian_name = reader.GetString(reader.GetOrdinal("guardian_name"));
+                }
+                else
+                {
+                    member.guardian_name = null;
+                }
                 member.email = reader.GetString(reader.GetOrdinal("email"));
                 member.dob = reader.GetDateTime(reader.GetOrdinal("dob"));
                 member.phone = reader.GetString(reader.GetOrdinal("phone"));
@@ -73,6 +81,15 @@ namespace SparkAPI
                 toReturn.member_id = reader.GetInt32(reader.GetOrdinal("member_id"));
                 toReturn.first_name = reader.GetString(reader.GetOrdinal("first_name"));
                 toReturn.guardian_name = reader.GetString(reader.GetOrdinal("guardian_name"));
+                //guardian_name is a nullable data field
+                if (reader["guardian_name"] != DBNull.Value)
+                {
+                    toReturn.guardian_name = reader.GetString(reader.GetOrdinal("guardian_name"));
+                }
+                else
+                {
+                    toReturn.guardian_name = null;
+                }
                 toReturn.email = reader.GetString(reader.GetOrdinal("email"));
                 toReturn.dob = reader.GetDateTime(reader.GetOrdinal("dob"));
                 toReturn.phone = reader.GetString(reader.GetOrdinal("phone"));
