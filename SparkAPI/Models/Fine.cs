@@ -8,6 +8,6 @@ namespace SparkAPI.Models
     public class Fine
     {
         public int memberId { get; set; }
-        public float amount { get; set; }
+        public double amount { get; set; }
     }
 }

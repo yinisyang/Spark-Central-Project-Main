@@ -35,7 +35,7 @@ namespace SparkAPI
             {
                 Fine f = new Fine();
                 f.memberId = reader.GetInt32(reader.GetOrdinal("member_id"));
-                f.amount = reader.GetFloat(reader.GetOrdinal("amount"));
+                f.amount = reader.GetDouble(reader.GetOrdinal("amount"));
                 finesArray.Add(f);
             }
             return finesArray;
@@ -50,7 +50,7 @@ namespace SparkAPI
             {
                 Fine f = new Fine();
                 f.memberId = reader.GetInt32(reader.GetOrdinal("member_id"));
-                f.amount = reader.GetFloat(reader.GetOrdinal("amount"));
+                f.amount = reader.GetDouble(reader.GetOrdinal("amount"));
 
                 return f;
             }
