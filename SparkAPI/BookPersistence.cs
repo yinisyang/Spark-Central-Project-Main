@@ -90,16 +90,16 @@ namespace SparkAPI
 
         public int SaveBook(Book b)
         {
-            String sqlString = "INSERT INTO Books (author, isbn-10, category, publisher, publication_year, pages, description, title, isbn-13) OUTPUT INSERTED.item_id VALUES (@author, @isbn-10, @category, @publisher, @publication_year, @pages, @description, @title, @isbn-13)";
+            String sqlString = "INSERT INTO Books (author, isbn_10, category, publisher, publication_year, pages, description, title, isbn_13) OUTPUT INSERTED.item_id VALUES (@author, @isbn_10, @category, @publisher, @publication_year, @pages, @description, @title, @isbn_13)";
             SqlParameter authorParam = new SqlParameter("@author", System.Data.SqlDbType.VarChar, 50);
-            SqlParameter isbn10Param = new SqlParameter("@isbn-10", System.Data.SqlDbType.VarChar, 20);
+            SqlParameter isbn10Param = new SqlParameter("@isbn_10", System.Data.SqlDbType.VarChar, 20);
             SqlParameter categoryParam = new SqlParameter("@category", System.Data.SqlDbType.VarChar, 50);
             SqlParameter publisherParam = new SqlParameter("@publisher", System.Data.SqlDbType.VarChar, 50);
             SqlParameter publicationYearParam = new SqlParameter("@publication_year", System.Data.SqlDbType.Int, 4);
             SqlParameter pagesParam = new SqlParameter("@pages", System.Data.SqlDbType.Int, 4);
             SqlParameter descriptionParam = new SqlParameter("@description", System.Data.SqlDbType.VarChar, 500);
             SqlParameter titleParam = new SqlParameter("@title", System.Data.SqlDbType.VarChar, 50);
-            SqlParameter isbn13Param = new SqlParameter("@isbn-13", System.Data.SqlDbType.VarChar, 50);
+            SqlParameter isbn13Param = new SqlParameter("@isbn_13", System.Data.SqlDbType.VarChar, 50);
 
             authorParam.Value = b.Author;
             isbn10Param.Value = b.Isbn10;
