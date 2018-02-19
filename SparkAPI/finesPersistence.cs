@@ -46,7 +46,7 @@ namespace SparkAPI
             SqlCommand cmd = new SqlCommand(sqlString, conn);
             SqlDataReader reader = cmd.ExecuteReader();
 
-            while (reader.Read())
+            if(reader.Read())
             {
                 Fine f = new Fine();
                 f.memberId = reader.GetInt32(reader.GetOrdinal("member_id"));
