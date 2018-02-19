@@ -48,7 +48,7 @@ namespace SparkAPI
             SqlCommand cmd = new SqlCommand(sqlString, conn);
             SqlDataReader reader = cmd.ExecuteReader();
 
-            while (reader.Read())
+            if(reader.Read())
             {
                 Checkout c = new Checkout();
                 c.ItemId = reader.GetInt32(reader.GetOrdinal("item_id"));

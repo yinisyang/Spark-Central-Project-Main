@@ -12,10 +12,14 @@ namespace SparkAPI.Controllers
     public class DVDController : ApiController
     {
         // GET api/<controller>
-        public ArrayList Get()
+        public ArrayList Get(string title = null, int? releaseYear = null, string rating = null)
         {
             DVDPersistence dvdp = new DVDPersistence();
-            return dvdp.getDVDS();
+
+            //if (title != null || releaseYear != null || rating != null)
+                return dvdp.getDVDS(title, releaseYear, rating);
+            //else
+                //return dvdp.getDVDS();
         }
 
         // GET api/<controller>/5
