@@ -74,14 +74,22 @@ namespace SparkAPI
                 Book ret = new Book();
                 ret.Id = reader.GetInt32(reader.GetOrdinal("item_id"));
                 ret.Author = reader.GetString(reader.GetOrdinal("author"));
-                ret.Isbn10 = reader.GetString(reader.GetOrdinal("isbn-10"));
+                ret.Isbn10 = reader.GetString(reader.GetOrdinal("isbn_10"));
                 ret.Category = reader.GetString(reader.GetOrdinal("category"));
                 ret.Publisher = reader.GetString(reader.GetOrdinal("publisher"));
                 ret.Year = reader.GetInt32(reader.GetOrdinal("publication_year"));
                 ret.Pages = reader.GetInt32(reader.GetOrdinal("pages"));
-                ret.Description = reader.GetString(reader.GetOrdinal("description"));
+
+                if (reader["description"] != DBNull.Value)
+                {
+                    ret.Description = reader.GetString(reader.GetOrdinal("description"));
+                }
+                else
+                {
+                    ret.Description = null;
+                }
                 ret.Title = reader.GetString(reader.GetOrdinal("title"));
-                ret.Isbn13 = reader.GetString(reader.GetOrdinal("isbn-13"));
+                ret.Isbn13 = reader.GetString(reader.GetOrdinal("isbn_13"));
 
                 return ret;
             }
