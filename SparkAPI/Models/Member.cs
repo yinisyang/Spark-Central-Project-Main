@@ -9,6 +9,7 @@ namespace SparkAPI.Models
     {
         public int member_id { get; set; }
         public string first_name { get; set; }
+        public string last_name { get; set; }
         public string guardian_name { get; set; }
         public string email { get; set; }
         public DateTime dob { get; set; }
@@ -22,6 +23,5 @@ namespace SparkAPI.Models
         public string ethnicity { get; set; }
         public bool restricted_to_tech { get; set; }
         public bool west_central_resident { get; set; }
-        public string last_name { get; set; }
     }
 }
