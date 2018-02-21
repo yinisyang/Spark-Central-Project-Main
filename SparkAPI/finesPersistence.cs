@@ -38,6 +38,7 @@ namespace SparkAPI
                 f.amount = reader.GetDouble(reader.GetOrdinal("amount"));
                 finesArray.Add(f);
             }
+            conn.Close();
             return finesArray;
         }
         public Fine getFine(int member_id)
@@ -52,8 +53,10 @@ namespace SparkAPI
                 f.memberId = reader.GetInt32(reader.GetOrdinal("member_id"));
                 f.amount = reader.GetDouble(reader.GetOrdinal("amount"));
 
+                conn.Close();
                 return f;
             }
+            conn.Close();
             return null;
         }
         public int saveFine(Fine fineToSave)
@@ -72,6 +75,7 @@ namespace SparkAPI
             cmd.Prepare();
             //cmd.ExecuteNonQuery();
             int id = (int)cmd.ExecuteScalar();
+            conn.Close();
             return id;
         }
     }

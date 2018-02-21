@@ -54,6 +54,7 @@ namespace SparkAPI
                 d.ReleaseYear = reader.GetInt32(reader.GetOrdinal("release_year"));
                 dvdArray.Add(d);
             }
+            conn.Close();
             return dvdArray;
         }
 
@@ -71,8 +72,10 @@ namespace SparkAPI
                 toReturn.Rating = reader.GetString(reader.GetOrdinal("rating"));
                 toReturn.ReleaseYear = reader.GetInt32(reader.GetOrdinal("release_year"));
 
+                conn.Close();
                 return toReturn;
             }
+            conn.Close();
             return null;
         }
 
@@ -95,6 +98,7 @@ namespace SparkAPI
             cmd.Prepare();
             //cmd.ExecuteNonQuery();
             int id = (int)cmd.ExecuteScalar();
+            conn.Close();
             return id;
         }
 

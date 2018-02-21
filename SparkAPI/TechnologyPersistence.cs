@@ -38,6 +38,7 @@ namespace SparkAPI
                 t.Name = reader.GetString(reader.GetOrdinal("name"));
                 techArray.Add(t);
             }
+            conn.Close();
             return techArray;
         }
 
@@ -52,8 +53,10 @@ namespace SparkAPI
                 toReturn.ItemId = reader.GetInt32(reader.GetOrdinal("item_id"));
                 toReturn.Name = reader.GetString(reader.GetOrdinal("name"));
 
+                conn.Close();
                 return toReturn;
             }
+            conn.Close();
             return null;
         }
 
@@ -91,6 +94,7 @@ namespace SparkAPI
             cmd.Prepare();
             //cmd.ExecuteNonQuery();
             int id = (int)cmd.ExecuteScalar();
+            conn.Close();
             return id;
         }
     }
