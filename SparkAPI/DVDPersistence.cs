@@ -97,5 +97,26 @@ namespace SparkAPI
             int id = (int)cmd.ExecuteScalar();
             return id;
         }
+
+        public bool deleteDVD(int id)
+        {
+            String sqlString = "SELECT * FROM DVDS WHERE item_id = " + id.ToString() + ";";
+            SqlCommand cmd = new SqlCommand(sqlString, conn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                reader.Close();
+
+                sqlString = "DELETE FROM DVDS WHERE item_id = " + id.ToString() + ";";
+                cmd = new SqlCommand(sqlString, conn);
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

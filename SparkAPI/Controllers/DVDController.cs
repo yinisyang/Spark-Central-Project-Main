@@ -46,8 +46,21 @@ namespace SparkAPI.Controllers
         }
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
+        public HttpResponseMessage Delete(int id)
         {
+            DVDPersistence tp = new DVDPersistence();
+            bool recordExisted = tp.deleteDVD(id);
+
+            HttpResponseMessage response;
+            if (recordExisted)
+            {
+                response = Request.CreateResponse(HttpStatusCode.NoContent);
+            }
+            else
+            {
+                response = Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+            return response;
         }
     }
 }

@@ -57,6 +57,27 @@ namespace SparkAPI
             return null;
         }
 
+        public bool deleteTechnology(int id)
+        {
+            String sqlString = "SELECT * FROM Technology WHERE item_id = " + id.ToString() + ";";
+            SqlCommand cmd = new SqlCommand(sqlString, conn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                reader.Close();
+
+                sqlString = "DELETE FROM Technology WHERE item_id = " + id.ToString() + ";";
+                cmd = new SqlCommand(sqlString, conn);
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public int saveTechnology(Technology techToSave)
         {
             String sqlString = "INSERT INTO Technology (name) OUTPUT INSERTED.item_id VALUES (@name);";
