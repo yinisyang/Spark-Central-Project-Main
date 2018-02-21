@@ -90,5 +90,25 @@ namespace SparkAPI
             conn.Close();
             return id;
         }
+        public bool deleteCheckout(int item_id, int member_id, String item_type)
+        {
+            String sqlString = "SELECT * FROM ITEM_CHECKOUT WHERE item_id = " + item_id.ToString() + " AND member_id = " + member_id.ToString() + " AND item_type = " + item_type + ";";
+            SqlCommand cmd = new SqlCommand(sqlString, conn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if(reader.Read())
+            {
+                reader.Close();
+
+                sqlString = "DELETE FROM ITEM_CHECKOUT WHERE item_id = " + item_id.ToString() + " AND member_id = " + member_id.ToString() + " AND item_type = " + item_type + ";";
+                cmd = new SqlCommand(sqlString, conn);
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

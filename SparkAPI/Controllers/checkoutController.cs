@@ -35,9 +35,21 @@ namespace SparkAPI.Controllers
         {
             
         }
-        public void Delete(int id)
+        public HttpResponseMessage Delete(int item_id, int member_id, String item_type)
         {
-            
+            CheckoutPersistence checkp = new CheckoutPersistence();
+            bool recordExisted = checkp.deleteCheckout(item_id, member_id, item_type);
+
+            HttpResponseMessage response;
+            if(recordExisted)
+            {
+                response = Request.CreateResponse(HttpStatusCode.NoContent);
+            }
+            else
+            {
+                response = Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+            return response;
         }
     }
 }
