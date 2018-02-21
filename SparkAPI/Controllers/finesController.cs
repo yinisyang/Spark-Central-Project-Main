@@ -42,11 +42,11 @@ namespace SparkAPI.Controllers
             HttpResponseMessage response;
             if(recordExisted)
             {
-                response = WebRequest.CreateResponse(HttpStatusCode.NoContent);
+                response = Request.CreateResponse(HttpStatusCode.NoContent);
             }
             else
             {
-                response = WebRequest.CreateResponse(HttpStatusCode.NotFound);
+                response = Request.CreateResponse(HttpStatusCode.NotFound);
             }
             return response;
         }

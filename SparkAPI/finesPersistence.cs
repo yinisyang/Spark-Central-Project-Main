@@ -86,7 +86,7 @@ namespace SparkAPI
 
             if(reader.Read())
             {
-                reader.close();
+                reader.Close();
 
                 sqlString = "DELETE FROM FINES WHERE member_id = " + member_id.ToString() + ";";
                 cmd = new SqlCommand(sqlString, conn);
