@@ -174,5 +174,25 @@ namespace SparkAPI
             conn.Close();
             return id;
         }
+        public bool deleteMember(int id)
+        {
+            String sqlString = "SELECT * FROM Members WHERE member_id = " + id.ToString() + ";";
+            SqlCommand cmd = new SqlCommand(sqlString, conn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                reader.Close();
+
+                sqlString = "DELETE FROM Members WHERE member_id = " + id.ToString() + ";";
+                cmd = new SqlCommand(sqlString, conn);
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

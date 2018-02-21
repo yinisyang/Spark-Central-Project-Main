@@ -41,8 +41,21 @@ namespace SparkAPI.Controllers
         }
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
+        public HttpResponseMessage Delete(int id)
         {
+            MemberPersistence tp = new MemberPersistence();
+            bool recordExisted = tp.deleteMember(id);
+
+            HttpResponseMessage response;
+            if (recordExisted)
+            {
+                response = Request.CreateResponse(HttpStatusCode.NoContent);
+            }
+            else
+            {
+                response = Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+            return response;
         }
     }
 }
