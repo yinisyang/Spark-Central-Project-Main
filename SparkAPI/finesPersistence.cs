@@ -78,5 +78,25 @@ namespace SparkAPI
             conn.Close();
             return id;
         }
+        public bool deleteFine(int member_id)
+        {
+            String sqlString = "SELECT * FROM FINES WHERE member_id = " + member_id.ToString() + ";";
+            SqlCommand cmd = new SqlCommand(sqlString, conn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if(reader.Read())
+            {
+                reader.close();
+
+                sqlString = "DELETE FROM FINES WHERE member_id = " + member_id.ToString() + ";";
+                cmd = new SqlCommand(sqlString, conn);
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

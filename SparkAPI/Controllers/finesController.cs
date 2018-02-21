@@ -34,9 +34,21 @@ namespace SparkAPI.Controllers
         {
 
         }
-        public void Delete(int id)
+        public HttpResponseMessage Delete(int id)
         {
+            FinesPersistence finep = new FinesPersistence();
+            bool recordExisted = finep.deleteFine(id);
 
+            HttpResponseMessage response;
+            if(recordExisted)
+            {
+                response = WebRequest.CreateResponse(HttpStatusCode.NoContent);
+            }
+            else
+            {
+                response = WebRequest.CreateResponse(HttpStatusCode.NotFound);
+            }
+            return response;
         }
     }
 }
