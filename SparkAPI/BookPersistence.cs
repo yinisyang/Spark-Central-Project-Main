@@ -98,6 +98,27 @@ namespace SparkAPI
             con.Close();
             return null;
         }
+        public bool DeleteBook(int id)
+        {
+            String sqlString = "SELECT * FROM Books WHERE item_id = " + id.ToString() + ";";
+
+            SqlCommand cmd = new SqlCommand(sqlString, con);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                reader.Close();
+                sqlString = "DELETE FROM Books WHERE item_id = " + id.ToString() + ";";
+                cmd = new SqlCommand(sqlString, con);
+
+                cmd.ExecuteNonQuery();
+
+                con.Close();
+                return true;
+            }
+            con.Close();
+            return false;
+        }
 
         public int SaveBook(Book b)
         {

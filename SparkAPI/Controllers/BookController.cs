@@ -42,8 +42,19 @@ namespace SparkAPI.Controllers
         }
 
         // DELETE: api/Book/5
-        public void Delete(int id)
+        public HttpResponseMessage Delete(int id)
         {
+            BookPersistence bookp = new BookPersistence();
+            HttpResponseMessage ret;
+            if(bookp.DeleteBook(id))
+            {
+                ret = Request.CreateResponse(HttpStatusCode.NoContent);
+            }
+            else
+            {
+                ret = Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+            return ret;
         }
     }
 }
