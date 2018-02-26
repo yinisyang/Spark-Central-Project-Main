@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
+using SparkAPI.MessageHandlers;
 
 namespace SparkAPI
 {
@@ -12,6 +13,7 @@ namespace SparkAPI
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configuration.MessageHandlers.Add(new APIKeyMessageHandler());
         }
     }
 }

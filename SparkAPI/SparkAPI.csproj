@@ -100,6 +100,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MessageHandlers\APIKeyMessageHandler.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Checkout.cs" />
     <Compile Include="Models\DVD.cs" />
