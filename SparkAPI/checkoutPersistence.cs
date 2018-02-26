@@ -23,10 +23,44 @@ namespace SparkAPI
 
             }
         }
-        public ArrayList getCheckouts()
+        public ArrayList getCheckouts(int? item_id, int? member_id, string item_type)
         {
-            String sqlString = "SELECT * FROM Item_Checkout;";
-            SqlCommand cmd = new SqlCommand(sqlString, conn);
+            String sqlString = "SELECT * FROM Item_Checkout ";
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+
+            if(item_id != null || member_id != null || item_type != null)
+            {
+                sqlString += "WHERE ";
+                if(item_id != null)
+                {
+                    sqlString += "item_id = @item_id AND ";
+                    SqlParameter itemIDParam = new SqlParameter("@item_id", System.Data.SqlDbType.Int, 4);
+                    itemIDParam.Value = item_id;
+                    cmd.Parameters.Add(itemIDParam);
+                }
+                if(member_id != null)
+                {
+                    sqlString += "member_id = @member_id AND ";
+                    SqlParameter memberIDParam = new SqlParameter("@member_id", System.Data.SqlDbType.Int, 4);
+                    memberIDParam.Value = member_id;
+                    cmd.Parameters.Add(memberIDParam);
+                }
+                if(item_type != null)
+                {
+                    sqlString += "item_type = @item_type";
+                    SqlParameter itemTypeParam = new SqlParameter("@item_type", System.Data.SqlDbType.VarChar, 50);
+                    itemTypeParam.Value = item_type;
+                    cmd.Parameters.Add(itemTypeParam);
+                }
+            }
+            if (sqlString.Substring(sqlString.Length - 4).Equals("AND "))
+                sqlString = sqlString.Substring(0, sqlString.Length - 4);
+
+            sqlString += ";";
+
+            cmd.CommandText = sqlString;
+            cmd.Prepare();
             SqlDataReader reader = cmd.ExecuteReader();
 
             ArrayList checkoutArray = new ArrayList();

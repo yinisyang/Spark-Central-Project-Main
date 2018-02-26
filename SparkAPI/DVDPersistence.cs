@@ -28,19 +28,40 @@ namespace SparkAPI
         public ArrayList getDVDS(string title, int? releaseYear, string rating)
         {
             String sqlString = "SELECT * FROM DVDS ";
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
 
             if (title != null || releaseYear != null || rating != null) {
                 sqlString += "WHERE ";
                 if (title != null)
-                    sqlString += " title = '" + title + "' AND ";
+                {
+                    sqlString += "title = @title AND ";
+                    SqlParameter titleParam = new SqlParameter("@title", System.Data.SqlDbType.VarChar, 50);
+                    titleParam.Value = title;
+                    cmd.Parameters.Add(titleParam);
+                }
                 if (releaseYear != null)
-                    sqlString += " release_year = " + releaseYear.ToString() + " AND ";
+                {
+                    sqlString += "release_year = @release_year AND ";
+                    SqlParameter releaseYearParam = new SqlParameter("@release_year", System.Data.SqlDbType.Int, 4);
+                    releaseYearParam.Value = releaseYear;
+                    cmd.Parameters.Add(releaseYearParam);
+                }
                 if (rating != null)
-                    sqlString += " rating = '" + rating + "'";
+                {
+                    sqlString += "rating = @rating";
+                    SqlParameter ratingParam = new SqlParameter("@rating", System.Data.SqlDbType.VarChar, 50);
+                    ratingParam.Value = rating;
+                    cmd.Parameters.Add(ratingParam);
+                }
             }
-            sqlString += ";";
+            if (sqlString.Substring(sqlString.Length - 4).Equals("AND "))
+                sqlString = sqlString.Substring(0, sqlString.Length - 4);
 
-            SqlCommand cmd = new SqlCommand(sqlString, conn);
+            sqlString += ";";
+            
+            cmd.CommandText = sqlString;
+            cmd.Prepare();
             SqlDataReader reader = cmd.ExecuteReader();
 
             ArrayList dvdArray = new ArrayList();

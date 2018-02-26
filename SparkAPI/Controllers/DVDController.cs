@@ -15,11 +15,7 @@ namespace SparkAPI.Controllers
         public ArrayList Get(string title = null, int? releaseYear = null, string rating = null)
         {
             DVDPersistence dvdp = new DVDPersistence();
-
-            //if (title != null || releaseYear != null || rating != null)
-                return dvdp.getDVDS(title, releaseYear, rating);
-            //else
-                //return dvdp.getDVDS();
+            return dvdp.getDVDS(title, releaseYear, rating);
         }
 
         // GET api/<controller>/5

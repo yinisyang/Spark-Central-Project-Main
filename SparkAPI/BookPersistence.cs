@@ -25,10 +25,52 @@ namespace SparkAPI
             }
         }
 
-        public ArrayList GetBooks()
+        public ArrayList GetBooks(string isbn10, string isbn13, string category, int? year)
         {
-            String sqlString = "SELECT * FROM Books;";
-            SqlCommand cmd = new SqlCommand(sqlString, con);
+            String sqlString = "SELECT * FROM Books ";
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+
+            if(isbn10 != null || isbn13 != null || category != null || year != null)
+            {
+                sqlString += "WHERE ";
+                if(isbn10 != null)
+                {
+                    sqlString += "isbn_10 = @isbn10 AND ";
+                    SqlParameter isbn10Param = new SqlParameter("@isbn10", System.Data.SqlDbType.VarChar, 50);
+                    isbn10Param.Value = isbn10;
+                    cmd.Parameters.Add(isbn10Param);
+                }
+                if(isbn13 != null)
+                {
+                    sqlString += "isbn_13 = @isbn13 AND ";
+                    SqlParameter isbn13Param = new SqlParameter("@isbn13", System.Data.SqlDbType.VarChar, 50);
+                    isbn13Param.Value = isbn13;
+                    cmd.Parameters.Add(isbn13Param);
+                }
+                if(category != null)
+                {
+                    sqlString += "category = @category AND ";
+                    SqlParameter categoryParam = new SqlParameter("@category", System.Data.SqlDbType.VarChar, 50);
+                    categoryParam.Value = category;
+                    cmd.Parameters.Add(categoryParam);
+                }
+                if(year != null)
+                {
+                    sqlString += "publication_year = @year";
+                    SqlParameter yearParam = new SqlParameter("@year", System.Data.SqlDbType.Int, 4);
+                    yearParam.Value = year;
+                    cmd.Parameters.Add(yearParam);
+                }
+
+            }
+            if (sqlString.Substring(sqlString.Length - 4).Equals("AND "))
+                sqlString = sqlString.Substring(0, sqlString.Length - 4);
+
+            sqlString += ";";
+            
+            cmd.CommandText = sqlString;
+            cmd.Prepare();
             SqlDataReader reader = cmd.ExecuteReader();
 
             ArrayList bookList = new ArrayList();

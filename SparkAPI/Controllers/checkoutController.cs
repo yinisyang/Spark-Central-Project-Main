@@ -11,10 +11,10 @@ namespace SparkAPI.Controllers
 {
     public class CheckoutController : ApiController
     {
-        public ArrayList Get()
+        public ArrayList Get(int? item_id = null, int? member_id = null, string item_type = null)
         {
             CheckoutPersistence checkp = new CheckoutPersistence();
-            return checkp.getCheckouts();
+            return checkp.getCheckouts(item_id, member_id, item_type);
         }
         public ArrayList Get(int member_id)
         {

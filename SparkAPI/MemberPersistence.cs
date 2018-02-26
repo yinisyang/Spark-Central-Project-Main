@@ -25,10 +25,58 @@ namespace SparkAPI
             }
         }
 
-        public ArrayList getMembers()
+        public ArrayList getMembers(string member_group, string ethnicity, bool? restricted_to_tech, bool? west_central_resident, string email)
         {
-            String sqlString = "SELECT * FROM Members;";
-            SqlCommand cmd = new SqlCommand(sqlString, conn);
+            String sqlString = "SELECT * FROM Members ";
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+
+            if(member_group != null || ethnicity != null || restricted_to_tech != null || west_central_resident != null || email != null)
+            {
+                sqlString += "WHERE ";
+                if(member_group != null)
+                {
+                    sqlString += "member_group = @member_group AND ";
+                    SqlParameter memberGroupParam = new SqlParameter("@member_group", System.Data.SqlDbType.VarChar, 50);
+                    memberGroupParam.Value = member_group;
+                    cmd.Parameters.Add(memberGroupParam);
+                }
+                if(ethnicity != null)
+                {
+                    sqlString += "ethnicity = @ethnicity AND ";
+                    SqlParameter ethnicityParam = new SqlParameter("@ethnicity", System.Data.SqlDbType.VarChar, 50);
+                    ethnicityParam.Value = ethnicity;
+                    cmd.Parameters.Add(ethnicityParam);
+                }
+                if(restricted_to_tech != null)
+                {
+                    sqlString += "restricted_to_tech = @restricted_to_tech AND ";
+                    SqlParameter techParam = new SqlParameter("@restricted_to_tech", System.Data.SqlDbType.Bit);
+                    techParam.Value = restricted_to_tech;
+                    cmd.Parameters.Add(techParam);
+                }
+                if(west_central_resident != null)
+                {
+                    sqlString += "west_central_resident = @west_central_resident AND ";
+                    SqlParameter westCentralParam = new SqlParameter("@west_central_resident", System.Data.SqlDbType.Bit);
+                    westCentralParam.Value = west_central_resident;
+                    cmd.Parameters.Add(westCentralParam);
+                }
+                if(email != null)
+                {
+                    sqlString += "email = @email";
+                    SqlParameter emailParam = new SqlParameter("@email", System.Data.SqlDbType.VarChar, 50);
+                    emailParam.Value = email;
+                    cmd.Parameters.Add(emailParam);
+                }
+            }
+            if (sqlString.Substring(sqlString.Length - 4).Equals("AND "))
+                sqlString = sqlString.Substring(0, sqlString.Length - 4);
+
+            sqlString += ";";
+
+            cmd.CommandText = sqlString;
+            cmd.Prepare();
             SqlDataReader reader = cmd.ExecuteReader();
 
             ArrayList MemberArray = new ArrayList();

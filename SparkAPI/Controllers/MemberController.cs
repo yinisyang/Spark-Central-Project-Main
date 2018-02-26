@@ -11,10 +11,10 @@ namespace SparkAPI.Controllers
     public class MemberController : ApiController
     {
         // GET api/<controller>
-        public ArrayList Get()
+        public ArrayList Get(string member_group = null, string ethnicity = null, bool? restricted_to_tech = null, bool? west_central_resident = null, string email = null)
         {
             MemberPersistence memberp = new MemberPersistence();
-            return memberp.getMembers();
+            return memberp.getMembers(member_group, ethnicity, restricted_to_tech, west_central_resident, email);
         }
 
         // GET api/<controller>/5

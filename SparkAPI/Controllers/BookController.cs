@@ -12,10 +12,10 @@ namespace SparkAPI.Controllers
     public class BookController : ApiController
     {
         // GET: api/Book
-        public ArrayList Get()
+        public ArrayList Get(string isbn10 = null, string isbn13 = null, string category = null, int? year = null)
         {
             BookPersistence bookp = new BookPersistence();
-            return bookp.GetBooks();
+            return bookp.GetBooks(isbn10, isbn13, category, year);
         }
 
         // GET: api/Book/5
