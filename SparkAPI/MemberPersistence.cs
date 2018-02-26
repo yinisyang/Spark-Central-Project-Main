@@ -71,8 +71,17 @@ namespace SparkAPI
 
         public Member getMember(int id)
         {
-            String sqlString = "SELECT * FROM Members WHERE member_id = " + id.ToString() + ";";
+            String sqlString = "SELECT * FROM Members WHERE member_id = " + @id + ";";
             SqlCommand cmd = new SqlCommand(sqlString, conn);
+
+            //sql parameters for protection
+            SqlParameter idParam = new SqlParameter("@id", System.Data.SqlDbType.Int, 4);
+            idParam.Value = id;
+
+            cmd.Parameters.Add(idParam);
+            cmd.Prepare();
+            ///////
+
             SqlDataReader reader = cmd.ExecuteReader();
 
             if (reader.Read())
@@ -169,24 +178,41 @@ namespace SparkAPI
             cmd.Parameters.Add(west_central_residentParam);
 
             cmd.Prepare();
-            //cmd.ExecuteNonQuery();
+
             int id = (int)cmd.ExecuteScalar();
             conn.Close();
             return id;
         }
         public bool deleteMember(int id)
         {
-            String sqlString = "SELECT * FROM Members WHERE member_id = " + id.ToString() + ";";
+            String sqlString = "SELECT * FROM Members WHERE member_id = " + "@id" + ";";
             SqlCommand cmd = new SqlCommand(sqlString, conn);
+
+            //sql parameters for protection
+            SqlParameter idParam = new SqlParameter("@id", System.Data.SqlDbType.Int, 4);
+            idParam.Value = id;
+
+            cmd.Parameters.Add(idParam);
+            cmd.Prepare();
+            ///////
+
             SqlDataReader reader = cmd.ExecuteReader();
 
             if (reader.Read())
             {
                 reader.Close();
 
-                sqlString = "DELETE FROM Members WHERE member_id = " + id.ToString() + ";";
-                cmd = new SqlCommand(sqlString, conn);
-                cmd.ExecuteNonQuery();
+                //Iutilized new variables rather than reusing the previous ones due to errors caused if I don't
+                String sqlString2 = "DELETE FROM Members WHERE member_id = " + "@id2" + ";";
+                SqlCommand delcmd = new SqlCommand(sqlString2, conn);
+
+                SqlParameter idParam2 = new SqlParameter("@id2", System.Data.SqlDbType.Int, 4);
+                idParam2.Value = idParam.Value;
+                delcmd.Parameters.Add(idParam2);
+
+                delcmd.Prepare();
+
+                delcmd.ExecuteNonQuery();
                 return true;
             }
             else
