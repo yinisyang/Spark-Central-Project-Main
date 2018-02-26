@@ -80,7 +80,7 @@ namespace SparkAPI
 
             cmd.Parameters.Add(idParam);
             cmd.Prepare();
-            ///////
+            ////////
 
             SqlDataReader reader = cmd.ExecuteReader();
 
