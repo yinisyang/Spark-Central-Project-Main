@@ -71,7 +71,7 @@ namespace SparkAPI
 
         public Member getMember(int id)
         {
-            String sqlString = "SELECT * FROM Members WHERE member_id = " + @id + ";";
+            String sqlString = "SELECT * FROM Members WHERE member_id = @id;";
             SqlCommand cmd = new SqlCommand(sqlString, conn);
 
             //sql parameters for protection
@@ -185,7 +185,7 @@ namespace SparkAPI
         }
         public bool deleteMember(int id)
         {
-            String sqlString = "SELECT * FROM Members WHERE member_id = " + "@id" + ";";
+            String sqlString = "SELECT * FROM Members WHERE member_id = @id;";
             SqlCommand cmd = new SqlCommand(sqlString, conn);
 
             //sql parameters for protection
