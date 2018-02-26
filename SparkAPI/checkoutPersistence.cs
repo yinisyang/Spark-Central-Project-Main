@@ -46,8 +46,17 @@ namespace SparkAPI
         }
         public ArrayList getCheckouts(int member_id)
         {
-            String sqlString = "SELECT * FROM ITEM_CHECKOUT WHERE member_id = " + member_id.ToString() + ";";
+            String sqlString = "SELECT * FROM ITEM_CHECKOUT WHERE member_id = @id;";
             SqlCommand cmd = new SqlCommand(sqlString, conn);
+
+            //sql parameters for protection
+            SqlParameter idParam = new SqlParameter("@id", System.Data.SqlDbType.Int, 4);
+            idParam.Value = member_id;
+
+            cmd.Parameters.Add(idParam);
+            cmd.Prepare();
+            ///////
+
             SqlDataReader reader = cmd.ExecuteReader();
 
             ArrayList checkoutArray = new ArrayList();
@@ -92,17 +101,51 @@ namespace SparkAPI
         }
         public bool deleteCheckout(int item_id, int member_id, String item_type)
         {
-            String sqlString = "SELECT * FROM ITEM_CHECKOUT WHERE item_id = " + item_id.ToString() + " AND member_id = " + member_id.ToString() + " AND item_type = '" + item_type + "';";
+          //String sqlString = "SELECT * FROM ITEM_CHECKOUT WHERE item_id = " + item_id.ToString() + " AND member_id = " + member_id.ToString() + " AND item_type = '" + item_type + "';";
+            String sqlString = "SELECT * FROM ITEM_CHECKOUT WHERE item_id = @it_id AND member_id = @mem_id AND item_type = @it_type;";
             SqlCommand cmd = new SqlCommand(sqlString, conn);
+
+            //sql parameters for protection
+            SqlParameter it_idParam = new SqlParameter("@it_id", System.Data.SqlDbType.Int, 4);
+            SqlParameter mem_idParam = new SqlParameter("@mem_id", System.Data.SqlDbType.Int, 4);
+            SqlParameter it_typeParam = new SqlParameter("@it_type", System.Data.SqlDbType.VarChar, 50);
+
+            it_idParam.Value = item_id;
+            mem_idParam.Value = member_id;
+            it_typeParam.Value = item_type;
+
+            cmd.Parameters.Add(it_idParam);
+            cmd.Parameters.Add(mem_idParam);
+            cmd.Parameters.Add(it_typeParam);
+
+            cmd.Prepare();
+            ///////
+
             SqlDataReader reader = cmd.ExecuteReader();
 
-            if(reader.Read())
+            if (reader.Read())
             {
                 reader.Close();
 
-                sqlString = "DELETE FROM ITEM_CHECKOUT WHERE item_id = " + item_id.ToString() + " AND member_id = " + member_id.ToString() + " AND item_type = '" + item_type + "';";
-                cmd = new SqlCommand(sqlString, conn);
-                cmd.ExecuteNonQuery();
+                String sqlString2 = "SELECT * FROM ITEM_CHECKOUT WHERE item_id = @it_id2 AND member_id = @mem_id2 AND item_type = @it_type2;";
+                SqlCommand delcmd = new SqlCommand(sqlString2, conn);
+
+                //sql parameters for protection
+                SqlParameter it_idParam2 = new SqlParameter("@it_id2", System.Data.SqlDbType.Int, 4);
+                SqlParameter mem_idParam2 = new SqlParameter("@mem_id2", System.Data.SqlDbType.Int, 4);
+                SqlParameter it_typeParam2 = new SqlParameter("@it_type2", System.Data.SqlDbType.VarChar, 50);
+
+                it_idParam2.Value = it_idParam.Value;
+                mem_idParam2.Value = mem_idParam.Value;
+                it_typeParam2.Value = it_typeParam.Value;
+
+                delcmd.Parameters.Add(it_idParam2);
+                delcmd.Parameters.Add(mem_idParam2);
+                delcmd.Parameters.Add(it_typeParam2);
+
+                delcmd.Prepare();
+
+                delcmd.ExecuteNonQuery();
                 return true;
             }
             else
