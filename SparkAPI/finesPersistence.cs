@@ -52,7 +52,6 @@ namespace SparkAPI
 
             cmd.Parameters.Add(idParam);
             cmd.Prepare();
-            ///////
 
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -70,7 +69,7 @@ namespace SparkAPI
         }
         public int saveFine(Fine fineToSave)
         {
-            String sqlString = "INSERT INTO FINES (member_id, amount) OUTPUT INSERTED.member_id VALUES(@membeR_id, @amount)";
+            String sqlString = "INSERT INTO FINES (member_id, amount) OUTPUT INSERTED.member_id VALUES(@member_id, @amount)";
             SqlParameter amountParam = new SqlParameter("@amount", System.Data.SqlDbType.Float, 8);
             SqlParameter memberIdParam = new SqlParameter("@member_id", System.Data.SqlDbType.VarChar, 50);
 
@@ -98,7 +97,6 @@ namespace SparkAPI
 
             cmd.Parameters.Add(idParam);
             cmd.Prepare();
-            ///////
 
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -107,7 +105,7 @@ namespace SparkAPI
                 reader.Close();
 
                 //Iutilized new variables rather than reusing the previous ones due to errors caused if I don't
-                String sqlString2 = "DELETE FROM FINES WHERE member_id = " + "@id2" + ";";
+                String sqlString2 = "DELETE FROM FINES WHERE member_id = @id2;";
                 SqlCommand delcmd = new SqlCommand(sqlString2, conn);
 
                 SqlParameter idParam2 = new SqlParameter("@id2", System.Data.SqlDbType.Int, 4);

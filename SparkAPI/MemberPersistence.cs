@@ -251,7 +251,7 @@ namespace SparkAPI
                 reader.Close();
 
                 //Iutilized new variables rather than reusing the previous ones due to errors caused if I don't
-                String sqlString2 = "DELETE FROM Members WHERE member_id = " + "@id2" + ";";
+                String sqlString2 = "DELETE FROM Members WHERE member_id = @id2;";
                 SqlCommand delcmd = new SqlCommand(sqlString2, conn);
 
                 SqlParameter idParam2 = new SqlParameter("@id2", System.Data.SqlDbType.Int, 4);
