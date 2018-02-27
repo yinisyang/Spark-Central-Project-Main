@@ -11,5 +11,6 @@ namespace SparkAPI.Models
         public int MemberId { get; set; }
         public String ItemType { get; set; }
         public DateTime dueDate { get; set; }
+        public bool resolved { get; set; }
     }
 }
