@@ -11,15 +11,15 @@ namespace SparkAPI.Controllers
 {
     public class FinesController : ApiController
     {
-        public ArrayList Get()
+        public ArrayList Get(int? member_id = null)
         {
             FinesPersistence finep = new FinesPersistence();
-            return finep.getFines();
+            return finep.getFines(member_id);
         }
-        public Fine Get(int member_id)
+        public Fine Get(int fine_id)
         {
             FinesPersistence finep = new FinesPersistence();
-            return finep.getFine(member_id);
+            return finep.getFine(fine_id);
         }
         public HttpResponseMessage Post([FromBody]Fine value)
         {

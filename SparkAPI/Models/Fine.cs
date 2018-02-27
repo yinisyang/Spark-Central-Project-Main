@@ -7,7 +7,9 @@ namespace SparkAPI.Models
 {
     public class Fine
     {
+        public int fineId { get; set; }
         public int memberId { get; set; }
-        public double amount { get; set; }
+        public Decimal amount { get; set; }
+        public String description { get; set; }
     }
 }
