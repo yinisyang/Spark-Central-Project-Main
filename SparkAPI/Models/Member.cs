@@ -19,7 +19,7 @@ namespace SparkAPI.Models
         public string state { get; set; }
         public int zip { get; set; }
         public int quota { get; set; }
-        public string member_group { get; set; }
+        public bool is_adult { get; set; }
         public string ethnicity { get; set; }
         public bool restricted_to_tech { get; set; }
         public bool west_central_resident { get; set; }

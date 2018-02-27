@@ -14,7 +14,7 @@ namespace SparkAPI.Controllers
         public ArrayList Get(string member_group = null, string ethnicity = null, bool? restricted_to_tech = null, bool? west_central_resident = null, string email = null)
         {
             MemberPersistence memberp = new MemberPersistence();
-            return memberp.getMembers(member_group, ethnicity, restricted_to_tech, west_central_resident, email);
+            return memberp.getMembers(ethnicity, restricted_to_tech, west_central_resident, email);
         }
 
         // GET api/<controller>/5

@@ -25,22 +25,15 @@ namespace SparkAPI
             }
         }
 
-        public ArrayList getMembers(string member_group, string ethnicity, bool? restricted_to_tech, bool? west_central_resident, string email)
+        public ArrayList getMembers(string ethnicity, bool? restricted_to_tech, bool? west_central_resident, string email)
         {
             String sqlString = "SELECT * FROM Members ";
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
 
-            if(member_group != null || ethnicity != null || restricted_to_tech != null || west_central_resident != null || email != null)
+            if(ethnicity != null || restricted_to_tech != null || west_central_resident != null || email != null)
             {
                 sqlString += "WHERE ";
-                if(member_group != null)
-                {
-                    sqlString += "member_group = @member_group AND ";
-                    SqlParameter memberGroupParam = new SqlParameter("@member_group", System.Data.SqlDbType.VarChar, 50);
-                    memberGroupParam.Value = member_group;
-                    cmd.Parameters.Add(memberGroupParam);
-                }
                 if(ethnicity != null)
                 {
                     sqlString += "ethnicity = @ethnicity AND ";
@@ -105,7 +98,7 @@ namespace SparkAPI
                 member.state = reader.GetString(reader.GetOrdinal("state"));
                 member.zip = reader.GetInt32(reader.GetOrdinal("zip"));
                 member.quota = reader.GetInt32(reader.GetOrdinal("quota"));
-                member.member_group = reader.GetString(reader.GetOrdinal("member_group"));
+                member.is_adult = reader.GetBoolean(reader.GetOrdinal("is_adult"));
                 member.ethnicity = reader.GetString(reader.GetOrdinal("ethnicity"));
                 member.restricted_to_tech = reader.GetBoolean(reader.GetOrdinal("restricted_to_tech"));
                 member.west_central_resident = reader.GetBoolean(reader.GetOrdinal("west_central_resident"));
@@ -156,7 +149,7 @@ namespace SparkAPI
                 toReturn.state = reader.GetString(reader.GetOrdinal("state"));
                 toReturn.zip = reader.GetInt32(reader.GetOrdinal("zip"));
                 toReturn.quota = reader.GetInt32(reader.GetOrdinal("quota"));
-                toReturn.member_group = reader.GetString(reader.GetOrdinal("member_group"));
+                toReturn.is_adult = reader.GetBoolean(reader.GetOrdinal("is_adult"));
                 toReturn.ethnicity = reader.GetString(reader.GetOrdinal("ethnicity"));
                 toReturn.restricted_to_tech = reader.GetBoolean(reader.GetOrdinal("restricted_to_tech"));
                 toReturn.west_central_resident = reader.GetBoolean(reader.GetOrdinal("west_central_resident"));
@@ -171,9 +164,9 @@ namespace SparkAPI
         public int saveMember(Member memberToSave)
         {
             String sqlString = "INSERT INTO Members (first_name, last_name, guardian_name, email, dob, phone, " +
-                "street_address, city, state, zip, quota, member_group, ethnicity, restricted_to_tech, west_central_resident) " +
+                "street_address, city, state, zip, quota, is_adult, ethnicity, restricted_to_tech, west_central_resident) " +
                 "OUTPUT INSERTED.member_id VALUES (@first_name, @last_name, @guardian_name, @email, @dob, @phone, " +
-                "@street_address, @city, @state, @zip, @quota, @member_group, @ethnicity, @restricted_to_tech, @west_central_resident)";
+                "@street_address, @city, @state, @zip, @quota, @is_adult, @ethnicity, @restricted_to_tech, @west_central_resident)";
 
             SqlParameter first_nameParam = new SqlParameter("@first_name", System.Data.SqlDbType.VarChar, 50);
             SqlParameter last_nameParam = new SqlParameter("@last_name", System.Data.SqlDbType.VarChar, 50);
@@ -186,7 +179,7 @@ namespace SparkAPI
             SqlParameter stateParam = new SqlParameter("@state", System.Data.SqlDbType.VarChar, 50);
             SqlParameter zipParam = new SqlParameter("@zip", System.Data.SqlDbType.Int, 4);
             SqlParameter quotaParam = new SqlParameter("@quota", System.Data.SqlDbType.Int, 4);
-            SqlParameter member_groupParam = new SqlParameter("@member_group", System.Data.SqlDbType.VarChar, 50);
+            SqlParameter isAdultParam = new SqlParameter("@is_adult", System.Data.SqlDbType.Bit, 1);
             SqlParameter ethnicityParam = new SqlParameter("@ethnicity", System.Data.SqlDbType.VarChar, 50);
             SqlParameter restricted_to_techParam = new SqlParameter("@restricted_to_tech", System.Data.SqlDbType.Bit, 1);
             SqlParameter west_central_residentParam = new SqlParameter("@west_central_resident", System.Data.SqlDbType.Bit, 1);
@@ -202,7 +195,7 @@ namespace SparkAPI
             stateParam.Value = memberToSave.state;
             zipParam.Value = memberToSave.zip;
             quotaParam.Value = memberToSave.quota;
-            member_groupParam.Value = memberToSave.member_group;
+            isAdultParam.Value = memberToSave.is_adult;
             ethnicityParam.Value = memberToSave.ethnicity;
             restricted_to_techParam.Value = memberToSave.restricted_to_tech;
             west_central_residentParam.Value = memberToSave.west_central_resident;
@@ -220,7 +213,7 @@ namespace SparkAPI
             cmd.Parameters.Add(stateParam);
             cmd.Parameters.Add(zipParam);
             cmd.Parameters.Add(quotaParam);
-            cmd.Parameters.Add(member_groupParam);
+            cmd.Parameters.Add(isAdultParam);
             cmd.Parameters.Add(ethnicityParam);
             cmd.Parameters.Add(restricted_to_techParam);
             cmd.Parameters.Add(west_central_residentParam);
