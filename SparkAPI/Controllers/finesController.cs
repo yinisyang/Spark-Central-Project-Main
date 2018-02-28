@@ -30,10 +30,10 @@ namespace SparkAPI.Controllers
             response.Headers.Location = new Uri(Request.RequestUri, String.Format("checkout/{0}", id));
             return response;
         }
-        public HttpResponseMessage Put(int fine_id, int member_id, [FromBody]Fine value)
+        public HttpResponseMessage Put(int fine_id, [FromBody]Fine value)
         {
             FinesPersistence finep = new FinesPersistence();
-            bool recordExisted = finep.updateFine(fine_id, member_id, value);
+            bool recordExisted = finep.updateFine(fine_id, value);
 
             HttpResponseMessage response;
             if (recordExisted)

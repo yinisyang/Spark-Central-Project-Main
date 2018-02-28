@@ -88,7 +88,7 @@ namespace SparkAPI
         {
             String sqlString = "INSERT INTO FINES (member_id, amount, description) OUTPUT INSERTED.member_id VALUES(@member_id, @amount, @description)";
             SqlParameter memberIdParam = new SqlParameter("@member_id", System.Data.SqlDbType.Int, 4);
-            SqlParameter amountParam = new SqlParameter("@amount", System.Data.SqlDbType.Money, 8);
+            SqlParameter amountParam = new SqlParameter("@amount", System.Data.SqlDbType.Decimal, 8);
             SqlParameter descriptionParam = new SqlParameter("@description", System.Data.SqlDbType.VarChar, 300);
 
             memberIdParam.Value = fineToSave.memberId;
@@ -141,7 +141,7 @@ namespace SparkAPI
                 return false;
             }
         }
-        public bool updateFine(int fine_id, int member_id, Fine fineToSave)
+        public bool updateFine(int fine_id, Fine fineToSave)
         {
             String sqlString = "SELECT * FROM FINES WHERE fine_id = @fine_id;";
             SqlCommand cmd = new SqlCommand(sqlString, conn);
@@ -160,12 +160,23 @@ namespace SparkAPI
                 reader.Close();
 
                 //Iutilized new variables rather than reusing the previous ones due to errors caused if I don't
-                String sqlString2 = "UPDATE FINES SET amount=" + fineToSave.amount + ", description='" + fineToSave.description + "' WHERE fine_id=" + fine_id.ToString() + " AND member_id=" + member_id.ToString();
-                SqlCommand upcmd = new SqlCommand(sqlString2, conn);
+                //String sqlString2 = "UPDATE FINES SET amount=" + fineToSave.amount + ", description='" + fineToSave.description + "' WHERE fine_id=" + fine_id.ToString() + " AND member_id=" + member_id.ToString();
+                String sqlString3 = "UPDATE FINES SET amount=@amount, description=@description, member_id=@member_id WHERE fine_id=@fine_id";
+                SqlCommand upcmd = new SqlCommand(sqlString3, conn);
 
-                SqlParameter idParam2 = new SqlParameter("@id2", System.Data.SqlDbType.Int, 4);
-                idParam2.Value = idParam.Value;
+                SqlParameter idParam2 = new SqlParameter("@amount", System.Data.SqlDbType.Decimal, 8);
+                SqlParameter idParam3 = new SqlParameter("@description", System.Data.SqlDbType.VarChar, 300);
+                SqlParameter idParam4 = new SqlParameter("@member_id", System.Data.SqlDbType.Int, 4);
+                SqlParameter idParam5 = new SqlParameter("@fine_id", System.Data.SqlDbType.Int, 4);
+                idParam2.Value = fineToSave.amount;
+                idParam3.Value = fineToSave.description;
+                idParam4.Value = fineToSave.memberId;
+                idParam5.Value = fineToSave.fineId;
+
                 upcmd.Parameters.Add(idParam2);
+                upcmd.Parameters.Add(idParam3);
+                upcmd.Parameters.Add(idParam4);
+                upcmd.Parameters.Add(idParam5);
 
                 upcmd.Prepare();
 
