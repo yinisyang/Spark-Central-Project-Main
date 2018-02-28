@@ -141,5 +141,41 @@ namespace SparkAPI
                 return false;
             }
         }
+        public bool updateFine(int fine_id, int member_id, Fine fineToSave)
+        {
+            String sqlString = "SELECT * FROM FINES WHERE fine_id = @fine_id;";
+            SqlCommand cmd = new SqlCommand(sqlString, conn);
+
+            //sql parameters for protection
+            SqlParameter idParam = new SqlParameter("@fine_id", System.Data.SqlDbType.Int, 4);
+            idParam.Value = fine_id;
+
+            cmd.Parameters.Add(idParam);
+            cmd.Prepare();
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                reader.Close();
+
+                //Iutilized new variables rather than reusing the previous ones due to errors caused if I don't
+                String sqlString2 = "UPDATE FINES SET amount=" + fineToSave.amount + ", description='" + fineToSave.description + "' WHERE fine_id=" + fine_id.ToString() + " AND member_id=" + member_id.ToString();
+                SqlCommand upcmd = new SqlCommand(sqlString2, conn);
+
+                SqlParameter idParam2 = new SqlParameter("@id2", System.Data.SqlDbType.Int, 4);
+                idParam2.Value = idParam.Value;
+                upcmd.Parameters.Add(idParam2);
+
+                upcmd.Prepare();
+
+                upcmd.ExecuteNonQuery();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

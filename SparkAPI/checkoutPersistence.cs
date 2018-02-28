@@ -195,5 +195,57 @@ namespace SparkAPI
                 return false;
             }
         }
+        public bool updateCheckout(int item_id, int member_id, String item_type, Checkout checkoutToSave)
+        {
+            String sqlString = "SELECT * FROM ITEM_CHECKOUT WHERE item_id = @it_id AND member_id = @mem_id AND item_type = @it_type;";
+            SqlCommand cmd = new SqlCommand(sqlString, conn);
+
+            //sql parameters for protection
+            SqlParameter it_idParam = new SqlParameter("@it_id", System.Data.SqlDbType.Int, 4);
+            SqlParameter mem_idParam = new SqlParameter("@mem_id", System.Data.SqlDbType.Int, 4);
+            SqlParameter it_typeParam = new SqlParameter("@it_type", System.Data.SqlDbType.VarChar, 50);
+
+            it_idParam.Value = item_id;
+            mem_idParam.Value = member_id;
+            it_typeParam.Value = item_type;
+
+            cmd.Parameters.Add(it_idParam);
+            cmd.Parameters.Add(mem_idParam);
+            cmd.Parameters.Add(it_typeParam);
+
+            cmd.Prepare();
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                reader.Close();
+
+                String sqlString2 = "UPDATE ITEM_CHECKOUT SET due_date='" + checkoutToSave.dueDate.ToString("") + "' WHERE item_id = " + item_id.ToString() + " AND member_id = " + member_id.ToString() + " AND item_type = " + item_type;
+                SqlCommand upcmd = new SqlCommand(sqlString2, conn);
+
+                //sql parameters for protection
+                SqlParameter it_idParam2 = new SqlParameter("@it_id2", System.Data.SqlDbType.Int, 4);
+                SqlParameter mem_idParam2 = new SqlParameter("@mem_id2", System.Data.SqlDbType.Int, 4);
+                SqlParameter it_typeParam2 = new SqlParameter("@it_type2", System.Data.SqlDbType.VarChar, 50);
+
+                it_idParam2.Value = it_idParam.Value;
+                mem_idParam2.Value = mem_idParam.Value;
+                it_typeParam2.Value = it_typeParam.Value;
+
+                upcmd.Parameters.Add(it_idParam2);
+                upcmd.Parameters.Add(mem_idParam2);
+                upcmd.Parameters.Add(it_typeParam2);
+
+                upcmd.Prepare();
+
+                upcmd.ExecuteNonQuery();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
