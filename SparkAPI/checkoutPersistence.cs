@@ -221,7 +221,7 @@ namespace SparkAPI
             {
                 reader.Close();
 
-                String sqlString2 = "UPDATE ITEM_CHECKOUT SET due_date='" + checkoutToSave.dueDate + "' WHERE item_id = " + item_id.ToString() + " AND member_id = " + member_id.ToString() + " AND item_type = " + item_type;
+                String sqlString2 = "UPDATE ITEM_CHECKOUT SET due_date='" + checkoutToSave.dueDate + "' WHERE item_id = " + item_id.ToString() + " AND member_id = " + member_id.ToString() + " AND item_type = '" + item_type + "'";
                 SqlCommand upcmd = new SqlCommand(sqlString2, conn);
 
                 //sql parameters for protection
