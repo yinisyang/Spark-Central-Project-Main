@@ -122,7 +122,7 @@ namespace SparkAPI
             SqlParameter itemParam = new SqlParameter("@item_id", System.Data.SqlDbType.Int, 4);
             SqlParameter memberParam = new SqlParameter("@member_id", System.Data.SqlDbType.Int, 4);
             SqlParameter ItemTypeParam = new SqlParameter("@item_type", System.Data.SqlDbType.VarChar, 50);
-            SqlParameter dueDateParam = new SqlParameter("@due_date", System.Data.SqlDbType.Date, 3);
+            SqlParameter dueDateParam = new SqlParameter("@due_date", System.Data.SqlDbType.DateTime, 8);
             SqlParameter resolvedParam = new SqlParameter("@resolved", System.Data.SqlDbType.Bit, 1);
 
             itemParam.Value = checkoutToSave.ItemId;
@@ -221,18 +221,24 @@ namespace SparkAPI
             {
                 reader.Close();
 
-                String sqlString2 = "UPDATE ITEM_CHECKOUT SET due_date=@due_date WHERE item_id = " + item_id.ToString() + " AND member_id = " + member_id.ToString() + " AND item_type = '" + item_type + "'";
+                String sqlString2 = "UPDATE ITEM_CHECKOUT SET due_date = @due_date, resolved= @resolved WHERE item_id = @item_id AND member_id = @member_id  AND item_type = @item_type";
                 SqlCommand upcmd = new SqlCommand(sqlString2, conn);
 
                 //sql parameters for protection
-                SqlParameter it_idParam2 = new SqlParameter("@it_id2", System.Data.SqlDbType.Int, 4);
-                SqlParameter mem_idParam2 = new SqlParameter("@mem_id2", System.Data.SqlDbType.Int, 4);
-                SqlParameter it_typeParam2 = new SqlParameter("@it_type2", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter it_idParam2 = new SqlParameter("@item_id", System.Data.SqlDbType.Int, 4);
+                SqlParameter mem_idParam2 = new SqlParameter("@member_id", System.Data.SqlDbType.Int, 4);
+                SqlParameter it_typeParam2 = new SqlParameter("@item_type", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter resolvedParam2 = new SqlParameter("@resolved", System.Data.SqlDbType.Bit, 1);
+                SqlParameter due_dateParam2 = new SqlParameter("@due_date", System.Data.SqlDbType.DateTime, 8);
 
                 it_idParam2.Value = it_idParam.Value;
                 mem_idParam2.Value = mem_idParam.Value;
                 it_typeParam2.Value = it_typeParam.Value;
+                due_dateParam2.Value = checkoutToSave.dueDate;
+                resolvedParam2.Value = checkoutToSave.resolved;
 
+                upcmd.Parameters.Add(due_dateParam2);
+                upcmd.Parameters.Add(resolvedParam2);
                 upcmd.Parameters.Add(it_idParam2);
                 upcmd.Parameters.Add(mem_idParam2);
                 upcmd.Parameters.Add(it_typeParam2);

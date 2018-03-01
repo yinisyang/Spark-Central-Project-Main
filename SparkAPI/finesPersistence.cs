@@ -49,7 +49,7 @@ namespace SparkAPI
                 Fine f = new Fine();
                 f.fineId = reader.GetInt32(reader.GetOrdinal("fine_id"));
                 f.memberId = reader.GetInt32(reader.GetOrdinal("member_id"));
-                f.amount = reader.GetDecimal(reader.GetOrdinal("amount"));
+                f.amount = reader.GetFloat(reader.GetOrdinal("amount"));
                 f.description = reader.GetString(reader.GetOrdinal("description"));
                 finesArray.Add(f);
             }
@@ -75,7 +75,7 @@ namespace SparkAPI
                 Fine f = new Fine();
                 f.fineId = reader.GetInt32(reader.GetOrdinal("fine_id"));
                 f.memberId = reader.GetInt32(reader.GetOrdinal("member_id"));
-                f.amount = reader.GetDecimal(reader.GetOrdinal("amount"));
+                f.amount = reader.GetFloat(reader.GetOrdinal("amount"));
                 f.description = reader.GetString(reader.GetOrdinal("description"));
 
                 conn.Close();
@@ -167,6 +167,7 @@ namespace SparkAPI
                 SqlParameter idParam3 = new SqlParameter("@description", System.Data.SqlDbType.VarChar, 300);
                 SqlParameter idParam4 = new SqlParameter("@member_id", System.Data.SqlDbType.Int, 4);
                 SqlParameter idParam5 = new SqlParameter("@fine_id", System.Data.SqlDbType.Int, 4);
+
                 idParam2.Value = fineToSave.amount;
                 idParam3.Value = fineToSave.description;
                 idParam4.Value = fineToSave.memberId;
