@@ -160,11 +160,10 @@ namespace SparkAPI
                 reader.Close();
 
                 //Iutilized new variables rather than reusing the previous ones due to errors caused if I don't
-                //String sqlString2 = "UPDATE FINES SET amount=" + fineToSave.amount + ", description='" + fineToSave.description + "' WHERE fine_id=" + fine_id.ToString() + " AND member_id=" + member_id.ToString();
                 String sqlString3 = "UPDATE FINES SET amount=@amount, description=@description, member_id=@member_id WHERE fine_id=@fine_id";
                 SqlCommand upcmd = new SqlCommand(sqlString3, conn);
 
-                SqlParameter idParam2 = new SqlParameter("@amount", System.Data.SqlDbType.Decimal, 8);
+                SqlParameter idParam2 = new SqlParameter("@amount", System.Data.SqlDbType.Float, 8);
                 SqlParameter idParam3 = new SqlParameter("@description", System.Data.SqlDbType.VarChar, 300);
                 SqlParameter idParam4 = new SqlParameter("@member_id", System.Data.SqlDbType.Int, 4);
                 SqlParameter idParam5 = new SqlParameter("@fine_id", System.Data.SqlDbType.Int, 4);
