@@ -18,10 +18,10 @@ namespace SparkAPI.Controllers
         }
 
         // GET api/<controller>/5
-        public Member Get(int id)
+        public Member Get(int member_id)
         {
             MemberPersistence memberp = new MemberPersistence();
-            return memberp.getMember(id);
+            return memberp.getMember(member_id);
         }
 
         // POST api/<controller>
@@ -36,15 +36,15 @@ namespace SparkAPI.Controllers
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int member_id, [FromBody]string value)
         {
         }
 
         // DELETE api/<controller>/5
-        public HttpResponseMessage Delete(int id)
+        public HttpResponseMessage Delete(int member_id)
         {
             MemberPersistence tp = new MemberPersistence();
-            bool recordExisted = tp.deleteMember(id);
+            bool recordExisted = tp.deleteMember(member_id);
 
             HttpResponseMessage response;
             if (recordExisted)

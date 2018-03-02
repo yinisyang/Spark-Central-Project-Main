@@ -12,17 +12,17 @@ namespace SparkAPI.Controllers
     public class DVDController : ApiController
     {
         // GET api/<controller>
-        public ArrayList Get(string title = null, int? releaseYear = null, string rating = null)
+        public ArrayList Get(string title = null, int? release_year = null, string rating = null)
         {
             DVDPersistence dvdp = new DVDPersistence();
-            return dvdp.getDVDS(title, releaseYear, rating);
+            return dvdp.getDVDS(title, release_year, rating);
         }
 
         // GET api/<controller>/5
-        public DVD Get(int id)
+        public DVD Get(int item_id)
         {
             DVDPersistence dvdp = new DVDPersistence();
-            return dvdp.getDVD(id);
+            return dvdp.getDVD(item_id);
         }
 
         // POST api/<controller>
@@ -55,10 +55,10 @@ namespace SparkAPI.Controllers
         }
 
         // DELETE api/<controller>/5
-        public HttpResponseMessage Delete(int id)
+        public HttpResponseMessage Delete(int item_id)
         {
             DVDPersistence tp = new DVDPersistence();
-            bool recordExisted = tp.deleteDVD(id);
+            bool recordExisted = tp.deleteDVD(item_id);
 
             HttpResponseMessage response;
             if (recordExisted)

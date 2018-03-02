@@ -46,10 +46,10 @@ namespace SparkAPI.Controllers
             }
             return response;
         }
-        public HttpResponseMessage Delete(int id)
+        public HttpResponseMessage Delete(int fine_id)
         {
             FinesPersistence finep = new FinesPersistence();
-            bool recordExisted = finep.deleteFine(id);
+            bool recordExisted = finep.deleteFine(fine_id);
 
             HttpResponseMessage response;
             if(recordExisted)

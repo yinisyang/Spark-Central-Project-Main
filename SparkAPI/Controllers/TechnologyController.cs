@@ -19,10 +19,10 @@ namespace SparkAPI.Controllers
         }
 
         // GET api/<controller>/5
-        public Technology Get(int id)
+        public Technology Get(int item_id)
         {
             TechnologyPersistence tp = new TechnologyPersistence();
-            return tp.getTechnology(id);
+            return tp.getTechnology(item_id);
         }
 
         // POST api/<controller>
@@ -55,10 +55,10 @@ namespace SparkAPI.Controllers
         }
 
         // DELETE api/<controller>/5
-        public HttpResponseMessage Delete(int id)
+        public HttpResponseMessage Delete(int item_id)
         {
             TechnologyPersistence tp = new TechnologyPersistence();
-            bool recordExisted = tp.deleteTechnology(id);
+            bool recordExisted = tp.deleteTechnology(item_id);
 
             HttpResponseMessage response;
             if (recordExisted)

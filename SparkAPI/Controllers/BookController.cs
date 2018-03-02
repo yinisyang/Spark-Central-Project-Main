@@ -19,10 +19,10 @@ namespace SparkAPI.Controllers
         }
 
         // GET: api/Book/5
-        public Book Get(int id)
+        public Book Get(int item_id)
         {
             BookPersistence bookp = new BookPersistence();
-            return bookp.GetBook(id);
+            return bookp.GetBook(item_id);
         }
 
         // POST: api/Book
@@ -37,16 +37,16 @@ namespace SparkAPI.Controllers
         }
 
         // PUT: api/Book/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int item_id, [FromBody]string value)
         {
         }
 
         // DELETE: api/Book/5
-        public HttpResponseMessage Delete(int id)
+        public HttpResponseMessage Delete(int item_id)
         {
             BookPersistence bookp = new BookPersistence();
             HttpResponseMessage ret;
-            if(bookp.DeleteBook(id))
+            if(bookp.DeleteBook(item_id))
             {
                 ret = Request.CreateResponse(HttpStatusCode.NoContent);
             }
