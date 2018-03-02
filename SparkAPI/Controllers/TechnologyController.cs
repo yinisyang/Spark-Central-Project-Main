@@ -37,8 +37,21 @@ namespace SparkAPI.Controllers
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        public HttpResponseMessage Put(int item_id, [FromBody]Technology value)
         {
+            TechnologyPersistence tp = new TechnologyPersistence();
+            bool recordExisted = tp.updateTechnology(item_id, value);
+
+            HttpResponseMessage response;
+            if (recordExisted)
+            {
+                response = Request.CreateResponse(HttpStatusCode.NoContent);
+            }
+            else
+            {
+                response = Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+            return response;
         }
 
         // DELETE api/<controller>/5

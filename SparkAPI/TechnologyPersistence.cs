@@ -123,5 +123,46 @@ namespace SparkAPI
             conn.Close();
             return id;
         }
+
+        public bool updateTechnology(int item_id, Technology toUpdate)
+        {
+            String sqlString = "SELECT * FROM Technology WHERE item_id = @item_id;";
+            SqlCommand cmd = new SqlCommand(sqlString, conn);
+
+            //sql parameters for protection
+            SqlParameter idParam = new SqlParameter("@item_id", System.Data.SqlDbType.Int, 4);
+            idParam.Value = item_id;
+
+            cmd.Parameters.Add(idParam);
+            cmd.Prepare();
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                reader.Close();
+
+                String sqlString3 = "UPDATE Technology SET name=@name WHERE item_id=@item_id";
+                SqlCommand upcmd = new SqlCommand(sqlString3, conn);
+
+                SqlParameter nameParam = new SqlParameter("@name", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter IDParam = new SqlParameter("@item_id", System.Data.SqlDbType.Int, 4);
+
+                nameParam.Value = toUpdate.Name;
+                IDParam.Value = item_id;
+
+                upcmd.Parameters.Add(nameParam);
+                upcmd.Parameters.Add(IDParam);
+
+                upcmd.Prepare();
+
+                upcmd.ExecuteNonQuery();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

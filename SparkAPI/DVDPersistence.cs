@@ -90,7 +90,6 @@ namespace SparkAPI
 
             cmd.Parameters.Add(idParam);
             cmd.Prepare();
-            ///////
 
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -143,7 +142,6 @@ namespace SparkAPI
 
             cmd.Parameters.Add(idParam);
             cmd.Prepare();
-            ///////
 
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -162,6 +160,53 @@ namespace SparkAPI
                 delcmd.Prepare();
 
                 delcmd.ExecuteNonQuery();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool updateDVD(int item_id, DVD toUpdate)
+        {
+            String sqlString = "SELECT * FROM DVDS WHERE item_id = @item_id;";
+            SqlCommand cmd = new SqlCommand(sqlString, conn);
+
+            //sql parameters for protection
+            SqlParameter idParam = new SqlParameter("@item_id", System.Data.SqlDbType.Int, 4);
+            idParam.Value = item_id;
+
+            cmd.Parameters.Add(idParam);
+            cmd.Prepare();
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                reader.Close();
+                
+                String sqlString3 = "UPDATE DVDS SET title=@title, release_year=@release_year, rating=@rating WHERE item_id=@item_id";
+                SqlCommand upcmd = new SqlCommand(sqlString3, conn);
+
+                SqlParameter titleParam = new SqlParameter("@title", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter releaseYearParam = new SqlParameter("@release_year", System.Data.SqlDbType.Int, 4);
+                SqlParameter ratingParam = new SqlParameter("@rating", System.Data.SqlDbType.VarChar, 10);
+                SqlParameter IDParam = new SqlParameter("@item_id", System.Data.SqlDbType.Int, 4);
+
+                titleParam.Value = toUpdate.Title;
+                releaseYearParam.Value = toUpdate.ReleaseYear;
+                ratingParam.Value = toUpdate.Rating;
+                IDParam.Value = item_id;
+
+                upcmd.Parameters.Add(titleParam);
+                upcmd.Parameters.Add(releaseYearParam);
+                upcmd.Parameters.Add(ratingParam);
+                upcmd.Parameters.Add(IDParam);
+
+                upcmd.Prepare();
+
+                upcmd.ExecuteNonQuery();
                 return true;
             }
             else
