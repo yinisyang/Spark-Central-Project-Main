@@ -261,5 +261,87 @@ namespace SparkAPI
                 return false;
             }
         }
+        public bool updateMember(int member_id, Member toUpdate)
+        {
+            String sqlString = "SELECT * FROM Members WHERE member_id = @member_id;";
+            SqlCommand cmd = new SqlCommand(sqlString, conn);
+
+            //sql parameters for protection
+            SqlParameter idParam = new SqlParameter("@member_id", System.Data.SqlDbType.Int, 4);
+            idParam.Value = member_id;
+
+            cmd.Parameters.Add(idParam);
+            cmd.Prepare();
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                reader.Close();
+
+                String sqlString3 = "UPDATE Members SET first_name=@first_name, last_name=@last_name, guardian_name=@guardian_name +" +
+                    " email=@email, dob=@dob, phone=@phone, street_address=@street_address, city=@city, state=@state, " +
+                    "zip=@zip, quota=@quota, is_adult=@is_adult, ethnicity=@ethnicity, restricted_to_tech=@restricted_to_tech, " +
+                    "west_central_resident=@west_central_resident WHERE item_id=@item_id";
+                SqlCommand upcmd = new SqlCommand(sqlString3, conn);
+
+                SqlParameter first_nameParam = new SqlParameter("@first_name", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter last_nameParam = new SqlParameter("@last_name", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter guardian_nameParam = new SqlParameter("@guardian_name", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter emailParam = new SqlParameter("@email", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter dobParam = new SqlParameter("@dob", System.Data.SqlDbType.Date, 3);
+                SqlParameter phoneParam = new SqlParameter("@phone", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter street_addressParam = new SqlParameter("@street_address", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter cityParam = new SqlParameter("@city", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter stateParam = new SqlParameter("@state", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter zipParam = new SqlParameter("@zip", System.Data.SqlDbType.Int, 4);
+                SqlParameter quotaParam = new SqlParameter("@quota", System.Data.SqlDbType.Int, 4);
+                SqlParameter isAdultParam = new SqlParameter("@is_adult", System.Data.SqlDbType.Bit, 1);
+                SqlParameter ethnicityParam = new SqlParameter("@ethnicity", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter restricted_to_techParam = new SqlParameter("@restricted_to_tech", System.Data.SqlDbType.Bit, 1);
+                SqlParameter west_central_residentParam = new SqlParameter("@west_central_resident", System.Data.SqlDbType.Bit, 1);
+
+                first_nameParam.Value = toUpdate.first_name;
+                last_nameParam.Value = toUpdate.last_name;
+                guardian_nameParam.Value = (object)toUpdate.guardian_name ?? DBNull.Value;
+                emailParam.Value = toUpdate.email;
+                dobParam.Value = toUpdate.dob;
+                phoneParam.Value = toUpdate.phone;
+                street_addressParam.Value = toUpdate.street_address;
+                cityParam.Value = toUpdate.city;
+                stateParam.Value = toUpdate.state;
+                zipParam.Value = toUpdate.zip;
+                quotaParam.Value = toUpdate.quota;
+                isAdultParam.Value = toUpdate.is_adult;
+                ethnicityParam.Value = toUpdate.ethnicity;
+                restricted_to_techParam.Value = toUpdate.restricted_to_tech;
+                west_central_residentParam.Value = toUpdate.west_central_resident;
+
+                upcmd.Parameters.Add(first_nameParam);
+                upcmd.Parameters.Add(last_nameParam);
+                upcmd.Parameters.Add(guardian_nameParam);
+                upcmd.Parameters.Add(emailParam);
+                upcmd.Parameters.Add(dobParam);
+                upcmd.Parameters.Add(phoneParam);
+                upcmd.Parameters.Add(street_addressParam);
+                upcmd.Parameters.Add(cityParam);
+                upcmd.Parameters.Add(stateParam);
+                upcmd.Parameters.Add(zipParam);
+                upcmd.Parameters.Add(quotaParam);
+                upcmd.Parameters.Add(isAdultParam);
+                upcmd.Parameters.Add(ethnicityParam);
+                upcmd.Parameters.Add(restricted_to_techParam);
+                upcmd.Parameters.Add(west_central_residentParam);
+
+                upcmd.Prepare();
+
+                upcmd.ExecuteNonQuery();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
