@@ -225,5 +225,69 @@ namespace SparkAPI
             con.Close();
             return id;
         }
+
+        public bool updateBook(int item_id, Book toUpdate)
+        {
+            String sqlString = "SELECT * FROM Books WHERE item_id = @item_id;";
+            SqlCommand cmd = new SqlCommand(sqlString, con);
+
+            SqlParameter idParam = new SqlParameter("@item_id", System.Data.SqlDbType.Int, 4);
+            idParam.Value = item_id;
+
+            cmd.Parameters.Add(idParam);
+            cmd.Prepare();
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                reader.Close();
+
+                String sqlString3 = "UPDATE Books SET author=@author, isbn_10=@isbn_10, category=@category, publisher=@publisher, publication_year=@publication_year, pages=@pages, description=@description, title=@title, isbn_13=@isbn_13 WHERE item_id=@item_id";
+                SqlCommand upcmd = new SqlCommand(sqlString3, con);
+
+                SqlParameter authorParam = new SqlParameter("@author", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter isbn10Param = new SqlParameter("@isbn_10", System.Data.SqlDbType.VarChar, 20);
+                SqlParameter categoryParam = new SqlParameter("@category", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter publisherParam = new SqlParameter("@publisher", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter yearParam = new SqlParameter("@publication_year", System.Data.SqlDbType.Int, 4);
+                SqlParameter pagesParam = new SqlParameter("@pages", System.Data.SqlDbType.Int, 4);
+                SqlParameter descParam = new SqlParameter("@description", System.Data.SqlDbType.VarChar, 500);
+                SqlParameter titleParam = new SqlParameter("@title", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter isbn13Param = new SqlParameter("@isbn_13", System.Data.SqlDbType.VarChar, 50);
+                SqlParameter IDParam = new SqlParameter("@item_id", System.Data.SqlDbType.Int, 4);
+
+                authorParam.Value = toUpdate.Author;
+                isbn10Param.Value = toUpdate.Isbn10;
+                categoryParam.Value = toUpdate.Category;
+                publisherParam.Value = toUpdate.Publisher;
+                yearParam.Value = toUpdate.Year;
+                pagesParam.Value = toUpdate.Pages;
+                descParam.Value = toUpdate.Description;
+                titleParam.Value = toUpdate.Title;
+                isbn13Param.Value = toUpdate.Isbn13;
+                IDParam.Value = item_id;
+
+                upcmd.Parameters.Add(authorParam);
+                upcmd.Parameters.Add(isbn10Param);
+                upcmd.Parameters.Add(categoryParam);
+                upcmd.Parameters.Add(publisherParam);
+                upcmd.Parameters.Add(yearParam);
+                upcmd.Parameters.Add(pagesParam);
+                upcmd.Parameters.Add(descParam);
+                upcmd.Parameters.Add(titleParam);
+                upcmd.Parameters.Add(isbn13Param);
+                upcmd.Parameters.Add(IDParam);
+
+                upcmd.Prepare();
+
+                upcmd.ExecuteNonQuery();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

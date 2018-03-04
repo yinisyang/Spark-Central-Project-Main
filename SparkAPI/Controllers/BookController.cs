@@ -37,8 +37,21 @@ namespace SparkAPI.Controllers
         }
 
         // PUT: api/Book/5
-        public void Put(int item_id, [FromBody]string value)
+        public HttpResponseMessage Put(int item_id, [FromBody]Book value)
         {
+            BookPersistence bookp = new BookPersistence();
+            bool recordExisted = bookp.updateBook(item_id, value);
+
+            HttpResponseMessage response;
+            if (recordExisted)
+            {
+                response = Request.CreateResponse(HttpStatusCode.NoContent);
+            }
+            else
+            {
+                response = Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+            return response;
         }
 
         // DELETE: api/Book/5
