@@ -282,7 +282,7 @@ namespace SparkAPI
                 String sqlString3 = "UPDATE Members SET first_name=@first_name, last_name=@last_name, guardian_name=@guardian_name, " +
                     " email=@email, dob=@dob, phone=@phone, street_address=@street_address, city=@city, state=@state, " +
                     "zip=@zip, quota=@quota, is_adult=@is_adult, ethnicity=@ethnicity, restricted_to_tech=@restricted_to_tech, " +
-                    "west_central_resident=@west_central_resident WHERE member_id=@membeId";
+                    "west_central_resident=@west_central_resident WHERE member_id=@member_id";
                 SqlCommand upcmd = new SqlCommand(sqlString3, conn);
 
                 SqlParameter first_nameParam = new SqlParameter("@first_name", System.Data.SqlDbType.VarChar, 50);
@@ -300,7 +300,7 @@ namespace SparkAPI
                 SqlParameter ethnicityParam = new SqlParameter("@ethnicity", System.Data.SqlDbType.VarChar, 50);
                 SqlParameter restricted_to_techParam = new SqlParameter("@restricted_to_tech", System.Data.SqlDbType.Bit, 1);
                 SqlParameter west_central_residentParam = new SqlParameter("@west_central_resident", System.Data.SqlDbType.Bit, 1);
-                SqlParameter memberId_param = new SqlParameter("@memberId", System.Data.SqlDbType.Int, 4);
+                SqlParameter member_id_param = new SqlParameter("@memberId", System.Data.SqlDbType.Int, 4);
 
                 first_nameParam.Value = toUpdate.first_name;
                 last_nameParam.Value = toUpdate.last_name;
@@ -317,7 +317,7 @@ namespace SparkAPI
                 ethnicityParam.Value = toUpdate.ethnicity;
                 restricted_to_techParam.Value = toUpdate.restricted_to_tech;
                 west_central_residentParam.Value = toUpdate.west_central_resident;
-                memberId_param.Value = toUpdate.member_id;
+                member_id_param.Value = toUpdate.member_id;
 
                 upcmd.Parameters.Add(first_nameParam);
                 upcmd.Parameters.Add(last_nameParam);
@@ -334,7 +334,7 @@ namespace SparkAPI
                 upcmd.Parameters.Add(ethnicityParam);
                 upcmd.Parameters.Add(restricted_to_techParam);
                 upcmd.Parameters.Add(west_central_residentParam);
-                upcmd.Parameters.Add(memberId_param);
+                upcmd.Parameters.Add(member_id_param);
 
                 upcmd.Prepare();
 
