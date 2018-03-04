@@ -36,8 +36,21 @@ namespace SparkAPI.Controllers
         }
 
         // PUT api/<controller>/5
-        public void Put(int member_id, [FromBody]string value)
+        public HttpResponseMessage Put(int member_id, [FromBody]Member value)
         {
+            MemberPersistence memberp = new MemberPersistence();
+            bool recordExisted = memberp.updateMember(member_id, value);
+
+            HttpResponseMessage response;
+            if (recordExisted)
+            {
+                response = Request.CreateResponse(HttpStatusCode.NoContent);
+            }
+            else
+            {
+                response = Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+            return response;
         }
 
         // DELETE api/<controller>/5
