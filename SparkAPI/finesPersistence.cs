@@ -86,9 +86,9 @@ namespace SparkAPI
         }
         public int saveFine(Fine fineToSave)
         {
-            String sqlString = "INSERT INTO FINES (member_id, amount, description) OUTPUT INSERTED.member_id VALUES(@member_id, @amount, @description)";
+            String sqlString = "INSERT INTO FINES (member_id, amount, description) OUTPUT INSERTED.fine_id VALUES(@member_id, @amount, @description)";
             SqlParameter memberIdParam = new SqlParameter("@member_id", System.Data.SqlDbType.Int, 4);
-            SqlParameter amountParam = new SqlParameter("@amount", System.Data.SqlDbType.Decimal, 8);
+            SqlParameter amountParam = new SqlParameter("@amount", System.Data.SqlDbType.Decimal, 8, System.Data.ParameterDirection.Input, false, 38, 1, "amount", System.Data.DataRowVersion.Current, fineToSave.amount);
             SqlParameter descriptionParam = new SqlParameter("@description", System.Data.SqlDbType.VarChar, 300);
 
             memberIdParam.Value = fineToSave.memberId;
@@ -100,10 +100,16 @@ namespace SparkAPI
             cmd.Parameters.Add(amountParam);
             cmd.Parameters.Add(descriptionParam);
 
-            cmd.Prepare();
-            int id = (int)cmd.ExecuteScalar();
-            conn.Close();
-            return id;
+            try
+            {
+                cmd.Prepare();
+                int id = (int)cmd.ExecuteScalar();
+                conn.Close();
+                return id;
+            }catch(Exception ex)
+            {
+                return -1;
+            }
         }
         public bool deleteFine(int fine_id)
         {
@@ -178,10 +184,16 @@ namespace SparkAPI
                 upcmd.Parameters.Add(idParam4);
                 upcmd.Parameters.Add(idParam5);
 
-                upcmd.Prepare();
+                try
+                {
+                    upcmd.Prepare();
 
-                upcmd.ExecuteNonQuery();
-                return true;
+                    upcmd.ExecuteNonQuery();
+                    return true;
+                }catch(Exception ex)
+                {
+                    return false;
+                }
             }
             else
             {

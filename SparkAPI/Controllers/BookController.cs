@@ -30,10 +30,15 @@ namespace SparkAPI.Controllers
         {
             BookPersistence bookp = new BookPersistence();
             int id = bookp.SaveBook(value);
-            value.Id = id;
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
-            response.Headers.Location = new Uri(Request.RequestUri, String.Format("book/{0}", id));
-            return response;
+
+            if (id != -1)
+            {
+                value.Id = id;
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
+                response.Headers.Location = new Uri(Request.RequestUri, String.Format("book/{0}", id));
+                return response;
+            }
+            return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
 
         // PUT: api/Book/5

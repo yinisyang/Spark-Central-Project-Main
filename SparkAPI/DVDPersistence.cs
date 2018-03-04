@@ -124,11 +124,16 @@ namespace SparkAPI
             cmd.Parameters.Add(ratingParam);
             cmd.Parameters.Add(releaseYearParam);
 
-            cmd.Prepare();
-            //cmd.ExecuteNonQuery();
-            int id = (int)cmd.ExecuteScalar();
-            conn.Close();
-            return id;
+            try
+            {
+                cmd.Prepare();
+                int id = (int)cmd.ExecuteScalar();
+                conn.Close();
+                return id;
+            }catch(Exception ex)
+            {
+                return -1;
+            }
         }
 
         public bool deleteDVD(int id)
@@ -204,10 +209,16 @@ namespace SparkAPI
                 upcmd.Parameters.Add(ratingParam);
                 upcmd.Parameters.Add(IDParam);
 
-                upcmd.Prepare();
+                try
+                {
+                    upcmd.Prepare();
 
-                upcmd.ExecuteNonQuery();
-                return true;
+                    upcmd.ExecuteNonQuery();
+                    return true;
+                }catch(Exception ex)
+                {
+                    return false;
+                }
             }
             else
             {

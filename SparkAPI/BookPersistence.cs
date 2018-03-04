@@ -116,7 +116,6 @@ namespace SparkAPI
 
             cmd.Parameters.Add(idParam);
             cmd.Prepare();
-            ///////
 
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -150,7 +149,6 @@ namespace SparkAPI
         }
         public bool DeleteBook(int id)
         {
-     //     String sqlString = "SELECT * FROM Books WHERE item_id = " + id.ToString() + ";";
             String sqlString = "SELECT * FROM Books WHERE item_id = @id;";
             SqlCommand cmd = new SqlCommand(sqlString, con);
 
@@ -160,7 +158,6 @@ namespace SparkAPI
 
             cmd.Parameters.Add(idParam);
             cmd.Prepare();
-            ///////
 
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -219,11 +216,16 @@ namespace SparkAPI
             cmd.Parameters.Add(titleParam);
             cmd.Parameters.Add(isbn13Param);
 
-            cmd.Prepare();
-            //cmd.ExecuteNonQuery();
-            int id = (int)cmd.ExecuteScalar();
-            con.Close();
-            return id;
+            try
+            {
+                cmd.Prepare();
+                int id = (int)cmd.ExecuteScalar();
+                con.Close();
+                return id;
+            }catch(Exception ex)
+            {
+                return -1;
+            }
         }
 
         public bool updateBook(int item_id, Book toUpdate)
@@ -279,10 +281,16 @@ namespace SparkAPI
                 upcmd.Parameters.Add(isbn13Param);
                 upcmd.Parameters.Add(IDParam);
 
-                upcmd.Prepare();
+                try
+                {
+                    upcmd.Prepare();
 
-                upcmd.ExecuteNonQuery();
-                return true;
+                    upcmd.ExecuteNonQuery();
+                    return true;
+                }catch(Exception ex)
+                {
+                    return false;
+                }
             }
             else
             {

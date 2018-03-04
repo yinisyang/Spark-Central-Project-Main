@@ -52,7 +52,6 @@ namespace SparkAPI
 
             cmd.Parameters.Add(idParam);
             cmd.Prepare();
-            ///////
 
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -80,7 +79,6 @@ namespace SparkAPI
 
             cmd.Parameters.Add(idParam);
             cmd.Prepare();
-            ///////
 
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -116,12 +114,18 @@ namespace SparkAPI
 
             SqlCommand cmd = new SqlCommand(sqlString, conn);
             cmd.Parameters.Add(nameParam);
+            
+            try
+            {
+                cmd.Prepare();
 
-            cmd.Prepare();
-            //cmd.ExecuteNonQuery();
-            int id = (int)cmd.ExecuteScalar();
-            conn.Close();
-            return id;
+                int id = (int)cmd.ExecuteScalar();
+                conn.Close();
+                return id;
+            }catch(Exception ex)
+            {
+                return -1;
+            }
         }
 
         public bool updateTechnology(int item_id, Technology toUpdate)
@@ -154,10 +158,16 @@ namespace SparkAPI
                 upcmd.Parameters.Add(nameParam);
                 upcmd.Parameters.Add(IDParam);
 
-                upcmd.Prepare();
+                try
+                {
+                    upcmd.Prepare();
 
-                upcmd.ExecuteNonQuery();
-                return true;
+                    upcmd.ExecuteNonQuery();
+                    return true;
+                }catch(Exception ex)
+                {
+                    return false;
+                }
             }
             else
             {

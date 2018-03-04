@@ -218,11 +218,17 @@ namespace SparkAPI
             cmd.Parameters.Add(restricted_to_techParam);
             cmd.Parameters.Add(west_central_residentParam);
 
-            cmd.Prepare();
+            try
+            {
+                cmd.Prepare();
 
-            int id = (int)cmd.ExecuteScalar();
-            conn.Close();
-            return id;
+                int id = (int)cmd.ExecuteScalar();
+                conn.Close();
+                return id;
+            }catch(Exception ex)
+            {
+                return -1;
+            }
         }
         public bool deleteMember(int id)
         {
@@ -235,7 +241,6 @@ namespace SparkAPI
 
             cmd.Parameters.Add(idParam);
             cmd.Prepare();
-            ///////
 
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -243,7 +248,7 @@ namespace SparkAPI
             {
                 reader.Close();
 
-                //Iutilized new variables rather than reusing the previous ones due to errors caused if I don't
+                //I utilized new variables rather than reusing the previous ones due to errors caused if I don't
                 String sqlString2 = "DELETE FROM Members WHERE member_id = @id2;";
                 SqlCommand delcmd = new SqlCommand(sqlString2, conn);
 
@@ -336,10 +341,16 @@ namespace SparkAPI
                 upcmd.Parameters.Add(west_central_residentParam);
                 upcmd.Parameters.Add(member_id_param);
 
-                upcmd.Prepare();
+                try
+                {
+                    upcmd.Prepare();
 
-                upcmd.ExecuteNonQuery();
-                return true;
+                    upcmd.ExecuteNonQuery();
+                    return true;
+                }catch(Exception ex)
+                {
+                    return false;
+                }
             }
             else
             {

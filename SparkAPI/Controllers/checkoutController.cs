@@ -16,20 +16,25 @@ namespace SparkAPI.Controllers
             CheckoutPersistence checkp = new CheckoutPersistence();
             return checkp.getCheckouts(item_id, member_id, item_type, resolved);
         }
-        public ArrayList Get(int member_id)
+        public ArrayList Get(int member_id, int item_id, string item_type)
         {
             CheckoutPersistence checkp = new CheckoutPersistence();
-            return checkp.getCheckouts(member_id);
+            return checkp.getCheckouts(member_id, item_id, item_type);
         }
 
         public HttpResponseMessage Post([FromBody]Checkout value)
         {
             CheckoutPersistence checkp = new CheckoutPersistence();
             int item_id = checkp.saveCheckout(value);
-            value.ItemId = item_id;
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
-            response.Headers.Location = new Uri(Request.RequestUri, String.Format("checkout/{0}", item_id));
-            return response;
+
+            if (item_id != -1)
+            {
+                value.ItemId = item_id;
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
+                response.Headers.Location = new Uri(Request.RequestUri, String.Format("checkout/{0}", item_id));
+                return response;
+            }
+            return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
         public HttpResponseMessage Put(int item_id, int member_id, String item_type, [FromBody]Checkout value)
         {

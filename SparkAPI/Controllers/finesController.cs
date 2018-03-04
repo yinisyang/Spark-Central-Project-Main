@@ -25,10 +25,15 @@ namespace SparkAPI.Controllers
         {
             FinesPersistence finep = new FinesPersistence();
             int id = finep.saveFine(value);
-            value.memberId = id;
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
-            response.Headers.Location = new Uri(Request.RequestUri, String.Format("checkout/{0}", id));
-            return response;
+
+            if (id != -1)
+            {
+                value.memberId = id;
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
+                response.Headers.Location = new Uri(Request.RequestUri, String.Format("checkout/{0}", id));
+                return response;
+            }
+            return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
         public HttpResponseMessage Put(int fine_id, [FromBody]Fine value)
         {

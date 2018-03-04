@@ -30,10 +30,15 @@ namespace SparkAPI.Controllers
         {
             TechnologyPersistence tp = new TechnologyPersistence();
             int id = tp.saveTechnology(value);
-            value.ItemId = id;
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
-            response.Headers.Location = new Uri(Request.RequestUri, String.Format("technology/{0}", id));
-            return response;
+
+            if (id != -1)
+            {
+                value.ItemId = id;
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
+                response.Headers.Location = new Uri(Request.RequestUri, String.Format("technology/{0}", id));
+                return response;
+            }
+            return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
 
         // PUT api/<controller>/5

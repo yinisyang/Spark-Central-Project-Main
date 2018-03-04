@@ -30,10 +30,15 @@ namespace SparkAPI.Controllers
         {
             DVDPersistence dvdp = new DVDPersistence();
             int id = dvdp.saveDVD(value);
-            value.ItemId = id;
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
-            response.Headers.Location = new Uri(Request.RequestUri, String.Format("dvd/{0}", id));
-            return response;
+
+            if (id != -1)
+            {
+                value.ItemId = id;
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
+                response.Headers.Location = new Uri(Request.RequestUri, String.Format("dvd/{0}", id));
+                return response;
+            }
+            return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
 
         // PUT api/<controller>/5

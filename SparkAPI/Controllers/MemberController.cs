@@ -29,10 +29,15 @@ namespace SparkAPI.Controllers
         {
             MemberPersistence memberp = new MemberPersistence();
             int id = memberp.saveMember(value);
-            value.member_id = id;
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
-            response.Headers.Location = new Uri(Request.RequestUri, String.Format("member/{0}", id));
-            return response;
+
+            if (id != -1)
+            {
+                value.member_id = id;
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
+                response.Headers.Location = new Uri(Request.RequestUri, String.Format("member/{0}", id));
+                return response;
+            }
+            return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
 
         // PUT api/<controller>/5

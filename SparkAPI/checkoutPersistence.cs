@@ -86,16 +86,22 @@ namespace SparkAPI
             conn.Close();
             return checkoutArray;
         }
-        public ArrayList getCheckouts(int member_id)
+        public ArrayList getCheckouts(int member_id, int item_id, string item_type)
         {
-            String sqlString = "SELECT * FROM ITEM_CHECKOUT WHERE member_id = @id;";
+            String sqlString = "SELECT * FROM ITEM_CHECKOUT WHERE member_id = @id AND item_id = @item_id AND item_type = @item_type;";
             SqlCommand cmd = new SqlCommand(sqlString, conn);
 
             //sql parameters for protection
             SqlParameter idParam = new SqlParameter("@id", System.Data.SqlDbType.Int, 4);
+            SqlParameter itemidParam = new SqlParameter("@item_id", System.Data.SqlDbType.Int, 4);
+            SqlParameter itemTypeParam = new SqlParameter("@item_type", System.Data.SqlDbType.VarChar, 50);
             idParam.Value = member_id;
+            itemidParam.Value = item_id;
+            itemTypeParam.Value = item_type;
 
             cmd.Parameters.Add(idParam);
+            cmd.Parameters.Add(itemidParam);
+            cmd.Parameters.Add(itemTypeParam);
             cmd.Prepare();
 
             SqlDataReader reader = cmd.ExecuteReader();
@@ -138,10 +144,16 @@ namespace SparkAPI
             cmd.Parameters.Add(dueDateParam);
             cmd.Parameters.Add(resolvedParam);
 
-            cmd.Prepare();
-            int id = (int)cmd.ExecuteScalar();
-            conn.Close();
-            return id;
+            try
+            {
+                cmd.Prepare();
+                int id = (int)cmd.ExecuteScalar();
+                conn.Close();
+                return id;
+            }catch(Exception ex)
+            {
+                return -1;
+            }
         }
         public bool deleteCheckout(int item_id, int member_id, String item_type)
         {
@@ -169,7 +181,7 @@ namespace SparkAPI
             {
                 reader.Close();
 
-                String sqlString2 = "SELECT * FROM ITEM_CHECKOUT WHERE item_id = @it_id2 AND member_id = @mem_id2 AND item_type = @it_type2;";
+                String sqlString2 = "DELETE FROM ITEM_CHECKOUT WHERE item_id = @it_id2 AND member_id = @mem_id2 AND item_type = @it_type2;";
                 SqlCommand delcmd = new SqlCommand(sqlString2, conn);
 
                 //sql parameters for protection
@@ -243,10 +255,16 @@ namespace SparkAPI
                 upcmd.Parameters.Add(mem_idParam2);
                 upcmd.Parameters.Add(it_typeParam2);
 
-                upcmd.Prepare();
+                try
+                {
+                    upcmd.Prepare();
 
-                upcmd.ExecuteNonQuery();
-                return true;
+                    upcmd.ExecuteNonQuery();
+                    return true;
+                }catch(Exception ex)
+                {
+                    return false;
+                }
             }
             else
             {
