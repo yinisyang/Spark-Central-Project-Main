@@ -300,7 +300,7 @@ namespace SparkAPI
                 SqlParameter ethnicityParam = new SqlParameter("@ethnicity", System.Data.SqlDbType.VarChar, 50);
                 SqlParameter restricted_to_techParam = new SqlParameter("@restricted_to_tech", System.Data.SqlDbType.Bit, 1);
                 SqlParameter west_central_residentParam = new SqlParameter("@west_central_resident", System.Data.SqlDbType.Bit, 1);
-                SqlParameter member_id_param = new SqlParameter("@memberId", System.Data.SqlDbType.Int, 4);
+                SqlParameter member_id_param = new SqlParameter("@member_Id", System.Data.SqlDbType.Int, 4);
 
                 first_nameParam.Value = toUpdate.first_name;
                 last_nameParam.Value = toUpdate.last_name;
@@ -317,7 +317,7 @@ namespace SparkAPI
                 ethnicityParam.Value = toUpdate.ethnicity;
                 restricted_to_techParam.Value = toUpdate.restricted_to_tech;
                 west_central_residentParam.Value = toUpdate.west_central_resident;
-                member_id_param.Value = toUpdate.member_id;
+                member_id_param.Value = member_id;
 
                 upcmd.Parameters.Add(first_nameParam);
                 upcmd.Parameters.Add(last_nameParam);
