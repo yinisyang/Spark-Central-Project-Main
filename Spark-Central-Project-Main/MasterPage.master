@@ -42,20 +42,22 @@
   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">Spark Library</span>
     <nav class="mdl-navigation">
-      <a class="mdl-navigation__link" href="">Link</a>
-      <a class="mdl-navigation__link" href="">Link</a>
-      <a class="mdl-navigation__link" href="">Link</a>
-      <a class="mdl-navigation__link" href="">Link</a>
+      <a class="mdl-navigation__link" href="">Dashboard</a>
+      <a class="mdl-navigation__link" href="">Circulations</a>
+      <a class="mdl-navigation__link" href="">Catalog</a>
+      <a class="mdl-navigation__link" href="">Reports</a>
     </nav>
   </div>
   <main class="mdl-layout__content">
-    <div class="page-content"><!-- Your content goes here -->Content</div>
+    <div class="page-content" style="padding:15px">
+        <asp:ContentPlaceHolder id="PageBody" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
   </main>
 </div>
 
-        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
         
-        </asp:ContentPlaceHolder>
     </div>
     </form>
 </body>
