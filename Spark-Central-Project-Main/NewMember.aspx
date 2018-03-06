@@ -26,8 +26,8 @@
                 <span class="mdl-checkbox__label">Adult</span>
             </asp:Label>-->
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-                <input type="text" value="" class="mdl-textfield__input" id="memberGroup" runat="server" readonly>
-                <input type="hidden" value="" name="memberGroup" id="hiddenMemberGroup" runat="server">
+                <input type="text" value="" class="mdl-textfield__input" id="memberGroup" readonly>
+                <input type="hidden" runat="server" id="memberGroupValue" value="" name="memberGroup">
                 <label for="memberGroup" class="mdl-textfield__label">Member Group</label>
                 <ul for="memberGroup" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
                     <li class="mdl-menu__item" data-val="Youth">Youth</li>
