@@ -20,10 +20,20 @@
     </div>
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--4-col">
+            <!--
             <asp:Label ID="lbladult_checkbox" runat="server" CssClass="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" AssociatedControlID="isAdultCheckbox">
                 <input type="checkbox" runat="server" id="isAdultCheckbox" class="mdl-checkbox__input"  />
                 <span class="mdl-checkbox__label">Adult</span>
-            </asp:Label>
+            </asp:Label>-->
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+                <input type="text" value="" class="mdl-textfield__input" id="memberGroup" runat="server" readonly>
+                <input type="hidden" value="" name="memberGroup" id="hiddenMemberGroup" runat="server">
+                <label for="memberGroup" class="mdl-textfield__label">Member Group</label>
+                <ul for="memberGroup" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                    <li class="mdl-menu__item" data-val="Youth">Youth</li>
+                    <li class="mdl-menu__item" data-val="Adult">Adult</li>
+                </ul>
+            </div>
         </div>
         <div class="mdl-cell mdl-cell--4-col">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">

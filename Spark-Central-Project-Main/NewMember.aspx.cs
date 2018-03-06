@@ -14,6 +14,6 @@ public partial class NewMember : System.Web.UI.Page
 
     protected void Submit_Click(object sender, EventArgs e)
     {
-        Label1.Text = firstName.Text + " " + lastName.Text + " " + guardianName.Text + " " + isAdultCheckbox.Checked.ToString();
+        Label1.Text = firstName.Text + " " + lastName.Text + " " + guardianName.Text;
     }
 }
