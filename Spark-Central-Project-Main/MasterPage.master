@@ -1,65 +1,97 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
 
 <!DOCTYPE html>
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-<link rel="stylesheet" href="styles/getmdl-select.min.css">
-<script defer src="scripts/getmdl-select.min.js"></script>
-
-
+<style type="text/css">
+    #catalog{
+        color: gainsboro;
+        font-family: "Arial";
+        font-style: normal;
+        font-size: 11pt;
+        text-transform: capitalize;
+    }
+    #circulation{
+        color: gainsboro;
+        font-family:"Arial";
+        font-style: normal;
+        font-size: 11pt;
+        text-transform: capitalize;
+    }
+    #dash{
+        color: gainsboro;
+        font-family: "Arial";
+        font-style: normal;
+        font-size: 11pt;
+        text-transform: capitalize;
+    }
+    #reports{
+        color: gainsboro;
+        font-family: "Arial";
+        font-style: normal;
+        font-size: 11pt;
+        text-transform: capitalize;
+    }
+    #manage{
+        color: gainsboro;
+        font-family: "Arial";
+        font-style: normal;
+        font-size: 11pt;
+        text-transform: capitalize;
+    }
+</style>
 <html>
-
-
 <head runat="server">
     <title>Spark Central Library</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    <link rel="stylesheet" href="styles/getmdl-select.min.css">
+    <script defer src="scripts/getmdl-select.min.js"></script>
+
     <asp:ContentPlaceHolder id="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-        <!-- The drawer is always open in large screens. The header is always shown,
-  even in small screens. -->
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
-            mdl-layout--fixed-header">
-  <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row">
-      <div class="mdl-layout-spacer"></div>
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                  mdl-textfield--floating-label mdl-textfield--align-right">
-        <label class="mdl-button mdl-js-button mdl-button--icon"
-               for="fixed-header-drawer-exp">
-          <i class="material-icons">search</i>
-        </label>
-        <div class="mdl-textfield__expandable-holder">
-          <input class="mdl-textfield__input" type="text" name="sample"
-                 id="fixed-header-drawer-exp">
-        </div>
-      </div>
-    </div>
-  </header>
-  <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Spark Library</span>
-    <nav class="mdl-navigation">
-      <a class="mdl-navigation__link" href="#">Dashboard</a>
-      <a class="mdl-navigation__link" href="#">Circulations</a>
-      <a class="mdl-navigation__link" href="#">Catalog</a>
-      <a class="mdl-navigation__link" href="#">Reports</a>
-    </nav>
-  </div>
-  <main class="mdl-layout__content">
-    <div class="page-content" style="padding:15px">
-        <asp:ContentPlaceHolder id="PageBody" runat="server">
-        
-        </asp:ContentPlaceHolder>
-    </div>
-  </main>
-</div>
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <header class="mdl-layout__header">
+                <div class="mdl-layout__header-row">
+      
+                    <span class="mdl-layout-title">Spark Central Library</span>
 
+                        <div class="mdl-layout-spacer"></div>
         
-    </div>
+                            <nav class="mdl-navigation">
+                                <a class="mdl-navigation__link" id= "dash" href="">Dashboard</a>
+                                <a class="mdl-navigation__link" id="reports" href="">Reports</a>
+                                <a class="mdl-navigation__link" id="manage" href="">Manage</a>
+                            </nav>
+                            
+                            <button id="catalog" class="mdl-button mdl-js-button">Catalog</button>
+                            <ul class="mdl-menu mdl-js-menu" for="catalog">
+                                <li class="mdl-menu__item" href="#">All Items</li>
+                                <li class="mdl-menu__item" href="#">Books</li>
+                                <li class="mdl-menu__item" href="#">DVDs</li>
+                                <li class="mdl-menu__item" href="#">Tech</li>
+                            </ul>
+        
+                            <button id="circulation" class="mdl-button mdl-js-button mdl-button">Circulation</button>
+                            <ul class="mdl-menu mdl-js-menu" for="circulation">
+                                <li class="mdl-menu__item">Members</li>
+                                <li class="mdl-menu__item">Fees</li>
+                                <li class="mdl-menu__item">Checkouts</li>
+                            </ul>
+                        </div>
+            </header>
+            <main class="mdl-layout__content">
+                <div class="page-content">
+                    <asp:ContentPlaceHolder id="PageBody" runat="server"></asp:ContentPlaceHolder>
+                </div>
+            </main>
+        </div>
     </form>
 </body>
 </html>
+
+
