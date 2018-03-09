@@ -14,6 +14,6 @@ public partial class NewMember : System.Web.UI.Page
 
     protected void Submit_Click(object sender, EventArgs e)
     {
-        Label1.Text = firstName.Text + " " + lastName.Text + " " + guardianName.Text + memberGroupValue.Value;
+        Label1.Text = firstName.Text + " " + lastName.Text + " " + guardianName.Text + " " + memberGroupValue.Value + " " + streetAddress.Text + " " + city.Text + " " + stateValue.Value + " " + zipCode.Text + " " + phone.Text + " " + email.Text + " " + dateOfBirth.Text + " " + ethnicityValue.Value + " " + checkoutQuota.Text + " " + isRestrictedToTech.Checked + " === " + isWestCentralResident.Checked;
     }
 }

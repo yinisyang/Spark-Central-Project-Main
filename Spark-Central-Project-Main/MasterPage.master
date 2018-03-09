@@ -85,7 +85,7 @@
                         </div>
             </header>
             <main class="mdl-layout__content">
-                <div class="page-content">
+                <div class="page-content" style="padding-left:15px">
                     <asp:ContentPlaceHolder id="PageBody" runat="server"></asp:ContentPlaceHolder>
                 </div>
             </main>
