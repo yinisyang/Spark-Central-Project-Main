@@ -30,21 +30,28 @@
       <!-- Title -->
       <span class="mdl-layout-title">SparkCentral Library</span>
     </div>
-    <!-- Tabs -->
-    <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-      <a href="#scroll-tab-1" class="mdl-layout__tab is-active">Tab 1</a>
-      <a href="#scroll-tab-2" class="mdl-layout__tab">Tab 2</a>
-      <a href="#scroll-tab-3" class="mdl-layout__tab">Tab 3</a>
-      <a href="#scroll-tab-4" class="mdl-layout__tab">Tab 4</a>
-      <a href="#scroll-tab-5" class="mdl-layout__tab">Tab 5</a>
-      <a href="#scroll-tab-6" class="mdl-layout__tab">Tab 6</a>
-    </div>
+    <!-- Tabs PlaceHolder -->
+      <asp:ContentPlaceHolder ID="PanelPlaceHolder" runat="server">
+
+
+      </asp:ContentPlaceHolder>
+
   </header>
+
+    <!-- Drawer Menu -->
   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">Menu</span>
+      <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" href="/Default.aspx">Dashboard</a>
+      <a class="mdl-navigation__link" href="/Dashboard.aspx">Members</a>
+      <a class="mdl-navigation__link" href="#">Link</a>
+      <a class="mdl-navigation__link" href="#">Link</a>
+    </nav>
   </div>
+
+
   <main class="mdl-layout__content">
-    <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+    <section class="mdl-layout__tab-panel is-active">
       <div class="page-content">
           <asp:ContentPlaceHolder id="ContentPlaceHolder" runat="server">
 
@@ -55,7 +62,12 @@
       <div class="page-content">tab2</div>
     </section>
     <section class="mdl-layout__tab-panel" id="scroll-tab-3">
-      <div class="page-content"><!-- Your content goes here --></div>
+      <div class="page-content">
+          <a href="#">All Items</a><br />
+          <a href="#" class="mdl-badge">Books</a><br />
+          <a href="#" class="mdl-badge">DVDs</a><br />
+          <a href="#" class="mdl-badge">Technology</a><br />
+      </div>
     </section>
     <section class="mdl-layout__tab-panel" id="scroll-tab-4">
       <div class="page-content"><!-- Your content goes here --></div>
