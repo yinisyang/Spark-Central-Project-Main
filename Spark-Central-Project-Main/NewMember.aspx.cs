@@ -5,24 +5,17 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
 public partial class NewMember : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
     }
 
     protected void Submit_Click(object sender, EventArgs e)
     {
-        //Label1.Text = firstName.Text + " " + lastName.Text + " " + guardianName.Text + " " + memberGroupValue.Value + " " + streetAddress.Text + " " + city.Text + " " + stateValue.Value + " " + zipCode.Text + " " + phone.Text + " " + email.Text + " " + dateOfBirth.Text + " " + ethnicityValue.Value + " " + checkoutQuota.Text + " " + isRestrictedToTech.Checked + " === " + isWestCentralResident.Checked;
-        HttpClient client = new HttpClient();
-        client.BaseAddress = new Uri("http://api.sparklib.org/api/member");
-        client.DefaultRequestHeaders.Add("APIKey", "254a2c54-5e21-4e07-b2aa-590bc545a520");
+        
 
         var member = new
         {
@@ -46,13 +39,23 @@ public partial class NewMember : System.Web.UI.Page
         JavaScriptSerializer serializer = new JavaScriptSerializer();
         string json = serializer.Serialize(member);
 
-        //var task = client.GetAsync("http://api.sparklib.org/api/member");
-        //Label1.Text = task.Result.Content.ReadAsStringAsync().Result;
+        using(var client = new WebClient())
+        {
+            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
 
-        //using (client)
-        //{
-            var response = client.PostAsJsonAsync("", json).Result;
-        //}
-        //Label1.Text = task.Result.Content.ReadAsStringAsync().Result;
+            try
+            {
+                client.UploadString(new Uri("http://api.sparklib.org/api/member"), "POST", json);
+                var response = client.ResponseHeaders;
+                string location = response.Get("Location");
+                string id = location.Split('/')[location.Split('/').Length - 1];
+
+                Response.Redirect("NewMemberSuccess.aspx?member_id=" + id);
+            }catch(Exception ex)
+            {
+                Label1.Text = "Something went wrong";
+            }
+        }
     }
 }
