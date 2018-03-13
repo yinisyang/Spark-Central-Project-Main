@@ -5,12 +5,12 @@
 
 <asp:Content ID="Panel" ContentPlaceHolderID="PanelPlaceHolder" runat="server">
     <asp:Panel id="pane" class="mdl-layout__tab-bar mdl-js-ripple-effect" runat="server">
-      <a href="/Default.aspx" class="mdl-layout__tab">Dashboard</a>
-      <a href="/Dashboard.aspx" class="mdl-layout__tab is-active">Members</a>
-      <a href="#scroll-tab-3" class="mdl-layout__tab">Books</a>
-      <a href="#scroll-tab-4" class="mdl-layout__tab">DVD</a>
-      <a href="#scroll-tab-5" class="mdl-layout__tab">Technology</a>
-      <a href="#scroll-tab-6" class="mdl-layout__tab">Tab 6</a>
+      <a href="/Dashboard.aspx" class="mdl-layout__tab is-active">Dashboard</a>
+      <a href="/Members.aspx" class="mdl-layout__tab">Members</a>
+      <a href="/Catalog.aspx" class="mdl-layout__tab">Catalog</a>
+      <a href="/Circulations.aspx" class="mdl-layout__tab">Circulations</a>
+      <a href="/Reports.aspx" class="mdl-layout__tab">Reports</a>
+      <a href="/Manage.aspx" class="mdl-layout__tab">Manage</a>
     </asp:Panel>
 </asp:Content>
 
