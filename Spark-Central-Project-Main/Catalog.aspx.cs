@@ -92,6 +92,8 @@ public partial class Catalog : System.Web.UI.Page
         ret.Cells.Add(addCell("Pages"));
         ret.Cells.Add(addCell("ISBN"));
         ret.Cells.Add(addCell("ISBN13"));
+
+        ret.BorderWidth = 5;
         return ret;
     }
 
@@ -102,6 +104,8 @@ public partial class Catalog : System.Web.UI.Page
         ret.Cells.Add(addCell("Title"));
         ret.Cells.Add(addCell("Year"));
         ret.Cells.Add(addCell("Rating"));
+
+        ret.BorderWidth = 5;
         return ret;
     }
 
@@ -111,6 +115,7 @@ public partial class Catalog : System.Web.UI.Page
         ret.Cells.Add(addCell("ID"));
         ret.Cells.Add(addCell("Name"));
 
+        ret.BorderWidth = 5;
         return ret;
     }
 
