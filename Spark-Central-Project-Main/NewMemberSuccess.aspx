@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="PageBody" Runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" Runat="Server">
     <h1>Member Created Successfully with ID of: <asp:Label ID="newMemberID" runat="server" Text="Label"></asp:Label></h1>
 </asp:Content>
 

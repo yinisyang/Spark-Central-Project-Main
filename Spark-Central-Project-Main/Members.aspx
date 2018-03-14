@@ -13,5 +13,8 @@
     </asp:Panel>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
+
+     <asp:Button ID="buttonNewMember" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" runat="server" Text="Add New Member" OnClick="buttonNewMember_Click" />
+
 </asp:Content>
 

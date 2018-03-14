@@ -11,4 +11,9 @@ public partial class Members : System.Web.UI.Page
     {
 
     }
+
+    protected void buttonNewMember_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("/NewMember.aspx");
+    }
 }
