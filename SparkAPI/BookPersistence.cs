@@ -9,68 +9,16 @@ using System.Data.SqlClient;
 
 namespace SparkAPI
 {
-    public class BookPersistence
+    public class BookPersistence : BasePersistence
     {
-        private SqlConnection con;
-        public BookPersistence()
-        {
-            try
-            {
-                con = new SqlConnection(System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("/SparkAPI").ConnectionStrings.ConnectionStrings["SparkCentralConnectionString"].ConnectionString);
-                con.Open();
-            }
-            catch (SqlException ex)
-            {
-
-            }
-        }
-
-        public ArrayList GetBooks(string isbn10, string isbn13, string category, int? year)
+        public override ArrayList GetAll(Dictionary<String, Tuple<String, System.Data.SqlDbType, int>> args) //string isbn10, string isbn13, string category, int? year)
         {
             String sqlString = "SELECT * FROM Books ";
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = con;
 
-            if(isbn10 != null || isbn13 != null || category != null || year != null)
-            {
-                sqlString += "WHERE ";
-                if(isbn10 != null)
-                {
-                    sqlString += "isbn_10 = @isbn10 AND ";
-                    SqlParameter isbn10Param = new SqlParameter("@isbn10", System.Data.SqlDbType.VarChar, 50);
-                    isbn10Param.Value = isbn10;
-                    cmd.Parameters.Add(isbn10Param);
-                }
-                if(isbn13 != null)
-                {
-                    sqlString += "isbn_13 = @isbn13 AND ";
-                    SqlParameter isbn13Param = new SqlParameter("@isbn13", System.Data.SqlDbType.VarChar, 50);
-                    isbn13Param.Value = isbn13;
-                    cmd.Parameters.Add(isbn13Param);
-                }
-                if(category != null)
-                {
-                    sqlString += "category = @category AND ";
-                    SqlParameter categoryParam = new SqlParameter("@category", System.Data.SqlDbType.VarChar, 50);
-                    categoryParam.Value = category;
-                    cmd.Parameters.Add(categoryParam);
-                }
-                if(year != null)
-                {
-                    sqlString += "publication_year = @year";
-                    SqlParameter yearParam = new SqlParameter("@year", System.Data.SqlDbType.Int, 4);
-                    yearParam.Value = year;
-                    cmd.Parameters.Add(yearParam);
-                }
+            GetAllPrepare(sqlString, args, cmd);
 
-            }
-            if (sqlString.Substring(sqlString.Length - 4).Equals("AND "))
-                sqlString = sqlString.Substring(0, sqlString.Length - 4);
-
-            sqlString += ";";
-            
-            cmd.CommandText = sqlString;
-            cmd.Prepare();
             SqlDataReader reader = cmd.ExecuteReader();
 
             ArrayList bookList = new ArrayList();
@@ -105,14 +53,14 @@ namespace SparkAPI
             return bookList;
         }
 
-        public Book GetBook(int id)
+        public override Modellable Get(Dictionary<String, String> args)
         {
             String sqlString = "SELECT * FROM Books WHERE item_id = @id;";
             SqlCommand cmd = new SqlCommand(sqlString, con);
 
             //sql parameters for protection
             SqlParameter idParam = new SqlParameter("@id", System.Data.SqlDbType.Int, 4);
-            idParam.Value = id;
+            idParam.Value = args["item_id"];
 
             cmd.Parameters.Add(idParam);
             cmd.Prepare();
@@ -147,14 +95,14 @@ namespace SparkAPI
             con.Close();
             return null;
         }
-        public bool DeleteBook(int id)
+        public override bool Delete(Dictionary<String, String> args)
         {
             String sqlString = "SELECT * FROM Books WHERE item_id = @id;";
             SqlCommand cmd = new SqlCommand(sqlString, con);
 
             //sql parameters for protection
             SqlParameter idParam = new SqlParameter("@id", System.Data.SqlDbType.Int, 4);
-            idParam.Value = id;
+            idParam.Value = args["item_id"];
 
             cmd.Parameters.Add(idParam);
             cmd.Prepare();
@@ -182,8 +130,10 @@ namespace SparkAPI
             return false;
         }
 
-        public int SaveBook(Book b)
+        public override int Save(Modellable item)
         {
+            Book b = (Book)item;
+
             String sqlString = "INSERT INTO Books (author, isbn_10, category, publisher, publication_year, pages, description, title, isbn_13) OUTPUT INSERTED.item_id VALUES (@author, @isbn_10, @category, @publisher, @publication_year, @pages, @description, @title, @isbn_13)";
             SqlParameter authorParam = new SqlParameter("@author", System.Data.SqlDbType.VarChar, 50);
             SqlParameter isbn10Param = new SqlParameter("@isbn_10", System.Data.SqlDbType.VarChar, 20);
@@ -228,13 +178,15 @@ namespace SparkAPI
             }
         }
 
-        public bool updateBook(int item_id, Book toUpdate)
+        public override bool Update(Dictionary<String, String> args, Modellable item)
         {
+            Book toUpdate = (Book)item;
+
             String sqlString = "SELECT * FROM Books WHERE item_id = @item_id;";
             SqlCommand cmd = new SqlCommand(sqlString, con);
 
             SqlParameter idParam = new SqlParameter("@item_id", System.Data.SqlDbType.Int, 4);
-            idParam.Value = item_id;
+            idParam.Value = args["item_id"];
 
             cmd.Parameters.Add(idParam);
             cmd.Prepare();
@@ -268,7 +220,7 @@ namespace SparkAPI
                 descParam.Value = toUpdate.Description;
                 titleParam.Value = toUpdate.Title;
                 isbn13Param.Value = toUpdate.Isbn13;
-                IDParam.Value = item_id;
+                IDParam.Value = args["item_id"];
 
                 upcmd.Parameters.Add(authorParam);
                 upcmd.Parameters.Add(isbn10Param);

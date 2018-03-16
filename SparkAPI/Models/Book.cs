@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SparkAPI.Models
 {
-    public class Book
+    public class Book : Modellable
     {
         public int Id { get; set; }
         public string Author { get; set; }
