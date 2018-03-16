@@ -14,7 +14,19 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
 
-     <asp:Button ID="buttonNewMember" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" runat="server" Text="Add New Member" OnClick="buttonNewMember_Click" />
+    <br />
 
+    <div style="padding-left:10%">
+        <asp:Button ID="buttonNewMember" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" runat="server" Text="Add New Member" OnClick="buttonNewMember_Click" />
+    </div>
+    <br />
+
+    <div style="padding-left: 5%">
+
+        <asp:Table ID="table" class="mdl-data-table mdl-js-data-table" runat="server">
+        </asp:Table>
+
+
+    </div>
 </asp:Content>
 

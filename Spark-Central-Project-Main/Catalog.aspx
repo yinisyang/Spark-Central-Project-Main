@@ -21,16 +21,17 @@
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
     <br />
-    <asp:Button ID="buttonBooks" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" runat="server" Text="Books" OnClick="buttonBooks_Click" />
-    <asp:Button ID="buttonDVD" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" runat="server" Text="DVD" OnClick="buttonDVD_Click" />
-    <asp:Button ID="buttonTech" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" runat="server" Text="Technology" OnClick="buttonTech_Click" />
+    <div  Style="padding-left: 10%">
+        <asp:Button ID="buttonBooks" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" runat="server" Text="Books" OnClick="buttonBooks_Click" />
+        <asp:Button ID="buttonDVD" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" runat="server" Text="DVD" OnClick="buttonDVD_Click" />
+        <asp:Button ID="buttonTech" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" runat="server" Text="Technology" OnClick="buttonTech_Click" />
+    </div>
     <br />
     <br />
 
-    <div>
+    <div style="padding-left: 5%">
 
         <asp:Table ID="table" class="mdl-data-table mdl-js-data-table" runat="server">
-
         </asp:Table>
 
 
