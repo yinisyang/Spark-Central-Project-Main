@@ -83,39 +83,39 @@ public partial class Catalog : System.Web.UI.Page
     private TableHeaderRow addBookTitleRow()
     {
         TableHeaderRow ret = new TableHeaderRow();
-        ret.Cells.Add(addCell("ID"));
-        ret.Cells.Add(addCell("Title"));
-        ret.Cells.Add(addCell("Author"));
-        ret.Cells.Add(addCell("Category"));
-        ret.Cells.Add(addCell("Publisher"));
-        ret.Cells.Add(addCell("Year"));
-        ret.Cells.Add(addCell("Pages"));
-        ret.Cells.Add(addCell("ISBN"));
-        ret.Cells.Add(addCell("ISBN13"));
+        ret.Cells.Add(addHeaderCell("ID"));
+        ret.Cells.Add(addHeaderCell("Title"));
+        ret.Cells.Add(addHeaderCell("Author"));
+        ret.Cells.Add(addHeaderCell("Category"));
+        ret.Cells.Add(addHeaderCell("Publisher"));
+        ret.Cells.Add(addHeaderCell("Year"));
+        ret.Cells.Add(addHeaderCell("Pages"));
+        ret.Cells.Add(addHeaderCell("ISBN"));
+        ret.Cells.Add(addHeaderCell("ISBN13"));
 
-        ret.BorderWidth = 5;
+        ret.BorderWidth = 3;
         return ret;
     }
 
     private TableHeaderRow addDVDTitleRow()
     {
         TableHeaderRow ret = new TableHeaderRow();
-        ret.Cells.Add(addCell("ID"));
-        ret.Cells.Add(addCell("Title"));
-        ret.Cells.Add(addCell("Year"));
-        ret.Cells.Add(addCell("Rating"));
+        ret.Cells.Add(addHeaderCell("ID"));
+        ret.Cells.Add(addHeaderCell("Title"));
+        ret.Cells.Add(addHeaderCell("Year"));
+        ret.Cells.Add(addHeaderCell("Rating"));
 
-        ret.BorderWidth = 5;
+        ret.BorderWidth = 3;
         return ret;
     }
 
     private TableHeaderRow addTechTitleRow()
     {
         TableHeaderRow ret = new TableHeaderRow();
-        ret.Cells.Add(addCell("ID"));
-        ret.Cells.Add(addCell("Name"));
+        ret.Cells.Add(addHeaderCell("ID"));
+        ret.Cells.Add(addHeaderCell("Name"));
 
-        ret.BorderWidth = 5;
+        ret.BorderWidth = 3;
         return ret;
     }
 
@@ -158,6 +158,13 @@ public partial class Catalog : System.Web.UI.Page
     private TableCell addCell(string content)
     {
         TableCell ret = new TableCell();
+        ret.Text = content;
+        return ret;
+    }
+
+    private TableHeaderCell addHeaderCell(string content)
+    {
+        TableHeaderCell ret = new TableHeaderCell();
         ret.Text = content;
         return ret;
     }

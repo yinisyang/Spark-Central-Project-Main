@@ -42,23 +42,24 @@ public partial class Members : System.Web.UI.Page
     protected TableHeaderRow addMemberTitleRow()
     {
         TableHeaderRow ret = new TableHeaderRow();
-        ret.Cells.Add(addCell("ID"));
-        ret.Cells.Add(addCell("Last Name"));
-        ret.Cells.Add(addCell("First Name"));
-        ret.Cells.Add(addCell("Guardian"));
-        ret.Cells.Add(addCell("Date of Birth"));
-        ret.Cells.Add(addCell("Phone"));
-        ret.Cells.Add(addCell("Street"));
-        ret.Cells.Add(addCell("City"));
-        ret.Cells.Add(addCell("State"));
-        ret.Cells.Add(addCell("Zip"));
-        ret.Cells.Add(addCell("Quota"));
-        ret.Cells.Add(addCell("Adult"));
-        ret.Cells.Add(addCell("Ethnicity"));
-        ret.Cells.Add(addCell("Tech Restricted"));
-        ret.Cells.Add(addCell("West Central"));
+        ret.Cells.Add(addHeaderCell("ID"));
+        ret.Cells.Add(addHeaderCell("Last Name"));
+        ret.Cells.Add(addHeaderCell("First Name"));
+        ret.Cells.Add(addHeaderCell("Guardian"));
+        ret.Cells.Add(addHeaderCell("Date of Birth"));
+        ret.Cells.Add(addHeaderCell("Phone"));
+        ret.Cells.Add(addHeaderCell("Street"));
+        ret.Cells.Add(addHeaderCell("City"));
+        ret.Cells.Add(addHeaderCell("State"));
+        ret.Cells.Add(addHeaderCell("Zip"));
+        ret.Cells.Add(addHeaderCell("Quota"));
+        ret.Cells.Add(addHeaderCell("Adult"));
+        ret.Cells.Add(addHeaderCell("Ethnicity"));
+        ret.Cells.Add(addHeaderCell("Tech Restricted"));
+        ret.Cells.Add(addHeaderCell("West Central"));
 
-        ret.BorderWidth = 5;
+        ret.BorderWidth = 3;
+
         return ret;
     }
 
@@ -86,6 +87,13 @@ public partial class Members : System.Web.UI.Page
     private TableCell addCell(string content)
     {
         TableCell ret = new TableCell();
+        ret.Text = content;
+        return ret;
+    }
+
+    private TableHeaderCell addHeaderCell(string content)
+    {
+        TableHeaderCell ret = new TableHeaderCell();
         ret.Text = content;
         return ret;
     }
