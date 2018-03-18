@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -12,40 +13,35 @@ namespace SparkAPI.Controllers
     public class BookController : ApiController
     {
         // GET: api/Book
-        public ArrayList Get(string isbn10 = null, string isbn13 = null, string category = null, int? year = null)
+        public ArrayList Get(string isbn10 = null, string isbn13 = null, string category = null, int? publication_year = null)
         {
             BookPersistence bookp = new BookPersistence();
+            bookp.addCallField("isbn_10", isbn10, SqlDbType.VarChar, 50);
+            bookp.addCallField("isbn_13", isbn13, SqlDbType.VarChar, 50);
+            bookp.addCallField("category", category, SqlDbType.VarChar, 50);
+            bookp.addCallField("publication_year", publication_year, SqlDbType.Int, 4);
 
-            Dictionary<String, Tuple<String, System.Data.SqlDbType, int>> args = new Dictionary<String, Tuple<String, System.Data.SqlDbType, int>>();
-            // Create a tuple for each param that isn't null and add it to the argument list
-            if(isbn10 != null) { args.Add("isbn_10", new Tuple<string, System.Data.SqlDbType, int>(isbn10, System.Data.SqlDbType.VarChar, 50));  }
-            if (isbn13 != null) { args.Add("isbn_13", new Tuple<string, System.Data.SqlDbType, int>(isbn13, System.Data.SqlDbType.VarChar, 50)); }
-            if (category != null) { args.Add("category", new Tuple<string, System.Data.SqlDbType, int>(category, System.Data.SqlDbType.VarChar, 50)); }
-            if (year != null) { args.Add("year", new Tuple<string, System.Data.SqlDbType, int>(year.ToString(), System.Data.SqlDbType.Int, 4)); }
-
-            return bookp.GetAll(args);
+            return bookp.GetAll();
         }
 
         // GET: api/Book/5
         public Book Get(int item_id)
         {
             BookPersistence bookp = new BookPersistence();
+            bookp.addCallField("item_id", item_id, SqlDbType.Int, 4);
 
-            Dictionary<String, String> args = new Dictionary<String, String>();
-            args.Add("item_id", item_id.ToString());
-
-            return (Book)bookp.Get(args);
+            return (Book)bookp.Get();
         }
 
         // POST: api/Book
         public HttpResponseMessage Post([FromBody]Book value)
         {
             BookPersistence bookp = new BookPersistence();
-            int id = bookp.Save(value);
+            int id = bookp.Save(value, "item_id");
 
             if (id != -1)
             {
-                value.Id = id;
+                value.item_id = id;
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
                 response.Headers.Location = new Uri(Request.RequestUri, String.Format("book/{0}", id));
                 return response;
@@ -58,10 +54,9 @@ namespace SparkAPI.Controllers
         {
             BookPersistence bookp = new BookPersistence();
 
-            Dictionary<String, String> args = new Dictionary<String, String>();
-            args.Add("item_id", item_id.ToString());
+            bookp.addCallField("item_id", item_id, SqlDbType.Int, 4);
 
-            bool recordExisted = bookp.Update(args, value);
+            bool recordExisted = bookp.Update(value);
 
             HttpResponseMessage response;
             if (recordExisted)
@@ -79,12 +74,10 @@ namespace SparkAPI.Controllers
         public HttpResponseMessage Delete(int item_id)
         {
             BookPersistence bookp = new BookPersistence();
-
-            Dictionary<String, String> args = new Dictionary<String, String>();
-            args.Add("item_id", item_id.ToString());
+            bookp.addCallField("item_id", item_id, SqlDbType.Int, 4);
 
             HttpResponseMessage ret;
-            if(bookp.Delete(args))
+            if(bookp.Delete())
             {
                 ret = Request.CreateResponse(HttpStatusCode.NoContent);
             }
