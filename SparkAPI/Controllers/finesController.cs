@@ -28,7 +28,7 @@ namespace SparkAPI.Controllers
 
             if (id != -1)
             {
-                value.memberId = id;
+                value.member_id = id;
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
                 response.Headers.Location = new Uri(Request.RequestUri, String.Format("checkout/{0}", id));
                 return response;

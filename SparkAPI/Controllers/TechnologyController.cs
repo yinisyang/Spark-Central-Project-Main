@@ -33,7 +33,7 @@ namespace SparkAPI.Controllers
 
             if (id != -1)
             {
-                value.ItemId = id;
+                value.item_id = id;
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
                 response.Headers.Location = new Uri(Request.RequestUri, String.Format("technology/{0}", id));
                 return response;

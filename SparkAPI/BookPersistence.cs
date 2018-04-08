@@ -11,7 +11,7 @@ namespace SparkAPI
 {
     public class BookPersistence : BasePersistence
     {
-        public BookPersistence() : base("Books"){}
+        public BookPersistence() : base("Books") { }
 
         protected override Modellable RetrieveNextItem(SqlDataReader reader)
         {

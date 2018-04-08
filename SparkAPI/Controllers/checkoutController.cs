@@ -29,7 +29,7 @@ namespace SparkAPI.Controllers
 
             if (item_id != -1)
             {
-                value.ItemId = item_id;
+                value.item_id = item_id;
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
                 response.Headers.Location = new Uri(Request.RequestUri, String.Format("checkout/{0}", item_id));
                 return response;
