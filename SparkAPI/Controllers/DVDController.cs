@@ -41,7 +41,7 @@ namespace SparkAPI.Controllers
             {
                 value.item_id = id;
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
-                response.Headers.Location = new Uri(Request.RequestUri, String.Format("dvd/{0}", id));
+                response.Headers.Location = new Uri(Request.RequestUri, String.Format("dvd?item_id={0}", id));
                 return response;
             }
             return Request.CreateResponse(HttpStatusCode.BadRequest);

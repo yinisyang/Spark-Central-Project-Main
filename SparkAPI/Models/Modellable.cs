@@ -9,9 +9,12 @@ namespace SparkAPI.Models
 {
     public interface Modellable
     {
-        // This interface is a marker interface. Any class that implements this interface can be passed
-        // to a persistence object to perform API operations with
+        // Receives: the name of a property of a model as a string
+        // Returns: The associated SqlDB type and length as it appears in the database
         Tuple<SqlDbType, int> GetAssociatedDBTypeAndSize(String propertyName);
+
+        // Receives:
+        // Returns: a list of column names that make up the primary key of the associated model
         String[] GetKeyNames();
     }
 }

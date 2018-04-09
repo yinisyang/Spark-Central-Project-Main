@@ -14,7 +14,11 @@ namespace SparkAPI
 
         protected override Modellable RetrieveNextItem(SqlDataReader reader)
         {
-            throw new NotImplementedException();
+            Technology t = new Technology();
+            t.item_id = reader.GetInt32(reader.GetOrdinal("item_id"));
+            t.name = reader.GetString(reader.GetOrdinal("name"));
+
+            return t;
         }
     }
 }
