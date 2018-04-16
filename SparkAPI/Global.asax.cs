@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
 using SparkAPI.MessageHandlers;
+using System.Web.Mvc;
 
 namespace SparkAPI
 {
@@ -12,6 +13,7 @@ namespace SparkAPI
     {
         protected void Application_Start()
         {
+            AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configuration.MessageHandlers.Add(new APIKeyMessageHandler());
         }

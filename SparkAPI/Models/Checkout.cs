@@ -27,9 +27,9 @@ namespace SparkAPI.Models
             }
         }
 
-        public string[] GetKeyNames()
+        public string[] FieldsNotSpecifiedInPOST()
         {
-            return new string[] { "item_id", "member_id", "item_type" };
+            return new string[] {};
         }
     }
 }

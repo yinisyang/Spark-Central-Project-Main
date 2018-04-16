@@ -15,6 +15,6 @@ namespace SparkAPI.Models
 
         // Receives:
         // Returns: a list of column names that make up the primary key of the associated model
-        String[] GetKeyNames();
+        String[] FieldsNotSpecifiedInPOST();
     }
 }

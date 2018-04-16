@@ -164,7 +164,7 @@ namespace SparkAPI
         }
 
         public int Save(Modellable item, String keyToReturn) {
-            string[] keyNames = item.GetKeyNames();
+            string[] keyNames = item.FieldsNotSpecifiedInPOST();
 
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = con;
@@ -210,17 +210,17 @@ namespace SparkAPI
 
             cmd.CommandText = sqlString;
 
-            try
-            {
+            //try
+            //{
                 cmd.Prepare();
                 int id = (int)cmd.ExecuteScalar();
                 con.Close();
                 return id;
-            }
-            catch (Exception ex)
-            {
-                return -1;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return -1;
+            //}
         }
 
         public bool Update(Modellable item)
@@ -247,7 +247,7 @@ namespace SparkAPI
             if (reader.Read())
             {
                 reader.Close();
-                String[] keyNames = item.GetKeyNames();
+                String[] keyNames = item.FieldsNotSpecifiedInPOST();
                 String updateSqlString = "UPDATE " + tableName + " SET ";
                 SqlCommand upCmd = new SqlCommand();
                 upCmd.Connection = con;
