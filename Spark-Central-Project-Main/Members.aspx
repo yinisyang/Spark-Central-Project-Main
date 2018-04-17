@@ -16,8 +16,69 @@
 
     <br />
 
-    <div style="padding-left:10%">
+
+    <div style="padding-left: 10%">
         <asp:Button ID="buttonNewMember" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" runat="server" Text="Add New Member" OnClick="buttonNewMember_Click" />
+
+        <button id="show-dialog" type="button" class="mdl-button">Add Member</button>
+        <dialog class="mdl-dialog">
+            <h4 class="mdl-dialog__title">Add Member</h4>
+            <div class="mdl-dialog__content">
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--6-col">
+
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="fname">
+                            <label class="mdl-textfield__label" for="sample1">First Name</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="lname">
+                            <label class="mdl-textfield__label" for="sample1">Last Name</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="phone">
+                            <label class="mdl-textfield__label" for="sample1">Phone Number</label>
+                        </div>
+                    </div>
+                    <div class="mdl-cell mdl-cell--6-col">
+
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="pname">
+                            <label class="mdl-textfield__label" for="sample1">First Name</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="xname">
+                            <label class="mdl-textfield__label" for="sample1">Last Name</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="chone">
+                            <label class="mdl-textfield__label" for="sample1">Phone Number</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button type="button" class="mdl-button">Add</button>
+                <button type="button" class="mdl-button close">Cancel</button>
+            </div>
+        </dialog>
+        <script>
+            var dialog = document.querySelector('dialog');
+            var showDialogButton = document.querySelector('#show-dialog');
+            if (!dialog.showModal) {
+                dialogPolyfill.registerDialog(dialog);
+            }
+            showDialogButton.addEventListener('click', function () {
+                dialog.showModal();
+            });
+            dialog.querySelector('.close').addEventListener('click', function () {
+                dialog.close();
+            });
+        </script>
+
+
     </div>
     <br />
 
@@ -28,5 +89,6 @@
 
 
     </div>
+
 </asp:Content>
 
