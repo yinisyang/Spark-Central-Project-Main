@@ -50,17 +50,17 @@ public partial class Circulations : System.Web.UI.Page
 
         TableRow ret = new TableRow();
         
-        ret.Cells.Add(addCell(c.MemberId.ToString()));
-        ret.Cells.Add(addCell(c.ItemId.ToString()));
-        ret.Cells.Add(addCell(c.ItemType));
+        ret.Cells.Add(addCell(c.member_id.ToString()));
+        ret.Cells.Add(addCell(c.item_id.ToString()));
+        ret.Cells.Add(addCell(c.item_type));
 
-        if (c.ItemType.Equals("book"))
+        if (c.item_type.Equals("book"))
         {
             try
             {
-                var response = client.DownloadString("http://api.sparklib.org/api/book?item_id=" + c.ItemId.ToString());
+                var response = client.DownloadString("http://api.sparklib.org/api/book?item_id=" + c.item_id.ToString());
                 Book b = new JavaScriptSerializer().Deserialize<Book>(response);
-                ret.Cells.Add(addCell(b.Title));
+                ret.Cells.Add(addCell(b.title));
             }
             catch(Exception e)
             {
@@ -68,13 +68,13 @@ public partial class Circulations : System.Web.UI.Page
             }
         }
 
-        else if (c.ItemType.Equals("technology"))
+        else if (c.item_type.Equals("technology"))
         {
             try
             {
-                var response = client.DownloadString("http://api.sparklib.org/api/technology?item_id=" + c.ItemId.ToString());
+                var response = client.DownloadString("http://api.sparklib.org/api/technology?item_id=" + c.item_id.ToString());
                 Technology t = new JavaScriptSerializer().Deserialize<Technology>(response);
-                ret.Cells.Add(addCell(t.Name));
+                ret.Cells.Add(addCell(t.name));
             }
             catch (Exception e)
             {
@@ -82,13 +82,13 @@ public partial class Circulations : System.Web.UI.Page
             }
         }
 
-        else if (c.ItemType.Equals("dvd"))
+        else if (c.item_type.Equals("dvd"))
         {
             try
             {
-                var response = client.DownloadString("http://api.sparklib.org/api/dvd?item_id=" + c.ItemId.ToString());
+                var response = client.DownloadString("http://api.sparklib.org/api/dvd?item_id=" + c.item_id.ToString());
                 DVD d = new JavaScriptSerializer().Deserialize<DVD>(response);
-                ret.Cells.Add(addCell(d.Title));           }
+                ret.Cells.Add(addCell(d.title));           }
             catch (Exception e)
             {
                 ret.Cells.Add(addCell("N/A"));
@@ -100,7 +100,7 @@ public partial class Circulations : System.Web.UI.Page
             ret.Cells.Add(addCell("N/A"));
         }
 
-        ret.Cells.Add(addCell(c.dueDate.ToShortDateString()));
+        ret.Cells.Add(addCell(c.due_date.ToShortDateString()));
         ret.Cells.Add(addCell(c.resolved.ToString()));
         return ret;
     }
