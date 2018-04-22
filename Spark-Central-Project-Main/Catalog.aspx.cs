@@ -123,25 +123,25 @@ public partial class Catalog : System.Web.UI.Page
     private TableRow addBookRow(Book b)
     {
         TableRow ret = new TableRow();
-        ret.Cells.Add(addCell(b.Id.ToString()));
-        ret.Cells.Add(addCell(b.Title));
-        ret.Cells.Add(addCell(b.Author));
-        ret.Cells.Add(addCell(b.Category));
-        ret.Cells.Add(addCell(b.Publisher));
-        ret.Cells.Add(addCell(b.Year.ToString()));
-        ret.Cells.Add(addCell(b.Pages.ToString()));
-        ret.Cells.Add(addCell(b.Isbn10));
-        ret.Cells.Add(addCell(b.Isbn13));
+        ret.Cells.Add(addCell(b.item_id.ToString()));
+        ret.Cells.Add(addCell(b.title));
+        ret.Cells.Add(addCell(b.author));
+        ret.Cells.Add(addCell(b.category));
+        ret.Cells.Add(addCell(b.publisher));
+        ret.Cells.Add(addCell(b.publication_year.ToString()));
+        ret.Cells.Add(addCell(b.pages.ToString()));
+        ret.Cells.Add(addCell(b.isbn_10));
+        ret.Cells.Add(addCell(b.isbn_13));
         return ret;
     }
 
     private TableRow addDVDRow(DVD d)
     {
         TableRow ret = new TableRow();
-        ret.Cells.Add(addCell(d.ItemId.ToString()));
-        ret.Cells.Add(addCell(d.Title));
-        ret.Cells.Add(addCell(d.ReleaseYear.ToString()));
-        ret.Cells.Add(addCell(d.Rating));
+        ret.Cells.Add(addCell(d.item_id.ToString()));
+        ret.Cells.Add(addCell(d.title));
+        ret.Cells.Add(addCell(d.release_year.ToString()));
+        ret.Cells.Add(addCell(d.rating));
 
         return ret;
     }
@@ -149,8 +149,8 @@ public partial class Catalog : System.Web.UI.Page
     private TableRow addTechRow(Technology t)
     {
         TableRow ret = new TableRow();
-        ret.Cells.Add(addCell(t.ItemId.ToString()));
-        ret.Cells.Add(addCell(t.Name));
+        ret.Cells.Add(addCell(t.item_id.ToString()));
+        ret.Cells.Add(addCell(t.name));
 
         return ret;
     }

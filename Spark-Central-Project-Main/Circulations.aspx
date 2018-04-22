@@ -13,6 +13,16 @@
     </asp:Panel>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
-    Circulations Content Goes Here
+
+
+    <div style="padding-left: 5%">
+
+        <br />
+        <asp:Table ID="table" class="mdl-data-table mdl-js-data-table" runat="server">
+        </asp:Table>
+
+
+    </div>
+
 </asp:Content>
 
