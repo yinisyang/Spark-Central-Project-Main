@@ -20,7 +20,7 @@
         <div class="mdl-layout-spacer"></div>
         <div class="mdl-cell mdl-cell--2-col">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <asp:TextBox ID="password" runat="server" CssClass="mdl-textfield__input"></asp:TextBox>
+                <asp:TextBox ID="password" runat="server" CssClass="mdl-textfield__input" TextMode="Password"></asp:TextBox>
                 <label class="mdl-textfield__label" for="password">Password</label>
             </div>
         </div>
