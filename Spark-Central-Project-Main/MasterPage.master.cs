@@ -10,9 +10,10 @@ public partial class MasterPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack)
+        string pageName = this.Page.ToString().Substring(4, this.Page.ToString().Substring(4).Length - 5) + ".aspx";
+        if (Session["admin_login"] == null && !pageName.Equals("login.aspx"))
         {
+            Server.Transfer("Login.aspx");
         }
-
     }
 }
