@@ -4,37 +4,55 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using SparkAPI.Models;
-
+using System.Text.RegularExpressions;
 
 public partial class Members : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack)
+        //if (!Page.IsPostBack)
+        //{
+
+
+        table.Rows.Clear();
+        table.Rows.Add(addMemberTitleRow());
+
+        List<Member> memberList;
+        if (Page.Session["mList"] != null)
         {
-            table.Rows.Clear();
-            table.Rows.Add(addMemberTitleRow());
-
-            var client = new WebClient();
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
-
-            var response = client.DownloadString("http://api.sparklib.org/api/Member");
-
-            foreach (Member cur in new JavaScriptSerializer().Deserialize<List<Member>>(response))
-            {
-                table.Rows.Add(addMemberRow(cur));
-            }
-
-            String memNumber = Request.QueryString["id"];
-            if(memNumber != null)
-            {
-                newMemberLabel.Text = "New Member Added With ID: " + memNumber;
-            }
+            memberList = (List<Member>)Page.Session["mList"];
         }
+        else
+        {
+            memberList = getMemberList();
+        }
+
+        foreach (Member cur in memberList)
+        {
+            table.Rows.Add(addMemberRow(cur));
+        }
+
+        if (Page.Session["note"] != null)
+        {
+            NoteLabel.Text = Page.Session["note"].ToString().ToUpper();
+        }
+        //}
+
+    }
+
+    private List<Member> getMemberList()
+    {
+        var client = new WebClient();
+        client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+
+        var response = client.DownloadString("http://api.sparklib.org/api/Member");
+
+        return new JavaScriptSerializer().Deserialize<List<Member>>(response);
 
     }
 
@@ -61,6 +79,7 @@ public partial class Members : System.Web.UI.Page
         ret.Cells.Add(addHeaderCell("Ethnicity"));
         ret.Cells.Add(addHeaderCell("Tech Restricted"));
         ret.Cells.Add(addHeaderCell("West Central"));
+        ret.Cells.Add(addHeaderCell("Edit/Delete"));
 
         ret.BorderWidth = 3;
 
@@ -85,8 +104,67 @@ public partial class Members : System.Web.UI.Page
         ret.Cells.Add(addCell(m.ethnicity));
         ret.Cells.Add(addCell(m.restricted_to_tech.ToString()));
         ret.Cells.Add(addCell(m.west_central_resident.ToString()));
+        ret.Cells.Add(addButtonCell(m.member_id));
         return ret;
     }
+
+
+    private TableCell addButtonCell(int id)
+    {
+        TableCell ret = new TableCell();
+        HtmlButton del = new HtmlButton();
+        HtmlButton edit = new HtmlButton();
+
+        del.Attributes["class"] = "mdl-button mdl-js-button mdl-button--icon";
+        del.InnerHtml = "<i class = \"material-icons\">delete</i>";
+        del.Attributes.Add("id", id.ToString());
+        del.Attributes["title"] = "Delete";
+
+        edit.Attributes["class"] = "mdl-button mdl-js-button mdl-button--icon";
+        edit.InnerHtml = "<i class = \"material-icons\">edit</i>";
+        edit.Attributes.Add("id", id.ToString());
+        edit.Attributes["title"] = "Edit";
+
+        del.ServerClick += new EventHandler(deleteClick);
+        edit.ServerClick += new EventHandler(editClick);
+
+        ret.Controls.Add(edit);
+        ret.Controls.Add(del);
+
+        return ret;
+    }
+
+    public void editClick(object sender, EventArgs e)
+    {
+        return;
+    }
+
+    public void deleteClick(object sender, EventArgs e)
+    {
+
+        using (var client = new WebClient())
+        {
+            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+
+            try
+            {
+                String apiString = "http://api.sparklib.org/api/member?member_id=" + (((HtmlButton)sender).Attributes["id"]);
+                client.UploadString(new Uri(apiString), "DELETE", "");
+                var response = client.ResponseHeaders;
+                string location = response.Get("Location");
+                string id = location.Split('=')[1];
+
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        Page.Session["mList"] = null;
+        Response.Redirect("Members.aspx");
+    }
+
 
     private TableCell addCell(string content)
     {
@@ -103,10 +181,59 @@ public partial class Members : System.Web.UI.Page
     }
 
 
+    private bool containsStr(String arrow, String target)
+    {
+        String regString = arrow;
+        Regex reg = new Regex(regString);
+
+        return reg.IsMatch(target);
+    }
+
+
+    //Search Button Click
+    protected void btnSearch_Click(object sender, EventArgs e)
+    {
+        var searchText = Server.UrlEncode(txtSearch.Text);
+
+        if (searchText == "")
+        {
+            Page.Session["mList"] = null;
+            Page.Session["note"] = null;
+        }
+        else
+        {
+            String arrow = searchText.ToString().ToLower();
+            List<Member> memberList = getMemberList();
+            List<Member> results = new List<Member>();
+            foreach (Member cur in memberList)
+            {
+                if (containsStr(arrow, cur.last_name.ToLower()) ||
+                    containsStr(arrow, cur.first_name.ToLower()) ||
+                    containsStr(arrow, cur.member_id.ToString()) ||
+                    containsStr(arrow, cur.state.ToString().ToLower()) ||
+                    containsStr(arrow, cur.zip.ToString()) ||
+                    containsStr(arrow, cur.street_address.ToString().ToLower()) ||
+                    containsStr(arrow, cur.city.ToString().ToLower()))
+                {
+                    results.Add(cur);
+                }
+                else if(cur.guardian_name != null)
+                {
+                    if(containsStr(arrow, cur.guardian_name.ToString().ToLower()))
+                    {
+                        results.Add(cur);
+                    }
+                }
+            }
+            Page.Session["mList"] = results;
+            Page.Session["note"] = "Search Results For: '" + arrow + "'";
+        }
+
+        Response.Redirect("~/Members.aspx");
+    }
+
     protected void Submit_Click(object sender, EventArgs e)
     {
-
-
         var member = new
         {
             first_name = firstName.Text,
@@ -141,7 +268,7 @@ public partial class Members : System.Web.UI.Page
                 string location = response.Get("Location");
                 string id = location.Split('=')[1];
 
-                Response.Redirect("Members.aspx?id=" + id);
+                Response.Redirect("Members.aspx");
             }
             catch (Exception ex)
             {

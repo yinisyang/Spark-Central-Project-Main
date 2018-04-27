@@ -18,7 +18,7 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="mainForm" runat="server">
         <div>
             <!-- The drawer is always open in large screens. The header is always shown,
   even in small screens. -->
@@ -48,6 +48,7 @@
                         <a class="mdl-navigation__link" href="/Manage.aspx">Manage</a>
                     </nav>
                 </div>
+
                 <main class="mdl-layout__content">
                     <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
                     </asp:ContentPlaceHolder>

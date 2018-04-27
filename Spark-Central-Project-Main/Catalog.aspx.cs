@@ -24,7 +24,7 @@ public partial class Catalog : System.Web.UI.Page
     protected void buttonBooks_Click(object sender, EventArgs e)
     {
         resetButtonColors();
-        buttonBooks.BackColor = System.Drawing.Color.BlanchedAlmond;
+        buttonBooks.BackColor = System.Drawing.Color.SlateGray;
 
         table.Rows.Clear();
         table.Rows.Add(addBookTitleRow());
@@ -44,7 +44,7 @@ public partial class Catalog : System.Web.UI.Page
     protected void buttonDVD_Click(object sender, EventArgs e)
     {
         resetButtonColors();
-        buttonDVD.BackColor = System.Drawing.Color.BlanchedAlmond;
+        buttonDVD.BackColor = System.Drawing.Color.SlateGray;
 
         table.Rows.Clear();
         table.Rows.Add(addDVDTitleRow());
@@ -64,7 +64,7 @@ public partial class Catalog : System.Web.UI.Page
     protected void buttonTech_Click(object sender, EventArgs e)
     {
         resetButtonColors();
-        buttonTech.BackColor = System.Drawing.Color.BlanchedAlmond;
+        buttonTech.BackColor = System.Drawing.Color.SlateGray;
 
         table.Rows.Clear();
         table.Rows.Add(addTechTitleRow());
@@ -171,8 +171,8 @@ public partial class Catalog : System.Web.UI.Page
 
     private void resetButtonColors()
     {
-        buttonBooks.BackColor = System.Drawing.Color.LightGray;
-        buttonDVD.BackColor = System.Drawing.Color.LightGray;
-        buttonTech.BackColor = System.Drawing.Color.LightGray;
+        buttonBooks.BackColor = System.Drawing.Color.White;
+        buttonDVD.BackColor = System.Drawing.Color.White;
+        buttonTech.BackColor = System.Drawing.Color.White;
     }
 }
