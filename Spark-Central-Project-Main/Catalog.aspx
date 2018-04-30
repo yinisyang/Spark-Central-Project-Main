@@ -32,7 +32,7 @@
     <br />
     <br />
 
-    <div style="padding-left: 5%">
+    <div style="padding-left: 5%; padding-bottom:5%">
 
         <asp:Table ID="table" class="mdl-data-table mdl-js-data-table" runat="server">
         </asp:Table>

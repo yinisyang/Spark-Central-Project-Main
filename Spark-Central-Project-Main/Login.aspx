@@ -9,6 +9,13 @@
     <div class="mdl-grid">
         <div class="mdl-layout-spacer"></div>
         <div class="mdl-cell mdl-cell--2-col">
+            <asp:Label ID="lblLoginInfo" runat="server" Text="" ForeColor="#CC0000"></asp:Label>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+    </div>
+    <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-cell mdl-cell--2-col">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <asp:TextBox ID="userName" runat="server" CssClass="mdl-textfield__input"></asp:TextBox>
                 <label class="mdl-textfield__label" for="userName">Username</label>

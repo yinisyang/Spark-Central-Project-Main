@@ -15,7 +15,7 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
 
 
-    <div style="padding-left: 5%">
+    <div style="padding-left: 5%;">
 
         <br />
         <asp:Table ID="table" class="mdl-data-table mdl-js-data-table" runat="server">

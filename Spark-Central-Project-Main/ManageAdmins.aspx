@@ -19,7 +19,7 @@
     <div style="padding-left: 5%">
 
         <button id="show-dialog" type="button" class="mdl-button mdl-js-button mdl-button--raised">Add Admin</button>
-        <asp:Label ID="newAdminLabel" class="mdl-list__item-primary-content" style="color:crimson" runat="server" Text=""></asp:Label>
+        <asp:Label ID="newAdminLabel" class="mdl-list__item-primary-content" style="color:crimson" runat="server" Text="" ForeColor="#CC0000"></asp:Label>
         <dialog class="mdl-dialog" style="width: 75%">
             <h4 class="mdl-dialog__title">Add Admin</h4>
             <div class="mdl-dialog__content">

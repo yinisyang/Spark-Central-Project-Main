@@ -12,7 +12,7 @@ public partial class Login : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        lblLoginInfo.Text = "";
     }
 
     protected void Submit_Click(object sender, EventArgs e)
@@ -29,17 +29,15 @@ public partial class Login : System.Web.UI.Page
         if (reader.Read())
         {
             String database_hash = reader.GetString(reader.GetOrdinal("password_hash"));
-            Console.WriteLine("Found username");
             if (hash.Equals(database_hash))
             {
-                Console.WriteLine("Matched Password");
                 Session["admin_login"] = true;
                 Response.Redirect("Dashboard.aspx");
             }
         }
         else
         {
-            Console.WriteLine("Didn't find username");
+            lblLoginInfo.Text = "Username or password was incorrect";
         }
     }
 

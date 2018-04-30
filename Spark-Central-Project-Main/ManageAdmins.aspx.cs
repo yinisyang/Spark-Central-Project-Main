@@ -13,6 +13,7 @@ public partial class ManageAdmins : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         populateTable();
+        newAdminLabel.Text = "";
     }
 
     protected void populateTable() {
@@ -65,7 +66,7 @@ public partial class ManageAdmins : System.Web.UI.Page
         }
         else
         {
-            // user already exists
+            newAdminLabel.Text = "That user already exists";
         }
     }
 
