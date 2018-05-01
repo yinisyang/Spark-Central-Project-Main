@@ -15,14 +15,18 @@ public partial class Members : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        //if (!Page.IsPostBack)
-        //{
-
 
         table.Rows.Clear();
         table.Rows.Add(addMemberTitleRow());
 
         List<Member> memberList;
+
+        if (Request.QueryString["search"] != null)
+        {
+            performSearch(Request.QueryString["search"]);
+        }
+
+
         if (Page.Session["mList"] != null)
         {
             memberList = (List<Member>)Page.Session["mList"];
@@ -41,7 +45,6 @@ public partial class Members : System.Web.UI.Page
         {
             NoteLabel.Text = Page.Session["note"].ToString().ToUpper();
         }
-        //}
 
     }
 
@@ -118,14 +121,30 @@ public partial class Members : System.Web.UI.Page
         del.Attributes["class"] = "mdl-button mdl-js-button mdl-button--icon";
         del.InnerHtml = "<i class = \"material-icons\">delete</i>";
         del.Attributes.Add("id", id.ToString());
+        del.Attributes["onclick"] = "if(swal({" +
+            "title: 'Delete Member'," +
+            "text: 'Are you sure you want to delete member id: " + id.ToString() + "?'," +
+            "icon: 'warning'," +
+            "buttons: true," +
+            "dangerMode: true," +
+            "}).then((value) => {" +
+            "if(value){" +
+            "deleteMember(" + id.ToString() +");" +
+            "swal('Member deleted', { icon: 'success', });" +
+            "} else {" +
+            "return false;" +
+            "}" +
+            "})){ return false; };";
+            
+
         del.Attributes["title"] = "Delete";
 
         edit.Attributes["class"] = "mdl-button mdl-js-button mdl-button--icon";
         edit.InnerHtml = "<i class = \"material-icons\">edit</i>";
         edit.Attributes.Add("id", id.ToString());
         edit.Attributes["title"] = "Edit";
+        edit.Attributes["onclick"] = "if(swal('Hello World')){return false;};";
 
-        del.ServerClick += new EventHandler(deleteClick);
         edit.ServerClick += new EventHandler(editClick);
 
         ret.Controls.Add(edit);
@@ -136,10 +155,13 @@ public partial class Members : System.Web.UI.Page
 
     public void editClick(object sender, EventArgs e)
     {
+
         return;
     }
 
-    public void deleteClick(object sender, EventArgs e)
+    //Delete Button Click WebMethod
+    [System.Web.Services.WebMethod]
+    public static void deleteClick(int id)
     {
 
         using (var client = new WebClient())
@@ -149,20 +171,14 @@ public partial class Members : System.Web.UI.Page
 
             try
             {
-                String apiString = "http://api.sparklib.org/api/member?member_id=" + (((HtmlButton)sender).Attributes["id"]);
+                String apiString = "http://api.sparklib.org/api/member?member_id=" + id.ToString();
                 client.UploadString(new Uri(apiString), "DELETE", "");
-                var response = client.ResponseHeaders;
-                string location = response.Get("Location");
-                string id = location.Split('=')[1];
 
             }
             catch (Exception ex)
             {
             }
         }
-
-        Page.Session["mList"] = null;
-        Response.Redirect("Members.aspx");
     }
 
 
@@ -183,10 +199,16 @@ public partial class Members : System.Web.UI.Page
 
     private bool containsStr(String arrow, String target)
     {
-        String regString = arrow;
-        Regex reg = new Regex(regString);
+        try
+        {
+            Regex reg = new Regex(arrow);
+            return reg.IsMatch(target);
 
-        return reg.IsMatch(target);
+        }
+        catch(Exception e)
+        {
+            return false;
+        }
     }
 
 
@@ -194,44 +216,54 @@ public partial class Members : System.Web.UI.Page
     protected void btnSearch_Click(object sender, EventArgs e)
     {
         var searchText = Server.UrlEncode(txtSearch.Text);
-
-        if (searchText == "")
+        if( searchText == "")
         {
             Page.Session["mList"] = null;
             Page.Session["note"] = null;
+            Response.Redirect("Members.aspx");
         }
-        else
+
+        Response.Redirect("Members.aspx?search=" + searchText);
+
+    }
+
+
+    protected void performSearch(string text)
+    {
+        if (text == "")
         {
-            String arrow = searchText.ToString().ToLower();
-            List<Member> memberList = getMemberList();
-            List<Member> results = new List<Member>();
-            foreach (Member cur in memberList)
+            Page.Session["mList"] = null;
+            Page.Session["note"] = null;
+            return;
+        }
+        String arrow = text.ToLower();
+        List<Member> memberList = getMemberList();
+        List<Member> results = new List<Member>();
+        foreach (Member cur in memberList)
+        {
+            if (containsStr(arrow, cur.last_name.ToLower()) ||
+                containsStr(arrow, cur.first_name.ToLower()) ||
+                containsStr(arrow, cur.member_id.ToString()) ||
+                containsStr(arrow, cur.state.ToString().ToLower()) ||
+                containsStr(arrow, cur.zip.ToString()) ||
+                containsStr(arrow, cur.phone.ToString().ToLower()) ||
+                containsStr(arrow, cur.city.ToString().ToLower()))
             {
-                if (containsStr(arrow, cur.last_name.ToLower()) ||
-                    containsStr(arrow, cur.first_name.ToLower()) ||
-                    containsStr(arrow, cur.member_id.ToString()) ||
-                    containsStr(arrow, cur.state.ToString().ToLower()) ||
-                    containsStr(arrow, cur.zip.ToString()) ||
-                    containsStr(arrow, cur.street_address.ToString().ToLower()) ||
-                    containsStr(arrow, cur.city.ToString().ToLower()))
+                results.Add(cur);
+            }
+            else if (cur.guardian_name != null)
+            {
+                if (containsStr(arrow, cur.guardian_name.ToString().ToLower()))
                 {
                     results.Add(cur);
                 }
-                else if(cur.guardian_name != null)
-                {
-                    if(containsStr(arrow, cur.guardian_name.ToString().ToLower()))
-                    {
-                        results.Add(cur);
-                    }
-                }
             }
-            Page.Session["mList"] = results;
-            Page.Session["note"] = "Search Results For: '" + arrow + "'";
         }
-
-        Response.Redirect("~/Members.aspx");
+        Page.Session["mList"] = results;
+        Page.Session["note"] = "Search Results For: '" + arrow + "'";
     }
 
+    //Add New Member Submit Click
     protected void Submit_Click(object sender, EventArgs e)
     {
         var member = new
@@ -268,7 +300,10 @@ public partial class Members : System.Web.UI.Page
                 string location = response.Get("Location");
                 string id = location.Split('=')[1];
 
+                Page.Session["note"] = "Member Added With ID: " + id;
+
                 Response.Redirect("Members.aspx");
+                
             }
             catch (Exception ex)
             {

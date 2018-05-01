@@ -14,6 +14,17 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
 
+    <asp:ScriptManager ID="ScriptManager" runat="server" EnablePageMethods="true"></asp:ScriptManager>
+
+    <script type="text/javascript">
+        function deleteMember(id) {
+            PageMethods.deleteClick(id);
+            location.reload();
+
+        }
+    </script>
+
+
     <br />
 
 
@@ -26,7 +37,7 @@
 
         <!-- Search Bar -->
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <asp:TextBox ID="txtSearch" runat="server"></asp:TextBox>
+            <asp:TextBox ID="txtSearch" runat="server" placeholder="Search..."></asp:TextBox>
             <asp:Button ID="btnSearch" Text="Search" Style="height: 25px" runat="server" CssClass="hidden" OnClick="btnSearch_Click" />
         </div>
 
@@ -34,7 +45,7 @@
         <!-- Note Label -->
         <asp:Label ID="NoteLabel" class="mdl-list__item-primary-content" Style="color: darkcyan" runat="server" Text=""></asp:Label>
 
- 
+
 
 
         <div>
@@ -169,16 +180,18 @@
 
     </div>
 
-    <div style="padding-left: 5%">
 
 
 
+    <!-- Member Table -->
+    <div style="padding-left: 5%; overflow-x: auto">
 
         <asp:Table ID="table" class="mdl-data-table mdl-js-data-table" runat="server">
         </asp:Table>
 
-
     </div>
 
+
 </asp:Content>
+
 
