@@ -272,6 +272,18 @@ namespace SparkAPI
                     }
                     cur++;
                 }
+                updateSqlString += " WHERE ";
+                foreach (String key in args.Keys)
+                {
+                    updateSqlString += key + " = @" + key + " AND ";
+                    SqlParameter param = new SqlParameter("@" + key, args[key].Item2, args[key].Item3);
+                    param.Value = args[key].Item1;
+                    upCmd.Parameters.Add(param);
+                }
+
+                if (updateSqlString.Substring(updateSqlString.Length - 4).Equals("AND "))
+                    updateSqlString = updateSqlString.Substring(0, updateSqlString.Length - 4);
+
                 updateSqlString += ";";
                 upCmd.CommandText = updateSqlString;
 
