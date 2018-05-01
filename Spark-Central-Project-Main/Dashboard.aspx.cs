@@ -11,4 +11,12 @@ public partial class Dashboard : System.Web.UI.Page
     {
 
     }
+    protected void buttonNewMember_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("/NewMember.aspx");
+    }
+    protected void buttonViewMembers_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("/Members.aspx");
+    }
 }

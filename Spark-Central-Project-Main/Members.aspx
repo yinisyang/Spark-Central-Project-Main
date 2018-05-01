@@ -30,7 +30,7 @@
 
         <!-- Search Bar -->
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <asp:TextBox ID="txtSearch" runat="server"></asp:TextBox>
+            <asp:TextBox ID="txtSearch" runat="server" placeholder="Search..."></asp:TextBox>
             <asp:Button ID="btnSearch" Text="Search" Style="height: 25px" runat="server" CssClass="hidden" OnClick="btnSearch_Click" />
         </div>
 
