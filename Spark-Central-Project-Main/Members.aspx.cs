@@ -202,8 +202,13 @@ public partial class Members : System.Web.UI.Page
      */ 
     public void editClick(object sender, EventArgs e)
     {
+<<<<<<< HEAD
         string id = ((HtmlButton)sender).Attributes["id"];
         Response.Redirect("EditMember.aspx?memberid=" + id);
+=======
+
+        return;
+>>>>>>> c7ae45e4a9746c71df0c4409dd3b06d21054ab7d
     }
 
 
