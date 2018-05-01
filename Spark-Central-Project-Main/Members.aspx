@@ -54,7 +54,7 @@
                 <h4 class="mdl-dialog__title">Add Member</h4>
                 <div class="mdl-dialog__content">
 
-                    <div class="mdl-grid">
+                    <div class="mdl-grid" style="width: 60%">
                         <div class="mdl-cell mdl-cell--6-col">
 
 
@@ -96,14 +96,6 @@
                                 <asp:TextBox ID="checkoutQuota" runat="server" CssClass="mdl-textfield__input"></asp:TextBox>
                                 <label class="mdl-textfield__label" for="checkoutQuota">Checkout Quota</label>
                             </div>
-                            <asp:Label ID="lblrestrictedtotech_checkbox" runat="server" CssClass="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" AssociatedControlID="isRestrictedToTech">
-                                <input type="checkbox" runat="server" id="isRestrictedToTech" class="mdl-checkbox__input" />
-                                <span class="mdl-checkbox__label">Restricted to Tech?</span>
-                            </asp:Label>
-                            <asp:Label ID="lbl" runat="server" CssClass="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" AssociatedControlID="isWestCentralResident">
-                                <input type="checkbox" runat="server" id="isWestCentralResident" class="mdl-checkbox__input" />
-                                <span class="mdl-checkbox__label">West Central Resident?</span>
-                            </asp:Label>
                         </div>
                         <div class="mdl-cell mdl-cell--6-col">
 
@@ -148,6 +140,14 @@
                                     <li class="mdl-menu__item" data-val="other">Other</li>
                                 </ul>
                             </div>
+                            <asp:Label ID="lblrestrictedtotech_checkbox" runat="server" CssClass="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" AssociatedControlID="isRestrictedToTech">
+                                <input type="checkbox" runat="server" id="isRestrictedToTech" class="mdl-checkbox__input" />
+                                <span class="mdl-checkbox__label">Restricted to Tech?</span>
+                            </asp:Label>
+                            <asp:Label ID="lbl" runat="server" CssClass="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" AssociatedControlID="isWestCentralResident">
+                                <input type="checkbox" runat="server" id="isWestCentralResident" class="mdl-checkbox__input" />
+                                <span class="mdl-checkbox__label">West Central Resident?</span>
+                            </asp:Label>
                         </div>
 
                     </div>
