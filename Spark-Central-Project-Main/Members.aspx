@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Members.aspx.cs" Inherits="Members" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <script src="scripts/Members.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="PanelPlaceHolder" runat="Server">
     <asp:Panel ID="pane" class="mdl-layout__tab-bar mdl-js-ripple-effect" runat="server">
@@ -15,14 +16,6 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
 
     <asp:ScriptManager ID="ScriptManager" runat="server" EnablePageMethods="true"></asp:ScriptManager>
-
-    <script type="text/javascript">
-        function deleteMember(id) {
-            PageMethods.deleteClick(id);
-            location.reload();
-
-        }
-    </script>
 
 
     <br />
@@ -42,16 +35,20 @@
         </div>
 
         <br />
-        <!-- Note Label -->
+
+
+        <!-- Note Label
+            *used for notifying user of search parameter and provides feedback after a new member is created.
+            -->
         <asp:Label ID="NoteLabel" class="mdl-list__item-primary-content" Style="color: darkcyan" runat="server" Text=""></asp:Label>
 
 
 
-
-        <div>
-            <!--
-            Start Member Dialog
+        <!--
+            Member Dialog
             -->
+        <div id="member-dialog">
+
 
             <dialog class="mdl-dialog" style="width: 75%">
                 <h4 class="mdl-dialog__title">Add Member</h4>
@@ -156,31 +153,15 @@
                     </div>
                 </div>
                 <div class="mdl-dialog__actions">
-                    <asp:Button ID="Submit" runat="server" Text="Create New Member" OnClick="Submit_Click" CssClass="mdl-button mdl-js-button mdl-button--raised" />
+                    <asp:Button ID="Submit" runat="server" Text="Create New Member" OnClick="Submit_Click" CssClass="mdl-button mdl-js-button mdl-button" />
                     <button type="button" class="mdl-button close">Cancel</button>
                 </div>
             </dialog>
-            <script>
-                var dialog = document.querySelector('dialog');
-                var showDialogButton = document.querySelector('#show-dialog');
-                if (!dialog.showModal) {
-                    dialogPolyfill.registerDialog(dialog);
-                }
-                showDialogButton.addEventListener('click', function () {
-                    dialog.showModal();
-                });
-                dialog.querySelector('.close').addEventListener('click', function () {
-                    dialog.close();
-                });
-            </script>
-            <!--
+        </div>
+        <!--
             End New Member Dialog
             -->
-        </div>
-
     </div>
-
-
 
 
     <!-- Member Table -->
@@ -190,6 +171,7 @@
         </asp:Table>
 
     </div>
+    <br />
 
 
 </asp:Content>
