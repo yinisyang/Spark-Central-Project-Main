@@ -13,6 +13,7 @@
         <a href="/Manage.aspx" class="mdl-layout__tab">Manage</a>
     </asp:Panel>
 </asp:Content>
+
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
 
     <asp:ScriptManager ID="ScriptManager" runat="server" EnablePageMethods="true"></asp:ScriptManager>
@@ -50,11 +51,11 @@
         <div id="member-dialog">
 
 
-            <dialog class="mdl-dialog" style="width: 75%">
+            <dialog class="mdl-dialog" style="width: 50%">
                 <h4 class="mdl-dialog__title">Add Member</h4>
                 <div class="mdl-dialog__content">
 
-                    <div class="mdl-grid" style="width: 60%">
+                    <div class="mdl-grid" style="width: 90%">
                         <div class="mdl-cell mdl-cell--6-col">
 
 

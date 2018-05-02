@@ -13,7 +13,7 @@
     </asp:Panel>
 </asp:Content>
 <asp:Content ID="Main" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
-    <div class="mdl-grid" style="width:50%">
+    <div class="mdl-grid" style="width: 50%">
         <div class="mdl-cell mdl-cell--6-col">
 
 
@@ -73,7 +73,7 @@
                 <asp:TextBox ID="ethnicity" runat="server" CssClass="mdl-textfield__input"></asp:TextBox>
                 <label class="mdl-textfield__label" for="guardianName">Ethnicity</label>
             </div>
-                        <asp:Label ID="lblrestrictedtotech_checkbox" runat="server" CssClass="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" AssociatedControlID="isRestrictedToTech">
+            <asp:Label ID="lblrestrictedtotech_checkbox" runat="server" CssClass="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" AssociatedControlID="isRestrictedToTech">
                 <input type="checkbox" runat="server" id="isRestrictedToTech" class="mdl-checkbox__input" />
                 <span class="mdl-checkbox__label">Restricted to Tech?</span>
             </asp:Label>
@@ -86,12 +86,14 @@
                 <span class="mdl-checkbox__label">Adult?</span>
             </asp:Label>
 
-                    <div class="mdl-dialog__actions">
-            <asp:Button ID="Button1" runat="server" Text="Save Changes" OnClick="Submit_Click" CssClass="mdl-button mdl-js-button mdl-button" />
-            <asp:Button ID="Button2" runat="server" Text="Cancel" OnClick="Cancel_Click" CssClass="mdl-button mdl-js-button mdl-button" />
+            <div class="mdl-dialog__actions">
+                <asp:Button ID="Button1" runat="server" Text="Save Changes" OnClick="Submit_Click" CssClass="mdl-button mdl-js-button mdl-button" />
+                <asp:Button ID="Button2" runat="server" Text="Cancel" OnClick="Cancel_Click" CssClass="mdl-button mdl-js-button mdl-button" />
 
+            </div>
         </div>
+
     </div>
-    </div>
+
 </asp:Content>
 

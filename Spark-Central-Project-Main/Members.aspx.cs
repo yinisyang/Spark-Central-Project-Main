@@ -9,7 +9,6 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using SparkAPI.Models;
-using System.Text.RegularExpressions;
 using SparkWebSite;
 
 
@@ -18,6 +17,10 @@ public partial class Members : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!Page.IsPostBack)
+        {
+
+        }
 
         table.Rows.Clear();
         table.Rows.Add(addMemberTitleRow());
@@ -52,9 +55,9 @@ public partial class Members : System.Web.UI.Page
         }
 
         //Set Note if one exists.
-        if (Page.Session["note"] != null)
+        if (Page.Session["mNote"] != null)
         {
-            NoteLabel.Text = Page.Session["note"].ToString().ToUpper();
+            NoteLabel.Text = Page.Session["mNote"].ToString().ToUpper();
         }
 
     }
@@ -250,7 +253,7 @@ public partial class Members : System.Web.UI.Page
         if (searchText == "")
         {
             Page.Session["mList"] = null;
-            Page.Session["note"] = null;
+            Page.Session["mNote"] = null;
             Response.Redirect("Members.aspx");
         }
 
@@ -277,7 +280,7 @@ public partial class Members : System.Web.UI.Page
         if (text == "")
         {
             Page.Session["mList"] = null;
-            Page.Session["note"] = null;
+            Page.Session["mNote"] = null;
             return;
         }
         String arrow = text.ToLower();
@@ -304,7 +307,7 @@ public partial class Members : System.Web.UI.Page
             }
         }
         Page.Session["mList"] = results;
-        Page.Session["note"] = "Search Results For: '" + arrow + "'";
+        Page.Session["mNote"] = "Search Results For: '" + arrow + "'";
     }
 
     //Add New Member Submit Click
@@ -344,7 +347,7 @@ public partial class Members : System.Web.UI.Page
                 string location = response.Get("Location");
                 string id = location.Split('=')[1];
 
-                Page.Session["note"] = "Member Added With ID: " + id;
+                Page.Session["mNote"] = "Member Added With ID: " + id;
 
                 Response.Redirect("Members.aspx");
 
