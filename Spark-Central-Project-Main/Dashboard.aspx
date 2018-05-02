@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Dashboard.aspx.cs" Inherits="Dashboard" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-
+    <script src="scripts/Dashboard.js"></script>
     <style>
         .demo-card-square.mdl-card {
             width: 330px;
@@ -28,9 +28,14 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
-    <div class="mdl-grid">
+    <asp:ScriptManager ID="ScriptManager" runat="server" EnablePageMethods="true"></asp:ScriptManager>
+
+    <div class="mdl-grid" style="width: 70%">
         <div class="mdl-cell mdl-cell--4-col">
 
+            <button id="btnSmart" type="button" class="mdl-button mdl-js-button mdl-button--icon" title="Smart Add">
+                <i class="material-icons">add</i>
+            </button>
 
             <div class="demo-card-square mdl-card mdl-shadow--2dp">
                 <div class="mdl-card__title mdl-card--expand">
@@ -84,6 +89,58 @@
         </div>
 
     </div>
+
+    <dialog class="mdl-dialog" id="smartDialog" style="width: 30%">
+        <h4 class="mdl-dialog__title">Smart Add</h4>
+        <div class="mdl-dialog__content">
+            <div class="mdl-grid" style="width: 90%">
+                <div class="mdl-cell mdl-cell--6-col">
+                    <form action="#">
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="isbn">
+                            <label class="mdl-textfield__label" for="isbn">Isbn</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="mdl-cell mdl-cell--6-col">
+                </div>
+
+
+
+
+                <div class="mdl-cell mdl-cell--6-col">
+                    <div id="bookTitle"></div>
+                    <div id="bookAuthor"></div>
+                    <div id="bookPublisher"></div>
+                    <div id="bookYear"></div>
+
+                </div>
+                <div class="mdl-cell mdl-cell--6-col">
+                    <div id="bookPages"></div>
+                    <div id="bookCategory"></div>
+                    <div id="bookIsbn10"></div>
+                    <div id="bookIsbn13"></div>
+
+                </div>
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div id="bookDescription"></div>
+                </div>
+            </div>
+        </div>
+        <div class="mdl-dialog__actions">
+            <button id="btnAdd" type="button" onclick="addBook()" class="mdl-button mdl-js-button mdl-button" title="Add">
+                Add
+            </button>
+            <button id="btnSearch" type="button" onclick="loadDoc()" class="mdl-button mdl-js-button mdl-button" title="Search">
+                Search
+            </button>
+            <button type="button" class="mdl-button close">Cancel</button>
+        </div>
+    </dialog>
+
+
+
+
 </asp:Content>
 
 
