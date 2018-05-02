@@ -13,10 +13,10 @@
     </asp:Panel>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
+    <br />
 
     <div class="mdl-grid" style="width: 50%">
         <div class="mdl-cell mdl-cell--6-col">
-
 
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <asp:TextBox ID="bookTitle" runat="server" CssClass="mdl-textfield__input"></asp:TextBox>
