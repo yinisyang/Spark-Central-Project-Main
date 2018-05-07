@@ -49,6 +49,10 @@
                                 <li class="mdl-menu__item" data-val="dvd">DVDs</li>
                             </ul>
                         </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <asp:TextBox ID="restrictToBox" runat="server" CssClass="mdl-textfield__input"></asp:TextBox>
+                            <label class="mdl-textfield__label" for="endDate">Restrict to:</label>
+                        </div>
                     </div>
                 </div>
                 <div class="mdl-dialog__actions">
