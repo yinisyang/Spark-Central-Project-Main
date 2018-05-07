@@ -36,6 +36,7 @@ namespace SparkAPI.Models
                 case "guardian_name": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
                 case "email": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
                 case "dob": return new Tuple<SqlDbType, int>(SqlDbType.Date, 3);
+                case "signup_date": return new Tuple<SqlDbType, int>(SqlDbType.Date, 3);
                 case "phone": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
                 case "street_address": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
                 case "city": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
