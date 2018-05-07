@@ -9,24 +9,35 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using SparkAPI.Models;
-using System.Text.RegularExpressions;
+using SparkWebSite;
+
+
 
 public partial class Members : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!Page.IsPostBack)
+        {
+
+        }
 
         table.Rows.Clear();
         table.Rows.Add(addMemberTitleRow());
 
         List<Member> memberList;
 
+        /*
+         * Check if there is a Search query string and if there is call the preform search function.
+         * 
+         * 
+         */
         if (Request.QueryString["search"] != null)
         {
             performSearch(Request.QueryString["search"]);
         }
 
-
+        //Check if there is a memberlist currently stored in session state, if there is load it into the memberlist; if not get member list from api.
         if (Page.Session["mList"] != null)
         {
             memberList = (List<Member>)Page.Session["mList"];
@@ -36,18 +47,30 @@ public partial class Members : System.Web.UI.Page
             memberList = getMemberList();
         }
 
+
+        //Populate member table from the member list.
         foreach (Member cur in memberList)
         {
             table.Rows.Add(addMemberRow(cur));
         }
 
-        if (Page.Session["note"] != null)
+        //Set Note if one exists.
+        if (Page.Session["mNote"] != null)
         {
-            NoteLabel.Text = Page.Session["note"].ToString().ToUpper();
+            NoteLabel.Text = Page.Session["mNote"].ToString().ToUpper();
         }
 
     }
 
+
+
+    /*
+     * getMemberList()
+     * 
+     * Obtains the member table from the api and deserializes it into a List of Members.
+     * 
+     * returns: filled list of members form the spark-central API.
+     */
     private List<Member> getMemberList()
     {
         var client = new WebClient();
@@ -59,59 +82,79 @@ public partial class Members : System.Web.UI.Page
 
     }
 
-    protected void buttonNewMember_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("/NewMember.aspx");
-    }
 
+    /*
+     * addMemberTitleRow()
+     * 
+     * returns: TableHeaderRow populated with information relevant to the member table.
+     * 
+     */
     protected TableHeaderRow addMemberTitleRow()
     {
         TableHeaderRow ret = new TableHeaderRow();
-        ret.Cells.Add(addHeaderCell("ID"));
-        ret.Cells.Add(addHeaderCell("Last Name"));
-        ret.Cells.Add(addHeaderCell("First Name"));
-        ret.Cells.Add(addHeaderCell("Guardian"));
-        ret.Cells.Add(addHeaderCell("Date of Birth"));
-        ret.Cells.Add(addHeaderCell("Phone"));
-        ret.Cells.Add(addHeaderCell("Street"));
-        ret.Cells.Add(addHeaderCell("City"));
-        ret.Cells.Add(addHeaderCell("State"));
-        ret.Cells.Add(addHeaderCell("Zip"));
-        ret.Cells.Add(addHeaderCell("Quota"));
-        ret.Cells.Add(addHeaderCell("Adult"));
-        ret.Cells.Add(addHeaderCell("Ethnicity"));
-        ret.Cells.Add(addHeaderCell("Tech Restricted"));
-        ret.Cells.Add(addHeaderCell("West Central"));
-        ret.Cells.Add(addHeaderCell("Edit/Delete"));
+        ret.Cells.Add(Utilities.addHeaderCell("ID"));
+        ret.Cells.Add(Utilities.addHeaderCell("Last Name"));
+        ret.Cells.Add(Utilities.addHeaderCell("First Name"));
+        ret.Cells.Add(Utilities.addHeaderCell("Guardian"));
+        ret.Cells.Add(Utilities.addHeaderCell("Date of Birth"));
+        ret.Cells.Add(Utilities.addHeaderCell("Phone"));
+        ret.Cells.Add(Utilities.addHeaderCell("Street"));
+        ret.Cells.Add(Utilities.addHeaderCell("City"));
+        ret.Cells.Add(Utilities.addHeaderCell("State"));
+        ret.Cells.Add(Utilities.addHeaderCell("Zip"));
+        ret.Cells.Add(Utilities.addHeaderCell("Quota"));
+        ret.Cells.Add(Utilities.addHeaderCell("Adult"));
+        ret.Cells.Add(Utilities.addHeaderCell("Ethnicity"));
+        ret.Cells.Add(Utilities.addHeaderCell("Tech Restricted"));
+        ret.Cells.Add(Utilities.addHeaderCell("West Central"));
+        ret.Cells.Add(Utilities.addHeaderCell("Edit/Delete"));
 
         ret.BorderWidth = 3;
 
         return ret;
     }
 
+
+    /*
+     * addMemberRow()
+     * 
+     * params: Member m -> the member object to use for populating the information in this TableRow
+     * 
+     * returns: TableRow populated with information from the passed-in member.
+     * 
+     */
     private TableRow addMemberRow(Member m)
     {
         TableRow ret = new TableRow();
-        ret.Cells.Add(addCell(m.member_id.ToString()));
-        ret.Cells.Add(addCell(m.last_name));
-        ret.Cells.Add(addCell(m.first_name));
-        ret.Cells.Add(addCell(m.guardian_name));
-        ret.Cells.Add(addCell(m.dob.ToShortDateString()));
-        ret.Cells.Add(addCell(m.phone));
-        ret.Cells.Add(addCell(m.street_address));
-        ret.Cells.Add(addCell(m.city));
-        ret.Cells.Add(addCell(m.state));
-        ret.Cells.Add(addCell(m.zip.ToString()));
-        ret.Cells.Add(addCell(m.quota.ToString()));
-        ret.Cells.Add(addCell(m.is_adult.ToString()));
-        ret.Cells.Add(addCell(m.ethnicity));
-        ret.Cells.Add(addCell(m.restricted_to_tech.ToString()));
-        ret.Cells.Add(addCell(m.west_central_resident.ToString()));
+        ret.Cells.Add(Utilities.addCell(m.member_id.ToString()));
+        ret.Cells.Add(Utilities.addCell(m.last_name));
+        ret.Cells.Add(Utilities.addCell(m.first_name));
+        ret.Cells.Add(Utilities.addCell(m.guardian_name));
+        ret.Cells.Add(Utilities.addCell(m.dob.ToShortDateString()));
+        ret.Cells.Add(Utilities.addCell(m.phone));
+        ret.Cells.Add(Utilities.addCell(m.street_address));
+        ret.Cells.Add(Utilities.addCell(m.city));
+        ret.Cells.Add(Utilities.addCell(m.state));
+        ret.Cells.Add(Utilities.addCell(m.zip.ToString()));
+        ret.Cells.Add(Utilities.addCell(m.quota.ToString()));
+        ret.Cells.Add(Utilities.addCell(m.is_adult.ToString()));
+        ret.Cells.Add(Utilities.addCell(m.ethnicity));
+        ret.Cells.Add(Utilities.addCell(m.restricted_to_tech.ToString()));
+        ret.Cells.Add(Utilities.addCell(m.west_central_resident.ToString()));
         ret.Cells.Add(addButtonCell(m.member_id));
         return ret;
     }
 
-
+    /*
+     * addButtonCell function
+     * params: int id -> the member_id of the current record
+     * 
+     * This method dynamically creates an edit and delete button for the current record inside the member table.
+     * These buttons are placed inside the TableCell that is returned.
+     * 
+     * returns: A table cell that contains the edit and delete buttons.
+     * 
+     */
     private TableCell addButtonCell(int id)
     {
         TableCell ret = new TableCell();
@@ -129,13 +172,13 @@ public partial class Members : System.Web.UI.Page
             "dangerMode: true," +
             "}).then((value) => {" +
             "if(value){" +
-            "deleteMember(" + id.ToString() +");" +
-            "swal('Member deleted', { icon: 'success', });" +
+            "deleteMember(" + id.ToString() + ");" +
+            "swal('Member deleted', { icon: 'success',});" +
             "} else {" +
             "return false;" +
             "}" +
             "})){ return false; };";
-            
+
 
         del.Attributes["title"] = "Delete";
 
@@ -143,7 +186,6 @@ public partial class Members : System.Web.UI.Page
         edit.InnerHtml = "<i class = \"material-icons\">edit</i>";
         edit.Attributes.Add("id", id.ToString());
         edit.Attributes["title"] = "Edit";
-        edit.Attributes["onclick"] = "if(swal('Hello World')){return false;};";
 
         edit.ServerClick += new EventHandler(editClick);
 
@@ -153,13 +195,35 @@ public partial class Members : System.Web.UI.Page
         return ret;
     }
 
+
+    /*
+     * editClick
+     * 
+     * handler for clicking any of the dynamically created edit buttons.
+     * Retrieves the member_id from the sender object.
+     * 
+     */ 
     public void editClick(object sender, EventArgs e)
     {
 
-        return;
+        string id = ((HtmlButton)sender).Attributes["id"];
+        Response.Redirect("EditMember.aspx?memberid=" + id);
+
+
     }
 
-    //Delete Button Click WebMethod
+
+
+    /*Delete Button Click WebMethod
+     * 
+     * Params: int id -> the id of the Member record to be removed
+     * 
+     * This method sends a delete request to the API to remove a specific member from the database.
+     * It is a static WebMethod so that it can be called asyncronously from javascript.
+     * 
+     * returns: void
+     * 
+     */
     [System.Web.Services.WebMethod]
     public static void deleteClick(int id)
     {
@@ -182,44 +246,14 @@ public partial class Members : System.Web.UI.Page
     }
 
 
-    private TableCell addCell(string content)
-    {
-        TableCell ret = new TableCell();
-        ret.Text = content;
-        return ret;
-    }
-
-    private TableHeaderCell addHeaderCell(string content)
-    {
-        TableHeaderCell ret = new TableHeaderCell();
-        ret.Text = content;
-        return ret;
-    }
-
-
-    private bool containsStr(String arrow, String target)
-    {
-        try
-        {
-            Regex reg = new Regex(arrow);
-            return reg.IsMatch(target);
-
-        }
-        catch(Exception e)
-        {
-            return false;
-        }
-    }
-
-
     //Search Button Click
     protected void btnSearch_Click(object sender, EventArgs e)
     {
         var searchText = Server.UrlEncode(txtSearch.Text);
-        if( searchText == "")
+        if (searchText == "")
         {
             Page.Session["mList"] = null;
-            Page.Session["note"] = null;
+            Page.Session["mNote"] = null;
             Response.Redirect("Members.aspx");
         }
 
@@ -228,12 +262,25 @@ public partial class Members : System.Web.UI.Page
     }
 
 
+
+    /*
+     * performSearch Method
+     * params: string text -> the string to search for
+     * 
+     * This method obtains the member list from the api, searches for the text and stores all matches in a table inside the session state.
+     * 
+     *
+     * 
+     * returns: void
+     * 
+     * 
+     */
     protected void performSearch(string text)
     {
         if (text == "")
         {
             Page.Session["mList"] = null;
-            Page.Session["note"] = null;
+            Page.Session["mNote"] = null;
             return;
         }
         String arrow = text.ToLower();
@@ -241,26 +288,26 @@ public partial class Members : System.Web.UI.Page
         List<Member> results = new List<Member>();
         foreach (Member cur in memberList)
         {
-            if (containsStr(arrow, cur.last_name.ToLower()) ||
-                containsStr(arrow, cur.first_name.ToLower()) ||
-                containsStr(arrow, cur.member_id.ToString()) ||
-                containsStr(arrow, cur.state.ToString().ToLower()) ||
-                containsStr(arrow, cur.zip.ToString()) ||
-                containsStr(arrow, cur.phone.ToString().ToLower()) ||
-                containsStr(arrow, cur.city.ToString().ToLower()))
+            if (Utilities.containsStr(arrow, cur.last_name.ToLower()) ||
+                Utilities.containsStr(arrow, cur.first_name.ToLower()) ||
+                Utilities.containsStr(arrow, cur.member_id.ToString()) ||
+                Utilities.containsStr(arrow, cur.state.ToString().ToLower()) ||
+                Utilities.containsStr(arrow, cur.zip.ToString()) ||
+                Utilities.containsStr(arrow, cur.phone.ToString().ToLower()) ||
+                Utilities.containsStr(arrow, cur.city.ToString().ToLower()))
             {
                 results.Add(cur);
             }
             else if (cur.guardian_name != null)
             {
-                if (containsStr(arrow, cur.guardian_name.ToString().ToLower()))
+                if (Utilities.containsStr(arrow, cur.guardian_name.ToString().ToLower()))
                 {
                     results.Add(cur);
                 }
             }
         }
         Page.Session["mList"] = results;
-        Page.Session["note"] = "Search Results For: '" + arrow + "'";
+        Page.Session["mNote"] = "Search Results For: '" + arrow + "'";
     }
 
     //Add New Member Submit Click
@@ -300,10 +347,10 @@ public partial class Members : System.Web.UI.Page
                 string location = response.Get("Location");
                 string id = location.Split('=')[1];
 
-                Page.Session["note"] = "Member Added With ID: " + id;
+                Page.Session["mNote"] = "Member Added With ID: " + id;
 
                 Response.Redirect("Members.aspx");
-                
+
             }
             catch (Exception ex)
             {
