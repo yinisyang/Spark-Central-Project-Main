@@ -14,6 +14,7 @@ namespace SparkAPI.Models
         public string guardian_name { get; set; }
         public string email { get; set; }
         public DateTime dob { get; set; }
+        public DateTime signup_date { get; set; }
         public string phone { get; set; }
         public string street_address { get; set; }
         public string city { get; set; }
