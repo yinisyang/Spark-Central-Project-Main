@@ -21,22 +21,18 @@
 
     <div class="mdl-grid" style="overflow-x: auto">
 
-        <div class="mdl-cell mdl-cell--11-col" style="padding-left: 5%">
-
-
-            <!--  Search Bar  -->
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-left:5px">
-                <asp:TextBox ID="txtSearch" runat="server" placeholder="Search..."></asp:TextBox>
-                <asp:Button ID="btnSearch" Text="Search" Style="height: 25px" runat="server" CssClass="hidden" OnClick="btnSearch_Click" />
-            </div>
-
+        
             <br />
             <asp:Label ID="NoteLabel" class="mdl-list__item-primary-content" Style="color: darkcyan" runat="server" Text=""></asp:Label>
 
-            <asp:Table ID="table" class="mdl-data-table mdl-js-data-table" runat="server">
-            </asp:Table>
+            <div style="padding-left: 5%; overflow-x: auto">
 
-        </div>
+                <asp:Table ID="table" class="mdl-data-table" runat="server">
+                </asp:Table>
+
+            </div>
+
+
         <div class="mdl-cell mdl-cell--1-col mdl-card__menu">
 
 

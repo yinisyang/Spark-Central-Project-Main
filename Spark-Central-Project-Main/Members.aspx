@@ -1,7 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Members.aspx.cs" Inherits="Members" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    
     <script src="scripts/Members.js"></script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="PanelPlaceHolder" runat="Server">
     <asp:Panel ID="pane" class="mdl-layout__tab-bar mdl-js-ripple-effect" runat="server">
@@ -29,11 +31,6 @@
             <i class="material-icons">person_add</i>
         </button>
 
-        <!-- Search Bar -->
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <asp:TextBox ID="txtSearch" runat="server" placeholder="Search..."></asp:TextBox>
-            <asp:Button ID="btnSearch" Text="Search" Style="height: 25px" runat="server" CssClass="hidden" OnClick="btnSearch_Click" />
-        </div>
 
         <br />
 
@@ -168,7 +165,7 @@
     <!-- Member Table -->
     <div style="padding-left: 5%; overflow-x: auto">
 
-        <asp:Table ID="table" class="mdl-data-table mdl-js-data-table" runat="server">
+        <asp:Table ID="table" class="mdl-data-table" runat="server">
         </asp:Table>
 
     </div>
