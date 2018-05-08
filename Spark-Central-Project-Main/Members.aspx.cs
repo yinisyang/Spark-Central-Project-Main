@@ -27,25 +27,7 @@ public partial class Members : System.Web.UI.Page
 
         List<Member> memberList;
 
-        /*
-         * Check if there is a Search query string and if there is call the preform search function.
-         * 
-         * 
-         */
-        if (Request.QueryString["search"] != null)
-        {
-            performSearch(Request.QueryString["search"]);
-        }
-
-        //Check if there is a memberlist currently stored in session state, if there is load it into the memberlist; if not get member list from api.
-        if (Page.Session["mList"] != null)
-        {
-            memberList = (List<Member>)Page.Session["mList"];
-        }
-        else
-        {
-            memberList = getMemberList();
-        }
+        memberList = getMemberList();
 
 
         //Populate member table from the member list.
@@ -58,6 +40,7 @@ public partial class Members : System.Web.UI.Page
         if (Page.Session["mNote"] != null)
         {
             NoteLabel.Text = Page.Session["mNote"].ToString().ToUpper();
+            Page.Session["mNote"] = null;
         }
 
     }
@@ -92,11 +75,12 @@ public partial class Members : System.Web.UI.Page
     protected TableHeaderRow addMemberTitleRow()
     {
         TableHeaderRow ret = new TableHeaderRow();
+        ret.TableSection = TableRowSection.TableHeader;
         ret.Cells.Add(Utilities.addHeaderCell("ID"));
         ret.Cells.Add(Utilities.addHeaderCell("Last Name"));
         ret.Cells.Add(Utilities.addHeaderCell("First Name"));
         ret.Cells.Add(Utilities.addHeaderCell("Guardian"));
-        ret.Cells.Add(Utilities.addHeaderCell("Date of Birth"));
+        //ret.Cells.Add(Utilities.addHeaderCell("Date of Birth"));
         ret.Cells.Add(Utilities.addHeaderCell("Phone"));
         ret.Cells.Add(Utilities.addHeaderCell("Street"));
         ret.Cells.Add(Utilities.addHeaderCell("City"));
@@ -104,10 +88,11 @@ public partial class Members : System.Web.UI.Page
         ret.Cells.Add(Utilities.addHeaderCell("Zip"));
         ret.Cells.Add(Utilities.addHeaderCell("Quota"));
         ret.Cells.Add(Utilities.addHeaderCell("Adult"));
-        ret.Cells.Add(Utilities.addHeaderCell("Ethnicity"));
+        //ret.Cells.Add(Utilities.addHeaderCell("Ethnicity"));
         ret.Cells.Add(Utilities.addHeaderCell("Tech Restricted"));
-        ret.Cells.Add(Utilities.addHeaderCell("West Central"));
+        //ret.Cells.Add(Utilities.addHeaderCell("West Central"));
         ret.Cells.Add(Utilities.addHeaderCell("Edit/Delete"));
+        ret.Cells.Add(Utilities.addHeaderCell("Check-Out"));
 
         ret.BorderWidth = 3;
 
@@ -126,11 +111,12 @@ public partial class Members : System.Web.UI.Page
     private TableRow addMemberRow(Member m)
     {
         TableRow ret = new TableRow();
+        ret.TableSection = TableRowSection.TableBody;
         ret.Cells.Add(Utilities.addCell(m.member_id.ToString()));
         ret.Cells.Add(Utilities.addCell(m.last_name));
         ret.Cells.Add(Utilities.addCell(m.first_name));
         ret.Cells.Add(Utilities.addCell(m.guardian_name));
-        ret.Cells.Add(Utilities.addCell(m.dob.ToShortDateString()));
+        //ret.Cells.Add(Utilities.addCell(m.dob.ToShortDateString()));
         ret.Cells.Add(Utilities.addCell(m.phone));
         ret.Cells.Add(Utilities.addCell(m.street_address));
         ret.Cells.Add(Utilities.addCell(m.city));
@@ -138,12 +124,29 @@ public partial class Members : System.Web.UI.Page
         ret.Cells.Add(Utilities.addCell(m.zip.ToString()));
         ret.Cells.Add(Utilities.addCell(m.quota.ToString()));
         ret.Cells.Add(Utilities.addCell(m.is_adult.ToString()));
-        ret.Cells.Add(Utilities.addCell(m.ethnicity));
+        //ret.Cells.Add(Utilities.addCell(m.ethnicity));
         ret.Cells.Add(Utilities.addCell(m.restricted_to_tech.ToString()));
-        ret.Cells.Add(Utilities.addCell(m.west_central_resident.ToString()));
+        //ret.Cells.Add(Utilities.addCell(m.west_central_resident.ToString()));
         ret.Cells.Add(addButtonCell(m.member_id));
+        ret.Cells.Add(addCheckOutCell(m.member_id));
         return ret;
     }
+
+
+    private TableCell addCheckOutCell(int id)
+    {
+        TableCell ret = new TableCell();
+        HtmlButton checkOut = new HtmlButton();
+        checkOut.Attributes["class"] = "mdl-button mdl-js-button mdl-button--icon";
+        checkOut.Attributes.Add("id", id.ToString());
+        checkOut.Attributes["title"] = "Check-Out";
+        checkOut.Attributes["type"] = "button";
+        checkOut.InnerHtml = "<i class = \"material-icons\">shopping_cart</i>";
+        ret.Controls.Add(checkOut);
+        return ret;
+    }
+
+
 
     /*
      * addButtonCell function
@@ -243,71 +246,6 @@ public partial class Members : System.Web.UI.Page
             {
             }
         }
-    }
-
-
-    //Search Button Click
-    protected void btnSearch_Click(object sender, EventArgs e)
-    {
-        var searchText = Server.UrlEncode(txtSearch.Text);
-        if (searchText == "")
-        {
-            Page.Session["mList"] = null;
-            Page.Session["mNote"] = null;
-            Response.Redirect("Members.aspx");
-        }
-
-        Response.Redirect("Members.aspx?search=" + searchText);
-
-    }
-
-
-
-    /*
-     * performSearch Method
-     * params: string text -> the string to search for
-     * 
-     * This method obtains the member list from the api, searches for the text and stores all matches in a table inside the session state.
-     * 
-     *
-     * 
-     * returns: void
-     * 
-     * 
-     */
-    protected void performSearch(string text)
-    {
-        if (text == "")
-        {
-            Page.Session["mList"] = null;
-            Page.Session["mNote"] = null;
-            return;
-        }
-        String arrow = text.ToLower();
-        List<Member> memberList = getMemberList();
-        List<Member> results = new List<Member>();
-        foreach (Member cur in memberList)
-        {
-            if (Utilities.containsStr(arrow, cur.last_name.ToLower()) ||
-                Utilities.containsStr(arrow, cur.first_name.ToLower()) ||
-                Utilities.containsStr(arrow, cur.member_id.ToString()) ||
-                Utilities.containsStr(arrow, cur.state.ToString().ToLower()) ||
-                Utilities.containsStr(arrow, cur.zip.ToString()) ||
-                Utilities.containsStr(arrow, cur.phone.ToString().ToLower()) ||
-                Utilities.containsStr(arrow, cur.city.ToString().ToLower()))
-            {
-                results.Add(cur);
-            }
-            else if (cur.guardian_name != null)
-            {
-                if (Utilities.containsStr(arrow, cur.guardian_name.ToString().ToLower()))
-                {
-                    results.Add(cur);
-                }
-            }
-        }
-        Page.Session["mList"] = results;
-        Page.Session["mNote"] = "Search Results For: '" + arrow + "'";
     }
 
     //Add New Member Submit Click

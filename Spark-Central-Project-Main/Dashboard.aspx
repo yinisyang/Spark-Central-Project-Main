@@ -60,8 +60,11 @@
                     <h2 class="mdl-card__title-text">Checkouts</h2>
                 </div>
                 <div class="mdl-card__actions mdl-card--border">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Check-Out
-                    </a>
+
+                    <button id="checkOutButton" type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" title="Check-Out">
+                        Check-Out
+                    </button>
+
                     <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Check-In
                     </a>
                 </div>
@@ -90,10 +93,58 @@
 
     </div>
 
+
+    <!-- Check Out Dialog -->
+    <dialog class="mdl-dialog" id="checkOutDialog" style="width: 60%">
+        <h4 class="mdl-dialog__title">Check-Out</h4>
+        <div class="mdl-dialog__content">
+            <div class="mdl-grid" style="width: 90%">
+                <div class="mdl-cell mdl-cell--6-col">
+                    <form action="#">
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="txtmemberid">
+                            <label class="mdl-textfield__label" for="txtmemberid">Member Id</label>
+                        </div>
+                        <button id="btnFindMember" type="button" onclick="findMember()" class="mdl-button mdl-js-button mdl-button" title="Find">
+                            Find
+                        </button>
+                    </form>
+                    <div id="memberNameField"></div>
+                    <div id="memberhidden" class="hidden"></div>
+                </div>
+                <div class="mdl-cell mdl-cell--6-col">
+                    <form action="#">
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="txtitemid">
+                            <label class="mdl-textfield__label" for="txtitemid">Item Id</label>
+                        </div>
+                        <button id="btnFindItem" type="button" onclick="findItem()" class="mdl-button mdl-js-button mdl-button" title="Find">
+                            Find
+                        </button>
+                    </form>
+                    <div id="itemNameField"></div>
+                    <div id="itemhidden" class="hidden"></div>
+                </div>
+            </div>
+        </div>
+        <div class="mdl-dialog__actions">
+            <button id="btnCheckOut" type="button" class="mdl-button mdl-js-button mdl-button" title="Confirm">
+                Confirm
+            </button>
+            <button type="button" class="mdl-button close">Cancel</button>
+        </div>
+    </dialog>
+
+
+
+
+
+
+    <!-- Smart Add Dialog -->
     <dialog class="mdl-dialog" id="smartDialog" style="width: 30%">
         <h4 class="mdl-dialog__title">Smart Add</h4>
         <div class="mdl-dialog__content">
-            <div class="mdl-grid" style="width: 90%">
+            <div class="mdl-grid" id="smartGrid" style="width: 90%">
                 <div class="mdl-cell mdl-cell--6-col">
                     <form action="#">
                         <div class="mdl-textfield mdl-js-textfield">
@@ -105,8 +156,11 @@
                 <div class="mdl-cell mdl-cell--6-col">
                 </div>
 
-
-
+                <div class="mdl-cell mdl-cell--4-col"></div>
+                <div class="mdl-cell mdl-cell--4-col">
+                    <img id="bookPic" src="images/empty.png"/>
+                </div>
+                <div class="mdl-cell mdl-cell--4-col"></div>
 
                 <div class="mdl-cell mdl-cell--6-col">
                     <div id="bookTitle"></div>
@@ -131,7 +185,7 @@
             <button id="btnAdd" type="button" onclick="addBook()" class="mdl-button mdl-js-button mdl-button" title="Add">
                 Add
             </button>
-            <button id="btnSearch" type="button" onclick="loadDoc()" class="mdl-button mdl-js-button mdl-button" title="Search">
+            <button id="btnSearch" type="button" onclick="findGoogleBook()" class="mdl-button mdl-js-button mdl-button" title="Search">
                 Search
             </button>
             <button type="button" class="mdl-button close">Cancel</button>

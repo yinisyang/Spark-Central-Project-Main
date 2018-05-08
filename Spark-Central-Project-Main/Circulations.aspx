@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Circulations.aspx.cs" Inherits="Circulations" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <script src="scripts/Circulations.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="PanelPlaceHolder" runat="Server">
     <asp:Panel ID="pane" class="mdl-layout__tab-bar mdl-js-ripple-effect" runat="server">
@@ -18,7 +19,7 @@
     <div style="padding-left: 5%;">
 
         <br />
-        <asp:Table ID="table" class="mdl-data-table mdl-js-data-table" runat="server">
+        <asp:Table ID="table" class="mdl-data-table" runat="server">
         </asp:Table>
 
 

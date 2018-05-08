@@ -44,6 +44,7 @@ public partial class Catalog : System.Web.UI.Page
         if (Page.Session["cNote"] != null)
         {
             NoteLabel.Text = Page.Session["cNote"].ToString().ToUpper();
+            Page.Session["cNote"] = null;
         }
     }
 
@@ -58,20 +59,8 @@ public partial class Catalog : System.Web.UI.Page
 
         List<Book> bookList;
 
-
-        if (Request.QueryString["search"] != null)
-        {
-            performSearch(Request.QueryString["search"].ToString());
-            bookList = (List<Book>)Page.Session["cList"];
-        }
-        else if (Page.Session["cList"] != null)
-        {
-            bookList = (List<Book>)Page.Session["cList"];
-        }
-        else
-        {
-            bookList = getBookList();
-        }
+        bookList = getBookList();
+        
 
         foreach (Book cur in bookList)
         {
@@ -90,20 +79,8 @@ public partial class Catalog : System.Web.UI.Page
 
         List<DVD> dvdList;
 
-        
-        if (Request.QueryString["search"] != null)
-        {
-            performSearch(Request.QueryString["search"].ToString());
-            dvdList = (List<DVD>)Page.Session["cList"];
-        }
-        else if (Page.Session["cList"] != null)
-        {
-            dvdList = (List<DVD>)Page.Session["cList"];
-        }
-        else
-        {
-            dvdList = getDVDList();
-        }
+        dvdList = getDVDList();
+
 
         foreach (DVD cur in dvdList)
         {
@@ -122,110 +99,12 @@ public partial class Catalog : System.Web.UI.Page
 
         List<Technology> techList;
 
+        techList = getTechList();
 
-
-        if (Request.QueryString["search"] != null)
-        {
-            performSearch(Request.QueryString["search"].ToString());
-            techList = (List<Technology>)Page.Session["cList"];
-        }
-        else if (Page.Session["cList"] != null)
-        {
-            techList = (List<Technology>)Page.Session["cList"];
-        }
-        else
-        {
-            techList = getTechList();
-        }
 
         foreach (Technology cur in techList)
         {
             table.Rows.Add(addTechRow(cur));
-        }
-    }
-
-
-    protected void btnSearch_Click(object sender, EventArgs e)
-    {
-
-        var searchText = Server.UrlEncode(txtSearch.Text);
-        if (searchText == "")
-        {
-            Page.Session["cList"] = null;
-            Page.Session["cNote"] = null;
-            Response.Redirect("Catalog.aspx");
-        }
-
-        Response.Redirect("Catalog.aspx?search=" + searchText);
-    }
-
-    protected void performSearch(string text)
-    {
-        if (text == "")
-        {
-            Page.Session["cList"] = null;
-            Page.Session["cNote"] = null;
-            return;
-        }
-
-        String arrow = text.ToLower();
-
-        switch (Page.Session["CatalogMode"].ToString())
-        {
-            case "book":
-                List<Book> bList = getBookList();
-                List<Book> bresults = new List<Book>();
-                foreach (Book cur in bList)
-                {
-                    if (Utilities.containsStr(arrow, cur.item_id.ToString()) ||
-                        Utilities.containsStr(arrow, cur.title.ToLower()) ||
-                        Utilities.containsStr(arrow, cur.publisher.ToLower()) ||
-                        Utilities.containsStr(arrow, cur.publication_year.ToString()) ||
-                        Utilities.containsStr(arrow, cur.isbn_10.ToLower()) ||
-                        Utilities.containsStr(arrow, cur.author.ToLower()) ||
-                        Utilities.containsStr(arrow, cur.category.ToLower()) ||
-                        Utilities.containsStr(arrow, cur.isbn_13.ToString().ToLower()))
-                    {
-                        bresults.Add(cur);
-                    }
-                }
-                Page.Session["cList"] = bresults;
-                Page.Session["cNote"] = "Book Search Results For: '" + arrow + "'";
-                break;
-
-
-            case "dvd":
-                List<DVD> dList = getDVDList();
-                List<DVD> dresults = new List<DVD>();
-                foreach (DVD cur in dList)
-                {
-                    if (Utilities.containsStr(arrow, cur.title.ToLower()) ||
-                        Utilities.containsStr(arrow, cur.release_year.ToString()) ||
-                        Utilities.containsStr(arrow, cur.rating.ToString()) ||
-                        Utilities.containsStr(arrow, cur.item_id.ToString()))
-                    {
-                        dresults.Add(cur);
-                    }
-                }
-                Page.Session["cList"] = dresults;
-                Page.Session["cNote"] = "DVD Search Results For: '" + arrow + "'";
-                break;
-
-
-            case "tech":
-                List<Technology> tList = getTechList();
-                List<Technology> tresults = new List<Technology>();
-                foreach (Technology cur in tList)
-                {
-                    if (Utilities.containsStr(arrow, cur.name.ToLower()) ||
-                        Utilities.containsStr(arrow, cur.item_id.ToString()))
-                    {
-                        tresults.Add(cur);
-                    }
-                }
-                Page.Session["cList"] = tresults;
-                Page.Session["cNote"] = "Technology Search Results For: '" + arrow + "'";
-                break;
         }
     }
 
@@ -407,15 +286,16 @@ public partial class Catalog : System.Web.UI.Page
     private TableHeaderRow addBookTitleRow()
     {
         TableHeaderRow ret = new TableHeaderRow();
+        ret.TableSection = TableRowSection.TableHeader;
         ret.Cells.Add(Utilities.addHeaderCell("ID"));
         ret.Cells.Add(Utilities.addHeaderCell("Title"));
         ret.Cells.Add(Utilities.addHeaderCell("Author"));
         ret.Cells.Add(Utilities.addHeaderCell("Category"));
-        ret.Cells.Add(Utilities.addHeaderCell("Publisher"));
+        //ret.Cells.Add(Utilities.addHeaderCell("Publisher"));
         ret.Cells.Add(Utilities.addHeaderCell("Year"));
         ret.Cells.Add(Utilities.addHeaderCell("Pages"));
-        ret.Cells.Add(Utilities.addHeaderCell("ISBN"));
-        ret.Cells.Add(Utilities.addHeaderCell("ISBN13"));
+        //ret.Cells.Add(Utilities.addHeaderCell("ISBN"));
+        //ret.Cells.Add(Utilities.addHeaderCell("ISBN13"));
         ret.Cells.Add(Utilities.addHeaderCell("Edit/Delete"));
 
         ret.BorderWidth = 3;
@@ -425,6 +305,7 @@ public partial class Catalog : System.Web.UI.Page
     private TableHeaderRow addDVDTitleRow()
     {
         TableHeaderRow ret = new TableHeaderRow();
+        ret.TableSection = TableRowSection.TableHeader;
         ret.Cells.Add(Utilities.addHeaderCell("ID"));
         ret.Cells.Add(Utilities.addHeaderCell("Title"));
         ret.Cells.Add(Utilities.addHeaderCell("Year"));
@@ -438,6 +319,7 @@ public partial class Catalog : System.Web.UI.Page
     private TableHeaderRow addTechTitleRow()
     {
         TableHeaderRow ret = new TableHeaderRow();
+        ret.TableSection = TableRowSection.TableHeader;
         ret.Cells.Add(Utilities.addHeaderCell("ID"));
         ret.Cells.Add(Utilities.addHeaderCell("Name"));
         ret.Cells.Add(Utilities.addHeaderCell("Edit/Delete"));
@@ -450,15 +332,16 @@ public partial class Catalog : System.Web.UI.Page
     private TableRow addBookRow(Book b)
     {
         TableRow ret = new TableRow();
+        ret.TableSection = TableRowSection.TableBody;
         ret.Cells.Add(Utilities.addCell(b.item_id.ToString()));
         ret.Cells.Add(Utilities.addCell(b.title));
         ret.Cells.Add(Utilities.addCell(b.author));
         ret.Cells.Add(Utilities.addCell(b.category));
-        ret.Cells.Add(Utilities.addCell(b.publisher));
+        //ret.Cells.Add(Utilities.addCell(b.publisher));
         ret.Cells.Add(Utilities.addCell(b.publication_year.ToString()));
         ret.Cells.Add(Utilities.addCell(b.pages.ToString()));
-        ret.Cells.Add(Utilities.addCell(b.isbn_10));
-        ret.Cells.Add(Utilities.addCell(b.isbn_13));
+        //ret.Cells.Add(Utilities.addCell(b.isbn_10));
+        //ret.Cells.Add(Utilities.addCell(b.isbn_13));
         ret.Cells.Add(addButtonCell_Book(b.item_id));
         return ret;
     }
@@ -466,6 +349,7 @@ public partial class Catalog : System.Web.UI.Page
     private TableRow addDVDRow(DVD d)
     {
         TableRow ret = new TableRow();
+        ret.TableSection = TableRowSection.TableBody;
         ret.Cells.Add(Utilities.addCell(d.item_id.ToString()));
         ret.Cells.Add(Utilities.addCell(d.title));
         ret.Cells.Add(Utilities.addCell(d.release_year.ToString()));
@@ -478,6 +362,7 @@ public partial class Catalog : System.Web.UI.Page
     private TableRow addTechRow(Technology t)
     {
         TableRow ret = new TableRow();
+        ret.TableSection = TableRowSection.TableBody;
         ret.Cells.Add(Utilities.addCell(t.item_id.ToString()));
         ret.Cells.Add(Utilities.addCell(t.name));
         ret.Cells.Add(addButtonCell_Tech(t.item_id));

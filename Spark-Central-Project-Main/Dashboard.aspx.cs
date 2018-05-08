@@ -27,7 +27,7 @@ public partial class Dashboard : System.Web.UI.Page
     }
 
     [System.Web.Services.WebMethod]
-    public static void Submit_Click(Book b)
+    public static string Submit_Click(Book b)
     {
         JavaScriptSerializer serializer = new JavaScriptSerializer();
         string json = serializer.Serialize(b);
@@ -40,9 +40,16 @@ public partial class Dashboard : System.Web.UI.Page
             try
             {
                 client.UploadString(new Uri("http://api.sparklib.org/api/book"), "POST", json);
+
+                var response = client.ResponseHeaders;
+                string location = response.Get("Location");
+                string id = location.Split('=')[1];
+                return id;
+
             }
             catch (Exception ex)
             {
+                return "";
             }
         }
     }
