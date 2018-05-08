@@ -14,6 +14,7 @@ namespace SparkAPI.Models
         public string guardian_name { get; set; }
         public string email { get; set; }
         public DateTime dob { get; set; }
+        public DateTime signup_date { get; set; }
         public string phone { get; set; }
         public string street_address { get; set; }
         public string city { get; set; }
@@ -35,6 +36,7 @@ namespace SparkAPI.Models
                 case "guardian_name": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
                 case "email": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
                 case "dob": return new Tuple<SqlDbType, int>(SqlDbType.Date, 3);
+                case "signup_date": return new Tuple<SqlDbType, int>(SqlDbType.Date, 3);
                 case "phone": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
                 case "street_address": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
                 case "city": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
