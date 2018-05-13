@@ -74,6 +74,14 @@ public partial class ManageAdmins : System.Web.UI.Page
     {
         TableRow ret = new TableRow();
         ret.Cells.Add(addCell(username));
+        if (username.Equals("sparkcentral"))
+        {
+            ret.Cells.Add(addCell(""));
+        }
+        else
+        {
+            ret.Cells.Add(addDeleteCell(username));
+        }
         return ret;
     }
 
@@ -84,10 +92,37 @@ public partial class ManageAdmins : System.Web.UI.Page
         return ret;
     }
 
+    private void Click_Delete(object sender, EventArgs e)
+    {
+        Button button = (Button)sender;
+        string buttonId = button.ID;
+
+        SqlConnection con = new SqlConnection("Data Source=SQL7004.site4now.net;Initial Catalog=DB_A3414F_SparkCentralLib;User Id=DB_A3414F_SparkCentralLib_admin;Password=CreativeCr0ssing;");
+
+        SqlCommand cmd = new SqlCommand("DELETE FROM Admins WHERE username = '" + buttonId + "'", con);
+        con.Open();
+        cmd.ExecuteNonQuery();
+
+        Response.Redirect(Request.RawUrl);
+    }
+
+    private TableCell addDeleteCell(string username)
+    {
+        TableCell ret = new TableCell();
+        Button deleteButton = new Button();
+        deleteButton.Text = "Delete";
+        deleteButton.ID = username;
+        deleteButton.Click += new EventHandler(Click_Delete);
+        ret.Controls.Add(deleteButton);
+
+        return ret;
+    }
+
     protected TableHeaderRow addAdminTitleRow()
     {
         TableHeaderRow ret = new TableHeaderRow();
         ret.Cells.Add(addHeaderCell("Username"));
+        ret.Cells.Add(addHeaderCell("Delete"));
 
         ret.BorderWidth = 3;
 

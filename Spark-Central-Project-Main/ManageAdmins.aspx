@@ -9,7 +9,7 @@
         <a href="/Catalog.aspx" class="mdl-layout__tab">Catalog</a>
         <a href="/Circulations.aspx" class="mdl-layout__tab">Circulations</a>
         <a href="/Reports.aspx" class="mdl-layout__tab">Reports</a>
-        <a href="/Manage.aspx" class="mdl-layout__tab">Manage</a>
+        <a href="/ManageAdmins.aspx" class="mdl-layout__tab">Manage</a>
     </asp:Panel>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder" Runat="Server">

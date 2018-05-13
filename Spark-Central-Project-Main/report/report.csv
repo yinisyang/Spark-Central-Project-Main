@@ -1,0 +1,12 @@
+member_id,first_name,guardian_name,email,dob,street_address,city,state,zip,quota,ethnicity,restricted_to_tech,west_central_resident,last_name,phone,is_adult,signup_date
+20,Tested,Mom,morgan@freeman.com,2/22/1940 12:00:00 AM,777 B Street,HollyWood,CA,992044,100,African American,True,True,Freemanlandtest,5093245111,True,
+22,Freddie,Mom,morgan@freeman.com,2/22/1940 12:00:00 AM,4234 Ten Street,HollyWood,CA,992044,1000,African American,True,False,Freemanland,5093245111,False,
+33,Freddie,Mom,morgan@freeman.com,2/22/1940 12:00:00 AM,777 B Street,HollyWood,CA,992044,1000,African American,True,False,Freemans,5093245111,False,
+114,Andrew,Mom,morgan@freeman.co,2/22/1940 12:00:00 AM,777 B Street,HollyWood,CA,77885,1000,African American,True,False,Freemanship,509333222,False,
+129,Freddie,Mom,morgan@freeman.com,2/22/1940 12:00:00 AM,777 B Street,HollyWood,CA,992044,1000,African American,True,True,Freemans,5093245111,True,
+132,Amber,Darren Sed,adc@mmr.com,5/1/2001 12:00:00 AM,44 Reave Street,New Reeves,OR,992203,2,Caucasian,True,False,Sed,222777666,True,
+139,Andrew,,,1/1/0001 12:00:00 AM,,,,0,0,,False,False,Fleiger,5094757580,True,
+143,,,,1/1/0001 12:00:00 AM,,,,0,0,,False,False,,,False,
+145,,,,1/1/0001 12:00:00 AM,,,,0,0,,False,False,,,False,
+146,,,,1/1/0001 12:00:00 AM,,,,0,0,,False,False,,,False,
+147,,,,1/1/0001 12:00:00 AM,,,,0,0,,False,False,,,False,
