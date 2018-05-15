@@ -17,13 +17,51 @@ public partial class Dashboard : System.Web.UI.Page
     {
 
     }
-    protected void buttonNewMember_Click(object sender, EventArgs e)
+    protected void Submit_ClickMember(object sender, EventArgs e)
     {
-        Response.Redirect("/NewMember.aspx");
-    }
-    protected void buttonViewMembers_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("/Members.aspx");
+        var member = new
+        {
+            first_name = firstName.Text,
+            last_name = lastName.Text,
+            is_adult = (memberGroupValue.Value.Equals("Adult") ? true : false),
+            guardian_name = (guardianName.Text.Equals("") ? null : guardianName.Text),
+            email = email.Text,
+            dob = dateOfBirth.Text,
+            phone = phone.Text,
+            street_address = streetAddress.Text,
+            city = city.Text,
+            state = stateValue.Value,
+            zip = zipCode.Text,
+            quota = checkoutQuota.Text,
+            ethnicity = ethnicityValue.Value,
+            restricted_to_tech = isRestrictedToTech.Checked,
+            west_central_resident = isWestCentralResident.Checked
+        };
+
+        JavaScriptSerializer serializer = new JavaScriptSerializer();
+        string json = serializer.Serialize(member);
+
+        using (var client = new WebClient())
+        {
+            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+
+            try
+            {
+                client.UploadString(new Uri("http://api.sparklib.org/api/member"), "POST", json);
+                var response = client.ResponseHeaders;
+                string location = response.Get("Location");
+                string id = location.Split('=')[1];
+
+                Page.Session["mNote"] = "Member Added With ID: " + id;
+
+                Response.Redirect("Members.aspx");
+
+            }
+            catch (Exception ex)
+            {
+            }
+        }
     }
 
     [System.Web.Services.WebMethod]
