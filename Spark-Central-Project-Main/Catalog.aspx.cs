@@ -159,29 +159,36 @@ public partial class Catalog : System.Web.UI.Page
         b.isbn_10 = bookIsnb10.Text;
         b.isbn_13 = bookIsbn13.Text;
 
-        JavaScriptSerializer serializer = new JavaScriptSerializer();
-        string json = serializer.Serialize(b);
-
-        using (var client = new WebClient())
+        if (!b.title.Equals(""))
         {
-            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string json = serializer.Serialize(b);
 
-            try
+            using (var client = new WebClient())
             {
-                client.UploadString(new Uri("http://api.sparklib.org/api/book"), "POST", json);
-                var response = client.ResponseHeaders;
-                string location = response.Get("Location");
-                string id = location.Split('=')[1];
+                client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+                client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
 
-                Page.Session["cNote"] = "Book Added With ID: " + id;
+                try
+                {
+                    client.UploadString(new Uri("http://api.sparklib.org/api/book"), "POST", json);
+                    var response = client.ResponseHeaders;
+                    string location = response.Get("Location");
+                    string id = location.Split('=')[1];
 
-                Response.Redirect("Catalog.aspx");
+                    Page.Session["cNote"] = "Book Added With ID: " + id;
 
+                    Response.Redirect("Catalog.aspx");
+
+                }
+                catch (Exception ex)
+                {
+                }
             }
-            catch (Exception ex)
-            {
-            }
+        }
+        else
+        {
+            Response.Write(@"<script langauge='text/javascript'>alert('Book Title was left blank');</script>");
         }
     }
 
@@ -195,29 +202,36 @@ public partial class Catalog : System.Web.UI.Page
         d.release_year = year;
         d.rating = dvdRating.Text;
 
-        JavaScriptSerializer serializer = new JavaScriptSerializer();
-        string json = serializer.Serialize(d);
-
-        using (var client = new WebClient())
+        if (!d.title.Equals(""))
         {
-            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string json = serializer.Serialize(d);
 
-            try
+            using (var client = new WebClient())
             {
-                client.UploadString(new Uri("http://api.sparklib.org/api/dvd"), "POST", json);
-                var response = client.ResponseHeaders;
-                string location = response.Get("Location");
-                string id = location.Split('=')[1];
+                client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+                client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
 
-                Page.Session["cNote"] = "DVD Added With ID: " + id;
+                try
+                {
+                    client.UploadString(new Uri("http://api.sparklib.org/api/dvd"), "POST", json);
+                    var response = client.ResponseHeaders;
+                    string location = response.Get("Location");
+                    string id = location.Split('=')[1];
 
-                Response.Redirect("Catalog.aspx");
+                    Page.Session["cNote"] = "DVD Added With ID: " + id;
 
+                    Response.Redirect("Catalog.aspx");
+
+                }
+                catch (Exception ex)
+                {
+                }
             }
-            catch (Exception ex)
-            {
-            }
+        }
+        else
+        {
+            Response.Write(@"<script langauge='text/javascript'>alert('DVD Title was left blank');</script>");
         }
     }
 
@@ -226,29 +240,36 @@ public partial class Catalog : System.Web.UI.Page
         Technology t = new Technology();
         t.name = techName.Text;
 
-        JavaScriptSerializer serializer = new JavaScriptSerializer();
-        string json = serializer.Serialize(t);
-
-        using (var client = new WebClient())
+        if (!t.name.Equals(""))
         {
-            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string json = serializer.Serialize(t);
 
-            try
+            using (var client = new WebClient())
             {
-                client.UploadString(new Uri("http://api.sparklib.org/api/technology"), "POST", json);
-                var response = client.ResponseHeaders;
-                string location = response.Get("Location");
-                string id = location.Split('=')[1];
+                client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+                client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
 
-                Page.Session["cNote"] = "Technology Added With ID: " + id;
+                try
+                {
+                    client.UploadString(new Uri("http://api.sparklib.org/api/technology"), "POST", json);
+                    var response = client.ResponseHeaders;
+                    string location = response.Get("Location");
+                    string id = location.Split('=')[1];
 
-                Response.Redirect("Catalog.aspx");
+                    Page.Session["cNote"] = "Technology Added With ID: " + id;
 
+                    Response.Redirect("Catalog.aspx");
+
+                }
+                catch (Exception ex)
+                {
+                }
             }
-            catch (Exception ex)
-            {
-            }
+        }
+        else
+        {
+            Response.Write(@"<script langauge='text/javascript'>alert('Tech name was left blank');</script>");
         }
     }
 
@@ -567,5 +588,33 @@ public partial class Catalog : System.Web.UI.Page
         ret.Controls.Add(del);
 
         return ret;
+    }
+
+    [System.Web.Services.WebMethod]
+    public static string Submit_Click(Book b)
+    {
+        JavaScriptSerializer serializer = new JavaScriptSerializer();
+        string json = serializer.Serialize(b);
+
+        using (var client = new WebClient())
+        {
+            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+
+            try
+            {
+                client.UploadString(new Uri("http://api.sparklib.org/api/book"), "POST", json);
+
+                var response = client.ResponseHeaders;
+                string location = response.Get("Location");
+                string id = location.Split('=')[1];
+                return id;
+
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
     }
 }
