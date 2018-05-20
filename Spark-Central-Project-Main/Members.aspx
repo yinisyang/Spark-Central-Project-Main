@@ -163,7 +163,7 @@
 
 
     <!-- Member Table -->
-    <div style="padding-left: 5%; overflow-x: auto">
+    <div id="tableDiv" style="padding-left: 5%; overflow-x: auto; visibility:hidden">
 
         <asp:Table ID="table" class="mdl-data-table" runat="server">
         </asp:Table>

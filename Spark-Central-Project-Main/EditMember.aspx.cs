@@ -54,6 +54,26 @@ public partial class _Default : System.Web.UI.Page
         Response.Redirect("Members.aspx");
     }
 
+    [System.Web.Services.WebMethod]
+    public static void deleteMem(int id)
+    {
+        using (var client = new WebClient())
+        {
+            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+
+            try
+            {
+                String apiString = "http://api.sparklib.org/api/member?member_id=" + id;
+                client.UploadString(apiString, "DELETE", "");
+
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+    }
+
     protected void Submit_Click(object sender, EventArgs e)
     {
         var member = new
@@ -87,11 +107,6 @@ public partial class _Default : System.Web.UI.Page
             {
                 String apiString = "http://api.sparklib.org/api/member?member_id=" + Request.QueryString["memberid"];
                 client.UploadString(apiString, "PUT", json);
-                var response = client.ResponseHeaders;
-                //string location = response.Get("Location");
-                //string id = location.Split('=')[1];
-
-                //Page.Session["note"] = "Member Added With ID: " + id;
 
                 Response.Redirect("Members.aspx");
 

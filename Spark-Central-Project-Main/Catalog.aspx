@@ -222,7 +222,7 @@
             End Tech Dialog
             -->
     <!-- Smart Add Dialog -->
-    <dialog class="mdl-dialog" id="smartDialog" style="width: 30%">
+    <dialog class="mdl-dialog" id="smartDialog" style="width: 30%; top:2%">
         <h4 class="mdl-dialog__title">Smart Add</h4>
         <div class="mdl-dialog__content">
             <div class="mdl-grid" id="smartGrid" style="width: 90%">

@@ -21,16 +21,11 @@ public partial class Members : System.Web.UI.Page
         {
 
         }
-
         table.Rows.Clear();
         table.Rows.Add(addMemberTitleRow());
-
         List<Member> memberList;
-
         memberList = getMemberList();
 
-
-        //Populate member table from the member list.
         foreach (Member cur in memberList)
         {
             table.Rows.Add(addMemberRow(cur));
@@ -42,7 +37,6 @@ public partial class Members : System.Web.UI.Page
             NoteLabel.Text = Page.Session["mNote"].ToString().ToUpper();
             Page.Session["mNote"] = null;
         }
-
     }
 
 
@@ -79,20 +73,20 @@ public partial class Members : System.Web.UI.Page
         ret.Cells.Add(Utilities.addHeaderCell("ID"));
         ret.Cells.Add(Utilities.addHeaderCell("Last Name"));
         ret.Cells.Add(Utilities.addHeaderCell("First Name"));
-        ret.Cells.Add(Utilities.addHeaderCell("Guardian"));
+        //ret.Cells.Add(Utilities.addHeaderCell("Guardian"));
         //ret.Cells.Add(Utilities.addHeaderCell("Date of Birth"));
         ret.Cells.Add(Utilities.addHeaderCell("Phone"));
         ret.Cells.Add(Utilities.addHeaderCell("Street"));
         ret.Cells.Add(Utilities.addHeaderCell("City"));
-        ret.Cells.Add(Utilities.addHeaderCell("State"));
-        ret.Cells.Add(Utilities.addHeaderCell("Zip"));
-        ret.Cells.Add(Utilities.addHeaderCell("Quota"));
+        //ret.Cells.Add(Utilities.addHeaderCell("State"));
+        //ret.Cells.Add(Utilities.addHeaderCell("Zip"));
+        //ret.Cells.Add(Utilities.addHeaderCell("Quota"));
         ret.Cells.Add(Utilities.addHeaderCell("Adult"));
         //ret.Cells.Add(Utilities.addHeaderCell("Ethnicity"));
         ret.Cells.Add(Utilities.addHeaderCell("Tech Restricted"));
         //ret.Cells.Add(Utilities.addHeaderCell("West Central"));
         ret.Cells.Add(Utilities.addHeaderCell("Edit/Delete"));
-        ret.Cells.Add(Utilities.addHeaderCell("Check-Out"));
+        //ret.Cells.Add(Utilities.addHeaderCell("Check-Out"));
 
         ret.BorderWidth = 3;
 
@@ -115,20 +109,20 @@ public partial class Members : System.Web.UI.Page
         ret.Cells.Add(Utilities.addCell(m.member_id.ToString()));
         ret.Cells.Add(Utilities.addCell(m.last_name));
         ret.Cells.Add(Utilities.addCell(m.first_name));
-        ret.Cells.Add(Utilities.addCell(m.guardian_name));
+        //ret.Cells.Add(Utilities.addCell(m.guardian_name));
         //ret.Cells.Add(Utilities.addCell(m.dob.ToShortDateString()));
         ret.Cells.Add(Utilities.addCell(m.phone));
         ret.Cells.Add(Utilities.addCell(m.street_address));
         ret.Cells.Add(Utilities.addCell(m.city));
-        ret.Cells.Add(Utilities.addCell(m.state));
-        ret.Cells.Add(Utilities.addCell(m.zip.ToString()));
-        ret.Cells.Add(Utilities.addCell(m.quota.ToString()));
+        //ret.Cells.Add(Utilities.addCell(m.state));
+        //ret.Cells.Add(Utilities.addCell(m.zip.ToString()));
+        //ret.Cells.Add(Utilities.addCell(m.quota.ToString()));
         ret.Cells.Add(Utilities.addCell(m.is_adult.ToString()));
         //ret.Cells.Add(Utilities.addCell(m.ethnicity));
         ret.Cells.Add(Utilities.addCell(m.restricted_to_tech.ToString()));
         //ret.Cells.Add(Utilities.addCell(m.west_central_resident.ToString()));
         ret.Cells.Add(addButtonCell(m.member_id));
-        ret.Cells.Add(addCheckOutCell(m.member_id));
+        //ret.Cells.Add(addCheckOutCell(m.member_id));
         return ret;
     }
 
@@ -145,7 +139,7 @@ public partial class Members : System.Web.UI.Page
         ret.Controls.Add(checkOut);
         return ret;
     }
-
+    
 
 
     /*
@@ -161,10 +155,10 @@ public partial class Members : System.Web.UI.Page
     private TableCell addButtonCell(int id)
     {
         TableCell ret = new TableCell();
-        HtmlButton del = new HtmlButton();
+        //HtmlButton del = new HtmlButton();
         HtmlButton edit = new HtmlButton();
 
-        del.Attributes["class"] = "mdl-button mdl-js-button mdl-button--icon";
+        /*del.Attributes["class"] = "mdl-button mdl-js-button mdl-button--icon";
         del.InnerHtml = "<i class = \"material-icons\">delete</i>";
         del.Attributes.Add("id", id.ToString());
         del.Attributes["onclick"] = "if(swal({" +
@@ -181,19 +175,19 @@ public partial class Members : System.Web.UI.Page
             "return false;" +
             "}" +
             "})){ return false; };";
+        
 
-
-        del.Attributes["title"] = "Delete";
+        del.Attributes["title"] = "Delete";*/
 
         edit.Attributes["class"] = "mdl-button mdl-js-button mdl-button--icon";
         edit.InnerHtml = "<i class = \"material-icons\">edit</i>";
         edit.Attributes.Add("id", id.ToString());
-        edit.Attributes["title"] = "Edit";
+        //edit.Attributes["title"] = "Edit";
 
         edit.ServerClick += new EventHandler(editClick);
 
         ret.Controls.Add(edit);
-        ret.Controls.Add(del);
+        //ret.Controls.Add(del);
 
         return ret;
     }

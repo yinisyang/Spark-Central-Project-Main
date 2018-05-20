@@ -17,7 +17,7 @@ public partial class Dashboard : System.Web.UI.Page
     {
 
     }
-    [System.Web.Services.WebMethod]
+
     protected void Submit_ClickMember(object sender, EventArgs e)
     {
         var member = new
@@ -57,7 +57,7 @@ public partial class Dashboard : System.Web.UI.Page
 
                     Page.Session["mNote"] = "Member Added With ID: " + id;
 
-                    Response.Redirect("Members.aspx");
+                    Response.Redirect("Dashboard.aspx");
 
                 }
                 catch (Exception ex)
@@ -70,6 +70,7 @@ public partial class Dashboard : System.Web.UI.Page
             Response.Write(@"<script langauge='text/javascript'>alert('Member Name is blank');</script>");
         }
     }
+
     [System.Web.Services.WebMethod]
     public static string Submit_Click(Book b)
     {
