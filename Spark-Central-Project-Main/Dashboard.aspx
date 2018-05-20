@@ -118,8 +118,15 @@
                             <input class="mdl-textfield__input" type="text" id="txtitemid">
                             <label class="mdl-textfield__label" for="txtitemid">Item Id</label>
                         </div>
-                        <button id="btnFindItem" type="button" onclick="findItem()" class="mdl-button mdl-js-button mdl-button" title="Find">
-                            Find
+                        <br />
+                        <button id="btnFindBook" type="button" onclick="findBook()" class="mdl-button mdl-js-button mdl-button" title="Find Book">
+                            Book
+                        </button>
+                        <button id="btnFindDvd" type="button" onclick="findDvd()" class="mdl-button mdl-js-button mdl-button" title="Find DVD">
+                            DVD
+                        </button>
+                        <button id="btnFindTech" type="button" onclick="findTech()" class="mdl-button mdl-js-button mdl-button" title="Find Technology">
+                            Technology
                         </button>
                     </form>
                     <div id="itemNameField"></div>
@@ -141,7 +148,7 @@
 
 
     <!-- Smart Add Dialog -->
-    <dialog class="mdl-dialog" id="smartDialog" style="width: 30%">
+    <dialog class="mdl-dialog" id="smartDialog" style="width: 30%; top:2%">
         <h4 class="mdl-dialog__title">Smart Add</h4>
         <div class="mdl-dialog__content">
             <div class="mdl-grid" id="smartGrid" style="width: 90%">

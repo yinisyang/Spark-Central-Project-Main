@@ -291,7 +291,7 @@ public partial class Catalog : System.Web.UI.Page
         ret.Cells.Add(Utilities.addHeaderCell("Title"));
         ret.Cells.Add(Utilities.addHeaderCell("Author"));
         ret.Cells.Add(Utilities.addHeaderCell("Category"));
-        //ret.Cells.Add(Utilities.addHeaderCell("Publisher"));
+        ret.Cells.Add(Utilities.addHeaderCell("Publisher"));
         ret.Cells.Add(Utilities.addHeaderCell("Year"));
         ret.Cells.Add(Utilities.addHeaderCell("Pages"));
         //ret.Cells.Add(Utilities.addHeaderCell("ISBN"));
@@ -337,7 +337,7 @@ public partial class Catalog : System.Web.UI.Page
         ret.Cells.Add(Utilities.addCell(b.title));
         ret.Cells.Add(Utilities.addCell(b.author));
         ret.Cells.Add(Utilities.addCell(b.category));
-        //ret.Cells.Add(Utilities.addCell(b.publisher));
+        ret.Cells.Add(Utilities.addCell(b.publisher));
         ret.Cells.Add(Utilities.addCell(b.publication_year.ToString()));
         ret.Cells.Add(Utilities.addCell(b.pages.ToString()));
         //ret.Cells.Add(Utilities.addCell(b.isbn_10));

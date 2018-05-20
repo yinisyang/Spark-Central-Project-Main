@@ -34,8 +34,7 @@ function findMember() {
     var xhttp = new XMLHttpRequest();
 
     var memberid = document.getElementById("txtmemberid").value;
-    //var url = "http://api.sparklib.org/api/member?member_id=" + memberid;
-    var url = "http://localhost:53746/api/member?member_id=" + memberid;
+    var url = "http://api.sparklib.org/api/member?member_id=" + memberid;
 
     xhttp.open("GET", url);
     xhttp.setRequestHeader("apikey", "254a2c54-5e21-4e07-b2aa-590bc545a520");
@@ -48,11 +47,82 @@ function findMember() {
             document.getElementById("memberNameField").innerHTML = obj.first_name + " " + obj.last_name;
             document.getElementById("memberhidden").innerHTML = obj.member_id;
         }
+        else {
+            document.getElementById("memberNameField").innerHTML = "No Result";
+        }
     };
 }
 
-function findItem() {
+function findBook() {
+    document.getElementById("itemNameField").innerHTML = "Looking...";
+    var xhttp = new XMLHttpRequest();
 
+    var itemid = document.getElementById("txtitemid").value;
+    var url = "http://api.sparklib.org/api/book?item_id=" + itemid;
+
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("apikey", "254a2c54-5e21-4e07-b2aa-590bc545a520");
+
+    xhttp.send();
+
+    xhttp.onreadystatechange = function () {
+        if (this.status === 200) {
+            var obj = JSON.parse(this.responseText);
+            document.getElementById("itemNameField").innerHTML = obj.title;
+            document.getElementById("itemhidden").innerHTML = obj.item_id;
+        }
+        else {
+            document.getElementById("itemNameField").innerHTML = "No Result";
+        }
+    };
+}
+
+function findDvd() {
+    document.getElementById("itemNameField").innerHTML = "Looking...";
+    var xhttp = new XMLHttpRequest();
+
+    var itemid = document.getElementById("txtitemid").value;
+    var url = "http://api.sparklib.org/api/dvd?item_id=" + itemid;
+
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("apikey", "254a2c54-5e21-4e07-b2aa-590bc545a520");
+
+    xhttp.send();
+
+    xhttp.onreadystatechange = function () {
+        if (this.status === 200) {
+            var obj = JSON.parse(this.responseText);
+            document.getElementById("itemNameField").innerHTML = obj.title;
+            document.getElementById("itemhidden").innerHTML = obj.item_id;
+        }
+        else {
+            document.getElementById("itemNameField").innerHTML = "No Result";
+        }
+    };
+}
+
+function findTech() {
+    document.getElementById("itemNameField").innerHTML = "Looking...";
+    var xhttp = new XMLHttpRequest();
+
+    var itemid = document.getElementById("txtitemid").value;
+    var url = "http://api.sparklib.org/api/technology?item_id=" + itemid;
+
+    xhttp.open("GET", url);
+    xhttp.setRequestHeader("apikey", "254a2c54-5e21-4e07-b2aa-590bc545a520");
+
+    xhttp.send();
+
+    xhttp.onreadystatechange = function () {
+        if (this.status === 200) {
+            var obj = JSON.parse(this.responseText);
+            document.getElementById("itemNameField").innerHTML = obj.name;
+            document.getElementById("itemhidden").innerHTML = obj.item_id;
+        }
+        else {
+            document.getElementById("itemNameField").innerHTML = "No Result";
+        }
+    };
 }
 
 
@@ -80,8 +150,7 @@ function findGoogleBook() {
             document.getElementById("bookDescription").innerHTML = obj.items[0].volumeInfo.description;
             document.getElementById("bookPic").setAttribute("src", obj.items[0].volumeInfo.imageLinks.thumbnail);
         }
-        else
-        {
+        else {
             document.getElementById("bookTitle").innerHTML = "Sorry, couldn't find that.";
         }
     };
@@ -95,8 +164,8 @@ function addBook() {
     var bookCategory = document.getElementById("bookCategory").innerHTML;
     var bookPublisher = document.getElementById("bookPublisher").innerHTML;
     var bookYear = parseInt(document.getElementById("bookYear").innerHTML);
-    var bookPages = parseInt( document.getElementById("bookPages").innerHTML);
-    var bookDesc = document.getElementById("bookDescription").innerHTML.slice(0,150);
+    var bookPages = parseInt(document.getElementById("bookPages").innerHTML);
+    var bookDesc = document.getElementById("bookDescription").innerHTML.slice(0, 150);
     var bookTitle = document.getElementById("bookTitle").innerHTML;
     var bookIsbn13 = document.getElementById("bookIsbn13").innerHTML;
 
@@ -127,7 +196,7 @@ function addBook() {
     document.getElementById("bookTitle").innerHTML = "Adding Item to Database";
 
     setTimeout(function () {
-        document.getElementById("bookTitle").innerHTML = "Item Added"; 
+        document.getElementById("bookTitle").innerHTML = "Item Added";
     }, 1000);
 
 }
