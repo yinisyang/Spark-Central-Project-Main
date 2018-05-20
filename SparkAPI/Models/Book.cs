@@ -18,7 +18,7 @@ namespace SparkAPI.Models
         public string description { get; set; }
         public string title { get; set; }
         public string isbn_13 { get; set; }
-
+        public string image { get; set; }
 
 
         public Tuple<SqlDbType, int> GetAssociatedDBTypeAndSize(string propertyName)
@@ -35,6 +35,7 @@ namespace SparkAPI.Models
                 case "description": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 300);
                 case "title": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
                 case "isbn_13": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
+                case "image": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
                 default: throw new ArgumentException("That property name is not registered inside of the current model type");
             }
         }

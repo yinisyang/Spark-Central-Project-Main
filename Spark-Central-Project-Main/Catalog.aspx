@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Catalog.aspx.cs" Inherits="Catalog" %>
+﻿<%@ Page EnableEventValidation="false" Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Catalog.aspx.cs" Inherits="Catalog" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script src="scripts/Catalog.js"></script>
@@ -10,7 +10,7 @@
         <a href="/Catalog.aspx" class="mdl-layout__tab is-active">Catalog</a>
         <a href="/Circulations.aspx" class="mdl-layout__tab">Circulations</a>
         <a href="/Reports.aspx" class="mdl-layout__tab">Reports</a>
-        <a href="/Manage.aspx" class="mdl-layout__tab">Manage</a>
+        <a href="/ManageAdmins.aspx" class="mdl-layout__tab">Manage</a>
     </asp:Panel>
 </asp:Content>
 
@@ -37,13 +37,16 @@
 
 
 
-
+            <button id="btnSmartAddBook" type="button" class="mdl-button mdl-js-button mdl-button--icon" title="Smart Add">
+                <i class="material-icons">grade</i>
+            </button>
             <br />
             <asp:ImageButton ID="BookImage" Title="Books" Height="80" ImageUrl="images/book.png" runat="server" OnClick="buttonBooks_Click" />
             <!-- Add Book Button -->
             <button id="btnAddBook" type="button" class="mdl-button mdl-js-button mdl-button--icon" title="Add Book">
                 <i class="material-icons">add</i>
             </button>
+            
 
 
             <br />
@@ -218,11 +221,57 @@
     <!--
             End Tech Dialog
             -->
+    <!-- Smart Add Dialog -->
+    <dialog class="mdl-dialog" id="smartDialog" style="width: 30%">
+        <h4 class="mdl-dialog__title">Smart Add</h4>
+        <div class="mdl-dialog__content">
+            <div class="mdl-grid" id="smartGrid" style="width: 90%">
+                <div class="mdl-cell mdl-cell--6-col">
+                    <form action="#">
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" id="isbn">
+                            <label class="mdl-textfield__label" for="isbn">Isbn</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="mdl-cell mdl-cell--6-col">
+                </div>
 
+                <div class="mdl-cell mdl-cell--4-col"></div>
+                <div class="mdl-cell mdl-cell--4-col">
+                    <img id="sbookPic" src="images/empty.png"/>
+                </div>
+                <div class="mdl-cell mdl-cell--4-col"></div>
 
+                <div class="mdl-cell mdl-cell--6-col">
+                    <div id="sbookTitle"></div>
+                    <div id="sbookAuthor"></div>
+                    <div id="sbookPublisher"></div>
+                    <div id="sbookYear"></div>
 
+                </div>
+                <div class="mdl-cell mdl-cell--6-col">
+                    <div id="sbookPages"></div>
+                    <div id="sbookCategory"></div>
+                    <div id="sbookIsbn10"></div>
+                    <div id="sbookIsbn13"></div>
 
-
-
+                </div>
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div id="sbookDescription"></div>
+                </div>
+            </div>
+        </div>
+        <div class="mdl-dialog__actions">
+            <button id="btnAdd" type="button" onclick="addBook()" class="mdl-button mdl-js-button mdl-button" title="Add">
+                Add
+            </button>
+            <button id="btnSearch" type="button" onclick="findGoogleBook()" class="mdl-button mdl-js-button mdl-button" title="Search">
+                Search
+            </button>
+            <button type="button" class="mdl-button close">Cancel</button>
+        </div>
+    </dialog>
+    <!---End Smart Add Dialog-->
 </asp:Content>
 

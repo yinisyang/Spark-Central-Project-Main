@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -11,6 +13,56 @@ public partial class Reports : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+    }
+
+    protected void westDownloadButton_Click(object sender, EventArgs e)
+    {
+        SqlConnection con = new SqlConnection("Data Source=SQL7004.site4now.net;Initial Catalog=DB_A3414F_SparkCentralLib;User Id=DB_A3414F_SparkCentralLib_admin;Password=CreativeCr0ssing;");
+        SqlCommand cmd = new SqlCommand("SELECT * FROM Members", con);
+
+        con.Open();
+        SqlDataReader reader = cmd.ExecuteReader();
+        
+        StringBuilder sb = new StringBuilder();
+        StreamWriter sw = new StreamWriter(Server.MapPath("report\\report.csv"));
+
+        var columnNames = Enumerable.Range(0, reader.FieldCount).Select(reader.GetName).ToList();
+        sb.Append(string.Join(",", columnNames));
+        sb.AppendLine();
+        while (reader.Read())
+        {
+            for (int i = 0; i < reader.FieldCount; i++)
+            {
+                string value = reader[i].ToString();
+                if (value.Contains(","))
+                    value = "\"" + value + "\"";
+
+                sb.Append(value.Replace(Environment.NewLine, " ") + ",");
+            }
+            sb.Length--; // Remove the last comma
+            sb.AppendLine();
+        }
+        con.Close();
+        sw.Write(sb.ToString());
+        sw.Close();
+        
+        try
+        {
+            System.String filename = Server.MapPath("report\\report.csv");
+            
+            Response.ContentType = "APPLICATION/OCTET-STREAM";
+            
+            System.String disHeader = "Attachment; Filename=\"" + filename + "\"";
+            Response.AppendHeader("Content-Disposition", disHeader);
+            
+            FileInfo fileToDownload = new FileInfo(Server.MapPath("report\\report.csv"));
+            //Response.End();
+            Response.WriteFile(fileToDownload.FullName);
+            Response.End();
+        }
+        catch (System.Exception ex)
+        {
+        }
     }
 
     protected void westCentralButton_Click(object sender, EventArgs e)

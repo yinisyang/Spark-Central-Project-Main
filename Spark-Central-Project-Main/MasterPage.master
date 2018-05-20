@@ -29,7 +29,7 @@
                 <header class="mdl-layout__header">
                     <div class="mdl-layout__header-row">
                         <!-- Title -->
-                        <span class="mdl-layout-title">Spark-Central Library</span>
+                        <span class="mdl-layout-title">Spark Central Library</span>
                     </div>
 
                     <!-- Tabs PlaceHolder -->
@@ -47,7 +47,7 @@
                         <a class="mdl-navigation__link" href="/Catalog.aspx">Catalog</a>
                         <a class="mdl-navigation__link" href="/Circulations.aspx">Circulations</a>
                         <a class="mdl-navigation__link" href="/Reports.aspx">Reports</a>
-                        <a class="mdl-navigation__link" href="/Manage.aspx">Manage</a>
+                        <a class="mdl-navigation__link" href="/ManageAdmins.aspx">Manage</a>
                     </nav>
                 </div>
 
@@ -66,7 +66,7 @@
                             <li><a href="/Catalog.aspx">Catalog</a></li>
                             <li><a href="/Circulations.aspx">Circulations</a></li>
                             <li><a href="/Reports.aspx">Reports</a></li>
-                            <li><a href="/Manage.aspx">Manage</a></li>
+                            <li><a href="/ManageAdmins.aspx">Manage</a></li>
                         </ul>
                     </div>
                 </footer>

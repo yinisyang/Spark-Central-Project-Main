@@ -269,30 +269,36 @@ public partial class Members : System.Web.UI.Page
             restricted_to_tech = isRestrictedToTech.Checked,
             west_central_resident = isWestCentralResident.Checked
         };
-
-        JavaScriptSerializer serializer = new JavaScriptSerializer();
-        string json = serializer.Serialize(member);
-
-        using (var client = new WebClient())
+        if (!firstName.Text.Equals(""))
         {
-            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string json = serializer.Serialize(member);
 
-            try
+            using (var client = new WebClient())
             {
-                client.UploadString(new Uri("http://api.sparklib.org/api/member"), "POST", json);
-                var response = client.ResponseHeaders;
-                string location = response.Get("Location");
-                string id = location.Split('=')[1];
+                client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+                client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
 
-                Page.Session["mNote"] = "Member Added With ID: " + id;
+                try
+                {
+                    client.UploadString(new Uri("http://api.sparklib.org/api/member"), "POST", json);
+                    var response = client.ResponseHeaders;
+                    string location = response.Get("Location");
+                    string id = location.Split('=')[1];
 
-                Response.Redirect("Members.aspx");
+                    Page.Session["mNote"] = "Member Added With ID: " + id;
 
+                    Response.Redirect("Members.aspx");
+
+                }
+                catch (Exception ex)
+                {
+                }
             }
-            catch (Exception ex)
-            {
-            }
+        }
+        else
+        {
+            Response.Write(@"<script langauge='text/javascript'>alert('Member Name is blank');</script>");
         }
     }
 }
