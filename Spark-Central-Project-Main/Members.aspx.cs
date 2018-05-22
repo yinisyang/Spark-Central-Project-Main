@@ -348,7 +348,7 @@ public partial class Members : System.Web.UI.Page
             resultSet.recordsFiltered = data.Count();
 
             //Sorting
-            data = Utilities.SortByColumnWithOrder(order, orderDirection, data);
+            data = SortByColumnWithOrder(order, orderDirection, data);
             
   
             // Apply pagination.   
@@ -393,6 +393,99 @@ public partial class Members : System.Web.UI.Page
         response.Write(result.ToJSON());
         response.Flush();
         response.End();
+    }
+
+    public static List<Member> SortByColumnWithOrder(int order, string orderDir, List<Member> data)
+    {
+        // Initialization.   
+        // Sorting   
+        switch (order)
+        {
+            case 0:
+                if (orderDir.Equals("ASC"))
+                {
+                    data = data.OrderBy(m => m.member_id).ToList();
+                }
+                else
+                {
+                    data = data.OrderByDescending(m => m.member_id).ToList();
+                }
+                break;
+
+            case 1:
+                if (orderDir.ToLower().Equals("asc"))
+                {
+                    data = data.OrderBy(m => m.last_name).ToList();
+                }
+                else
+                {
+                    data = data.OrderByDescending(m => m.last_name).ToList();
+                }
+                break;
+
+            case 2:
+                if (orderDir.ToLower().Equals("asc"))
+                {
+                    data = data.OrderBy(m => m.first_name).ToList();
+                }
+                else
+                {
+                    data = data.OrderByDescending(m => m.first_name).ToList();
+                }
+                break;
+            case 3:
+                if (orderDir.ToLower().Equals("asc"))
+                {
+                    data = data.OrderBy(m => m.phone).ToList();
+                }
+                else
+                {
+                    data = data.OrderByDescending(m => m.phone).ToList();
+                }
+                break;
+            case 4:
+                if (orderDir.ToLower().Equals("asc"))
+                {
+                    data = data.OrderBy(m => m.email).ToList();
+                }
+                else
+                {
+                    data = data.OrderByDescending(m => m.email).ToList();
+                }
+                break;
+            case 5:
+                if (orderDir.ToLower().Equals("asc"))
+                {
+                    data = data.OrderBy(m => m.city).ToList();
+                }
+                else
+                {
+                    data = data.OrderByDescending(m => m.city).ToList();
+                }
+                break;
+            case 6:
+                if (orderDir.ToLower().Equals("asc"))
+                {
+                    data = data.OrderBy(m => m.state).ToList();
+                }
+                else
+                {
+                    data = data.OrderByDescending(m => m.state).ToList();
+                }
+                break;
+            default:
+                if (orderDir.ToLower().Equals("asc"))
+                {
+                    data = data.OrderBy(m => m.member_id).ToList();
+                }
+                else
+                {
+                    data = data.OrderByDescending(m => m.member_id).ToList();
+                }
+                break;
+        }
+
+        return data;
     }
 
 }

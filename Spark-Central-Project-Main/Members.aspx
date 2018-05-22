@@ -166,7 +166,7 @@
 
 
 
-    <div id="tableDiv" style="padding-left: 5%; overflow-x: auto">
+    <div id="tableDiv" style="padding-left: 5%; overflow-x: auto; width:75%">
 
         <table class="mdl-data-table" id="table">  
                     <thead>  
