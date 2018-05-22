@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using System.Web.Http;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using SparkAPI.Models;
 using SparkWebSite;
-
-
+using System.Web.Mvc;
+using System.Web.Script.Services;
 
 public partial class Members : System.Web.UI.Page
 {
@@ -21,15 +23,16 @@ public partial class Members : System.Web.UI.Page
         {
 
         }
-        table.Rows.Clear();
-        table.Rows.Add(addMemberTitleRow());
-        List<Member> memberList;
-        memberList = getMemberList();
 
-        foreach (Member cur in memberList)
+        //table.Rows.Clear();
+        //table.Rows.Add(addMemberTitleRow());
+        //List<Member> memberList;
+        //memberList = getMemberList();
+
+        /*foreach (Member cur in memberList)
         {
             table.Rows.Add(addMemberRow(cur));
-        }
+        }*/
 
         //Set Note if one exists.
         if (Page.Session["mNote"] != null)
@@ -184,7 +187,7 @@ public partial class Members : System.Web.UI.Page
         edit.Attributes.Add("id", id.ToString());
         //edit.Attributes["title"] = "Edit";
 
-        edit.ServerClick += new EventHandler(editClick);
+        //edit.ServerClick += new EventHandler(editClick);
 
         ret.Controls.Add(edit);
         //ret.Controls.Add(del);
@@ -200,11 +203,11 @@ public partial class Members : System.Web.UI.Page
      * Retrieves the member_id from the sender object.
      * 
      */ 
+
     public void editClick(object sender, EventArgs e)
     {
-
-        string id = ((HtmlButton)sender).Attributes["id"];
-        Response.Redirect("EditMember.aspx?memberid=" + id);
+        int id = Int32.Parse(((HtmlButton)sender).Attributes["id"]);
+        Page.Response.Redirect("EditMember.aspx?member_id=" + id);
 
 
     }
@@ -221,7 +224,7 @@ public partial class Members : System.Web.UI.Page
      * returns: void
      * 
      */
-    [System.Web.Services.WebMethod]
+    [WebMethod]
     public static void deleteClick(int id)
     {
 
@@ -295,4 +298,101 @@ public partial class Members : System.Web.UI.Page
             Response.Write(@"<script langauge='text/javascript'>alert('Member Name is blank');</script>");
         }
     }
+
+    [WebMethod(Description = "Server Side DataTables support", EnableSession = true)]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static void GetData(object parameters)
+    {
+        try
+        {
+            // Initialization.   
+            var req = DataTableParameters.Get(parameters);
+            var resultSet = new DataTableResultSet();
+
+            List<Member> data = Utilities.getMemberList();
+
+            resultSet.draw = req.Draw;
+            resultSet.recordsTotal = data.Count();
+
+            string search = req.SearchValue;
+            int order = req.Order[0].Column;
+            string orderDirection = req.Order[0].Direction;
+
+            int startRec = req.Start;
+            int pageSize = req.Length;
+
+            //Search
+            if (!string.IsNullOrEmpty(search) &&
+               !string.IsNullOrWhiteSpace(search))
+            {
+                // Apply search   
+                List<Member> searchResults = new List<Member>();
+
+                foreach (Member m in data)
+                {
+                    if(
+                        Utilities.containsStr(search, m.member_id.ToString()) ||
+                        Utilities.containsStr(search, m.last_name) ||
+                        Utilities.containsStr(search, m.first_name) ||
+                        Utilities.containsStr(search, m.guardian_name) ||
+                        Utilities.containsStr(search, m.phone) ||
+                        Utilities.containsStr(search, m.city)
+                        )
+                    {
+                        searchResults.Add(m);
+                    }
+                }
+                data = searchResults;
+
+            }
+            resultSet.recordsFiltered = data.Count();
+
+            //Sorting
+            data = Utilities.SortByColumnWithOrder(order, orderDirection, data);
+            
+  
+            // Apply pagination.   
+            data = data.Skip(startRec).Take(pageSize).ToList();
+
+            foreach (Member m in data)
+            { 
+                var columns = new List<string>();
+                columns.Add(m.member_id.ToString());
+                columns.Add(m.last_name);
+                columns.Add(m.first_name);
+                columns.Add(m.phone);
+                columns.Add(m.email);
+                columns.Add(m.city);
+                columns.Add(m.state);
+                columns.Add("<button id=" + m.member_id.ToString() + " class='mdl-button mdl-js-button mdl-button--icon' onClick='editMember(event); return false' title ='Edit'><i class= 'material-icons'>edit</i></button>"
+
+                    );
+
+                resultSet.data.Add(columns);
+            }
+            SendResponse(HttpContext.Current.Response, resultSet);
+
+
+
+            
+        }
+        catch (Exception ex)
+        {
+            // Info   
+            Console.Write(ex);
+        }
+        // Return info.   
+        
+    }
+    private static void SendResponse(HttpResponse response, DataTableResultSet result)
+    {
+        response.Clear();
+        response.Headers.Add("X-Content-Type-Options", "nosniff");
+        response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+        response.ContentType = "application/json; charset=utf-8";
+        response.Write(result.ToJSON());
+        response.Flush();
+        response.End();
+    }
+
 }

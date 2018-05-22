@@ -163,12 +163,28 @@
 
 
     <!-- Member Table -->
-    <div id="tableDiv" style="padding-left: 5%; overflow-x: auto; visibility:hidden">
 
-        <asp:Table ID="table" class="mdl-data-table" runat="server">
-        </asp:Table>
+
+
+    <div id="tableDiv" style="padding-left: 5%; overflow-x: auto">
+
+        <table class="mdl-data-table" id="table">  
+                    <thead>  
+                        <tr>  
+                            <th>ID</th>  
+                            <th>Last Name</th>  
+                            <th>First Name</th>  
+                            <th>Phone</th>  
+                            <th>Email</th>  
+                            <th>City</th>  
+                            <th>State</th>  
+                            <th>Edit</th>
+                        </tr>  
+                    </thead>  
+                </table>  
 
     </div>
+   
     <br />
 
 

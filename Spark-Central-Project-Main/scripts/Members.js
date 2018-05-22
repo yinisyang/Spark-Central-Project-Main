@@ -7,8 +7,20 @@ function deleteMember(id) {
 
 }
 
+function editMember(e){
+    if (!e)
+        e = window.event;
+    var sender = e.srcElement || e.target;
+
+    while (sender && sender.nodeName.toLowerCase() != "button")
+        sender = sender.parentNode;
+
+    var id = sender.id;
+    window.location.href = "EditMember.aspx?memberid=" + id;
+}
+
 $(document).ready(function () {
-    
+
     var dialog = document.querySelector('dialog');
     var showDialogButton = document.querySelector('#show-dialog');
     if (!dialog.showModal) {
@@ -22,8 +34,17 @@ $(document).ready(function () {
     });
 
     $('table').DataTable({
-        stateSave: true
+        processing: true,
+        serverSide: true,
+        stateSave: true,
+        ajax: {
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "/Members.aspx/GetData",
+            data: function (d) {
+                return JSON.stringify({ parameters: d });
+            }
+        }
     });
 
-    document.getElementById('tableDiv').style.visibility = "visible";
 });
