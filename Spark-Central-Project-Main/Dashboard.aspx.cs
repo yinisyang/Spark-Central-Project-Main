@@ -28,6 +28,7 @@ public partial class Dashboard : System.Web.UI.Page
             guardian_name = (guardianName.Text.Equals("") ? null : guardianName.Text),
             email = email.Text,
             dob = dateOfBirth.Text,
+            signup_date = DateTime.Now.ToString("yyyy-MM-dd"),
             phone = phone.Text,
             street_address = streetAddress.Text,
             city = city.Text,
