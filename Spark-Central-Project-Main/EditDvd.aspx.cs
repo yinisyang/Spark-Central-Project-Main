@@ -39,6 +39,26 @@ public partial class _Default : System.Web.UI.Page
         Response.Redirect("Catalog.aspx");
     }
 
+    [System.Web.Services.WebMethod]
+    public static void deleteDv(int id)
+    {
+        using (var client = new WebClient())
+        {
+            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+
+            try
+            {
+                String apiString = "http://api.sparklib.org/api/dvd?item_id=" + id;
+                client.UploadString(apiString, "DELETE", "");
+
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+    }
+
     protected void Submit_Click(object sender, EventArgs e)
     {
         int year;

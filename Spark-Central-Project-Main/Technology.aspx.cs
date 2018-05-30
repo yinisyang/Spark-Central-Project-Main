@@ -216,7 +216,7 @@ public partial class Catalog : System.Web.UI.Page
         ret.TableSection = TableRowSection.TableHeader;
         ret.Cells.Add(Utilities.addHeaderCell("ID"));
         ret.Cells.Add(Utilities.addHeaderCell("Name"));
-        ret.Cells.Add(Utilities.addHeaderCell("Edit/Delete"));
+        ret.Cells.Add(Utilities.addHeaderCell("Edit"));
 
         ret.BorderWidth = 3;
         return ret;
@@ -262,29 +262,7 @@ public partial class Catalog : System.Web.UI.Page
     private TableCell addButtonCell_Tech(int id)
     {
         TableCell ret = new TableCell();
-        HtmlButton del = new HtmlButton();
         HtmlButton edit = new HtmlButton();
-
-        del.Attributes["class"] = "mdl-button mdl-js-button mdl-button--icon";
-        del.InnerHtml = "<i class = \"material-icons\">delete</i>";
-        del.Attributes.Add("id", id.ToString());
-        del.Attributes["onclick"] = "if(swal({" +
-            "title: 'Delete Technology'," +
-            "text: 'Are you sure you want to delete Technology id: " + id.ToString() + "?'," +
-            "icon: 'warning'," +
-            "buttons: true," +
-            "dangerMode: true," +
-            "}).then((value) => {" +
-            "if(value){" +
-            "deleteTechnology(" + id.ToString() + ");" +
-            "swal('Technology deleted', { icon: 'success',});" +
-            "} else {" +
-            "return false;" +
-            "}" +
-            "})){ return false; };";
-
-
-        del.Attributes["title"] = "Delete";
 
         edit.Attributes["class"] = "mdl-button mdl-js-button mdl-button--icon";
         edit.InnerHtml = "<i class = \"material-icons\">edit</i>";
@@ -294,7 +272,6 @@ public partial class Catalog : System.Web.UI.Page
         edit.ServerClick += new EventHandler(editTechClick);
 
         ret.Controls.Add(edit);
-        ret.Controls.Add(del);
 
         return ret;
     }

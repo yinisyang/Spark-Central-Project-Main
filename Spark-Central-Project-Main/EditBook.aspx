@@ -15,6 +15,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
     <asp:ScriptManager ID="ScriptManager" runat="server" EnablePageMethods="true"></asp:ScriptManager>
+    <br />
 
     <div class="mdl-grid" style="width: 50%">
         <div class="mdl-cell mdl-cell--6-col">

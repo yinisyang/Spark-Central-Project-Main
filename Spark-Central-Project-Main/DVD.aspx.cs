@@ -221,7 +221,7 @@ public partial class Catalog : System.Web.UI.Page
         ret.Cells.Add(Utilities.addHeaderCell("Title"));
         ret.Cells.Add(Utilities.addHeaderCell("Year"));
         ret.Cells.Add(Utilities.addHeaderCell("Rating"));
-        ret.Cells.Add(Utilities.addHeaderCell("Edit/Delete"));
+        ret.Cells.Add(Utilities.addHeaderCell("Edit"));
 
         ret.BorderWidth = 3;
         return ret;
@@ -269,29 +269,7 @@ public partial class Catalog : System.Web.UI.Page
     private TableCell addButtonCell_DVD(int id)
     {
         TableCell ret = new TableCell();
-        HtmlButton del = new HtmlButton();
         HtmlButton edit = new HtmlButton();
-
-        del.Attributes["class"] = "mdl-button mdl-js-button mdl-button--icon";
-        del.InnerHtml = "<i class = \"material-icons\">delete</i>";
-        del.Attributes.Add("id", id.ToString());
-        del.Attributes["onclick"] = "if(swal({" +
-            "title: 'Delete DVD'," +
-            "text: 'Are you sure you want to delete DVD id: " + id.ToString() + "?'," +
-            "icon: 'warning'," +
-            "buttons: true," +
-            "dangerMode: true," +
-            "}).then((value) => {" +
-            "if(value){" +
-            "deleteDVD(" + id.ToString() + ");" +
-            "swal('DVD deleted', { icon: 'success',});" +
-            "} else {" +
-            "return false;" +
-            "}" +
-            "})){ return false; };";
-
-
-        del.Attributes["title"] = "Delete";
 
         edit.Attributes["class"] = "mdl-button mdl-js-button mdl-button--icon";
         edit.InnerHtml = "<i class = \"material-icons\">edit</i>";
@@ -301,7 +279,6 @@ public partial class Catalog : System.Web.UI.Page
         edit.ServerClick += new EventHandler(editDVDClick);
 
         ret.Controls.Add(edit);
-        ret.Controls.Add(del);
 
         return ret;
     }

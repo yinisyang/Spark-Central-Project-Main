@@ -1,7 +1,11 @@
 ﻿<%@ Page EnableEventValidation="false" Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Dashboard.aspx.cs" Inherits="Dashboard" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="scripts/jquery.easy-autocomplete.min.js"></script>
     <script src="scripts/Dashboard.js"></script>
+    <link href="styles/easy-autocomplete.themes.min.css" rel="stylesheet" />
     <style>
         .mdl-card {
             width: 330px;
@@ -100,36 +104,33 @@
     <!-- Check Out Dialog -->
     <dialog class="mdl-dialog" id="checkOutDialog" style="width: 60%">
         <h4 class="mdl-dialog__title">Check-Out</h4>
-        <div class="mdl-dialog__content">
-            <div class="mdl-grid" style="width: 90%">
-                <div class="mdl-cell mdl-cell--6-col">
-                    <form action="#">
-                        <div class="mdl-textfield mdl-js-textfield">
-                            <input class="mdl-textfield__input" type="text" id="txtmemberid">
-                            <label class="mdl-textfield__label" for="txtmemberid">Member Id</label>
-                        </div>
-                        <button id="btnFindMember" type="button" onclick="findMember()" class="mdl-button mdl-js-button mdl-button" title="Find">
-                            Find
-                        </button>
-                    </form>
-                    <div id="memberNameField"></div>
-                    <div id="memberhidden" class="hidden"></div>
-                </div>
-                <div class="mdl-cell mdl-cell--6-col">
-                    <form action="#">
-                        <div class="mdl-textfield mdl-js-textfield">
-                            <input class="mdl-textfield__input" type="text" id="txtitemid">
-                            <label class="mdl-textfield__label" for="txtitemid">Item Id</label>
-                        </div>
-                        <button id="btnFindItem" type="button" onclick="findItem()" class="mdl-button mdl-js-button mdl-button" title="Find">
-                            Find
-                        </button>
-                    </form>
-                    <div id="itemNameField"></div>
-                    <div id="itemhidden" class="hidden"></div>
-                </div>
+
+        <div class="mdl-grid" style="width: 90%">
+
+            <div class="mdl-cell mdl-cell--6-col">
+
+                <input id="txtmemberid" />
+
+                <button id="btnFindMember" type="button" onclick="findMember()" class="mdl-button mdl-js-button mdl-button" title="Find">
+                    Find
+                </button>
+
+                <div id="memberNameField"></div>
+                <div id="memberhidden" class="hidden"></div>
+                <label id="memName"></label>
+            </div>
+            <div class="mdl-cell mdl-cell--6-col">
+                <input id="txtitemid" />
+
+                <button id="btnFindItem" type="button" onclick="findItem()" class="mdl-button mdl-js-button mdl-button" title="Find">
+                    Find
+                </button>
+
+                <div id="itemNameField"></div>
+                <div id="itemhidden" class="hidden"></div>
             </div>
         </div>
+
         <div class="mdl-dialog__actions">
             <button id="btnCheckOut" type="button" class="mdl-button mdl-js-button mdl-button" title="Confirm">
                 Confirm

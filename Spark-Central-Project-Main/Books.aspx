@@ -50,7 +50,7 @@
         </div>
 
 
-        <div class="mdl-cell mdl-cell--1-col mdl-card__menu">
+        <div class="mdl-cell mdl-cell--1-col">
 
 
 
