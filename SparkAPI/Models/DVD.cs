@@ -9,6 +9,7 @@ namespace SparkAPI.Models
     public class DVD : Modellable
     {
         public int item_id { get; set; }
+        public int assn { get; set; }
         public string title { get; set; }
         public int release_year { get; set; }
         public string rating { get; set; }
@@ -18,6 +19,7 @@ namespace SparkAPI.Models
             switch (propertyName)
             {
                 case "item_id": return new Tuple<SqlDbType, int>(SqlDbType.Int, 4);
+                case "assn": return new Tuple<SqlDbType, int>(SqlDbType.Int, 4);
                 case "title": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
                 case "release_year": return new Tuple<SqlDbType, int>(SqlDbType.Int, 4);
                 case "rating": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);

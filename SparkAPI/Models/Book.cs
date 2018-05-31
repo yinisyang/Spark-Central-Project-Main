@@ -9,6 +9,7 @@ namespace SparkAPI.Models
     public class Book : Modellable
     {
         public int item_id { get; set; }
+        public int assn { get; set; }
         public string author { get; set; }
         public string isbn_10 { get; set; }
         public string category { get; set; }
@@ -26,6 +27,7 @@ namespace SparkAPI.Models
             switch (propertyName)
             {
                 case "item_id": return new Tuple<SqlDbType, int>(SqlDbType.Int, 4);
+                case "assn": return new Tuple<SqlDbType, int>(SqlDbType.Int, 4);
                 case "author": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
                 case "isbn_10": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
                 case "category": return new Tuple<SqlDbType, int>(SqlDbType.VarChar, 50);
