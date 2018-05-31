@@ -1,20 +1,8 @@
 ﻿
 
-function deleteBook(id) {
-    PageMethods.deleteBookClick(id);
-    location.reload();
-
-}
-
 function deleteDVD(id) {
     PageMethods.deleteDVDClick(id);
     location.reload();
-}
-
-function deleteTechnology(id) {
-    PageMethods.deleteTechClick(id);
-    location.reload();
-
 }
 
 
@@ -71,7 +59,7 @@ $(document).ready(function () {
     });
 
 
-    $('table').DataTable();
+    $('table').DataTable({ stateSave: true });
 
 
 });

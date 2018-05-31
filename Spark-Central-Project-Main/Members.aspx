@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Members.aspx.cs" Inherits="Members" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    
+
     <script src="scripts/Members.js"></script>
 
 </asp:Content>
@@ -166,25 +166,25 @@
 
 
 
-    <div id="tableDiv" style="padding-left: 5%; overflow-x: auto; width:75%">
+    <div id="tableDiv" style="padding-left: 5%; overflow-x: auto; width: 75%">
 
-        <table class="mdl-data-table" id="table">  
-                    <thead>  
-                        <tr>  
-                            <th>ID</th>  
-                            <th>Last Name</th>  
-                            <th>First Name</th>  
-                            <th>Phone</th>  
-                            <th>Email</th>  
-                            <th>City</th>  
-                            <th>State</th>  
-                            <th>Edit</th>
-                        </tr>  
-                    </thead>  
-                </table>  
+        <table class="mdl-data-table" id="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Guardian Name</th>
+                    <th>Tech Restricted</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+        </table>
 
     </div>
-   
+
     <br />
 
 

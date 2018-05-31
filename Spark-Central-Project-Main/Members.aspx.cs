@@ -24,16 +24,6 @@ public partial class Members : System.Web.UI.Page
 
         }
 
-        //table.Rows.Clear();
-        //table.Rows.Add(addMemberTitleRow());
-        //List<Member> memberList;
-        //memberList = getMemberList();
-
-        /*foreach (Member cur in memberList)
-        {
-            table.Rows.Add(addMemberRow(cur));
-        }*/
-
         //Set Note if one exists.
         if (Page.Session["mNote"] != null)
         {
@@ -64,146 +54,12 @@ public partial class Members : System.Web.UI.Page
 
 
     /*
-     * addMemberTitleRow()
-     * 
-     * returns: TableHeaderRow populated with information relevant to the member table.
-     * 
-     */
-    protected TableHeaderRow addMemberTitleRow()
-    {
-        TableHeaderRow ret = new TableHeaderRow();
-        ret.TableSection = TableRowSection.TableHeader;
-        ret.Cells.Add(Utilities.addHeaderCell("ID"));
-        ret.Cells.Add(Utilities.addHeaderCell("Last Name"));
-        ret.Cells.Add(Utilities.addHeaderCell("First Name"));
-        //ret.Cells.Add(Utilities.addHeaderCell("Guardian"));
-        //ret.Cells.Add(Utilities.addHeaderCell("Date of Birth"));
-        ret.Cells.Add(Utilities.addHeaderCell("Phone"));
-        ret.Cells.Add(Utilities.addHeaderCell("Street"));
-        ret.Cells.Add(Utilities.addHeaderCell("City"));
-        //ret.Cells.Add(Utilities.addHeaderCell("State"));
-        //ret.Cells.Add(Utilities.addHeaderCell("Zip"));
-        //ret.Cells.Add(Utilities.addHeaderCell("Quota"));
-        ret.Cells.Add(Utilities.addHeaderCell("Adult"));
-        //ret.Cells.Add(Utilities.addHeaderCell("Ethnicity"));
-        ret.Cells.Add(Utilities.addHeaderCell("Tech Restricted"));
-        //ret.Cells.Add(Utilities.addHeaderCell("West Central"));
-        ret.Cells.Add(Utilities.addHeaderCell("Edit/Delete"));
-        //ret.Cells.Add(Utilities.addHeaderCell("Check-Out"));
-
-        ret.BorderWidth = 3;
-
-        return ret;
-    }
-
-
-    /*
-     * addMemberRow()
-     * 
-     * params: Member m -> the member object to use for populating the information in this TableRow
-     * 
-     * returns: TableRow populated with information from the passed-in member.
-     * 
-     */
-    private TableRow addMemberRow(Member m)
-    {
-        TableRow ret = new TableRow();
-        ret.TableSection = TableRowSection.TableBody;
-        ret.Cells.Add(Utilities.addCell(m.member_id.ToString()));
-        ret.Cells.Add(Utilities.addCell(m.last_name));
-        ret.Cells.Add(Utilities.addCell(m.first_name));
-        //ret.Cells.Add(Utilities.addCell(m.guardian_name));
-        //ret.Cells.Add(Utilities.addCell(m.dob.ToShortDateString()));
-        ret.Cells.Add(Utilities.addCell(m.phone));
-        ret.Cells.Add(Utilities.addCell(m.street_address));
-        ret.Cells.Add(Utilities.addCell(m.city));
-        //ret.Cells.Add(Utilities.addCell(m.state));
-        //ret.Cells.Add(Utilities.addCell(m.zip.ToString()));
-        //ret.Cells.Add(Utilities.addCell(m.quota.ToString()));
-        ret.Cells.Add(Utilities.addCell(m.is_adult.ToString()));
-        //ret.Cells.Add(Utilities.addCell(m.ethnicity));
-        ret.Cells.Add(Utilities.addCell(m.restricted_to_tech.ToString()));
-        //ret.Cells.Add(Utilities.addCell(m.west_central_resident.ToString()));
-        ret.Cells.Add(addButtonCell(m.member_id));
-        //ret.Cells.Add(addCheckOutCell(m.member_id));
-        return ret;
-    }
-
-
-    private TableCell addCheckOutCell(int id)
-    {
-        TableCell ret = new TableCell();
-        HtmlButton checkOut = new HtmlButton();
-        checkOut.Attributes["class"] = "mdl-button mdl-js-button mdl-button--icon";
-        checkOut.Attributes.Add("id", id.ToString());
-        checkOut.Attributes["title"] = "Check-Out";
-        checkOut.Attributes["type"] = "button";
-        checkOut.InnerHtml = "<i class = \"material-icons\">shopping_cart</i>";
-        ret.Controls.Add(checkOut);
-        return ret;
-    }
-    
-
-
-    /*
-     * addButtonCell function
-     * params: int id -> the member_id of the current record
-     * 
-     * This method dynamically creates an edit and delete button for the current record inside the member table.
-     * These buttons are placed inside the TableCell that is returned.
-     * 
-     * returns: A table cell that contains the edit and delete buttons.
-     * 
-     */
-    private TableCell addButtonCell(int id)
-    {
-        TableCell ret = new TableCell();
-        //HtmlButton del = new HtmlButton();
-        HtmlButton edit = new HtmlButton();
-
-        /*del.Attributes["class"] = "mdl-button mdl-js-button mdl-button--icon";
-        del.InnerHtml = "<i class = \"material-icons\">delete</i>";
-        del.Attributes.Add("id", id.ToString());
-        del.Attributes["onclick"] = "if(swal({" +
-            "title: 'Delete Member'," +
-            "text: 'Are you sure you want to delete member id: " + id.ToString() + "?'," +
-            "icon: 'warning'," +
-            "buttons: true," +
-            "dangerMode: true," +
-            "}).then((value) => {" +
-            "if(value){" +
-            "deleteMember(" + id.ToString() + ");" +
-            "swal('Member deleted', { icon: 'success',});" +
-            "} else {" +
-            "return false;" +
-            "}" +
-            "})){ return false; };";
-        
-
-        del.Attributes["title"] = "Delete";*/
-
-        edit.Attributes["class"] = "mdl-button mdl-js-button mdl-button--icon";
-        edit.InnerHtml = "<i class = \"material-icons\">edit</i>";
-        edit.Attributes.Add("id", id.ToString());
-        //edit.Attributes["title"] = "Edit";
-
-        //edit.ServerClick += new EventHandler(editClick);
-
-        ret.Controls.Add(edit);
-        //ret.Controls.Add(del);
-
-        return ret;
-    }
-
-
-    /*
      * editClick
      * 
      * handler for clicking any of the dynamically created edit buttons.
      * Retrieves the member_id from the sender object.
      * 
      */ 
-
     public void editClick(object sender, EventArgs e)
     {
         int id = Int32.Parse(((HtmlButton)sender).Attributes["id"]);
@@ -336,7 +192,7 @@ public partial class Members : System.Web.UI.Page
                         Utilities.containsStr(search, m.first_name) ||
                         Utilities.containsStr(search, m.guardian_name) ||
                         Utilities.containsStr(search, m.phone) ||
-                        Utilities.containsStr(search, m.city)
+                        Utilities.containsStr(search, m.email)
                         )
                     {
                         searchResults.Add(m);
@@ -362,8 +218,8 @@ public partial class Members : System.Web.UI.Page
                 columns.Add(m.first_name);
                 columns.Add(m.phone);
                 columns.Add(m.email);
-                columns.Add(m.city);
-                columns.Add(m.state);
+                columns.Add(m.guardian_name);
+                columns.Add(m.restricted_to_tech.ToString());
                 columns.Add("<button id=" + m.member_id.ToString() + " class='mdl-button mdl-js-button mdl-button--icon' onClick='editMember(event); return false' title ='Edit'><i class= 'material-icons'>edit</i></button>"
 
                     );

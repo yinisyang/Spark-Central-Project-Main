@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="EditTechnology.aspx.cs" Inherits="_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <script src="scripts/EditTech.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="PanelPlaceHolder" runat="Server">
     <asp:Panel ID="pane" class="mdl-layout__tab-bar mdl-js-ripple-effect" runat="server">
@@ -13,6 +14,7 @@
     </asp:Panel>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder" runat="Server">
+    <asp:ScriptManager ID="ScriptManager" runat="server" EnablePageMethods="true"></asp:ScriptManager>
     <br />
 
     <div class="mdl-grid" style="width: 50%">
@@ -24,6 +26,9 @@
             </div>
             <div class="mdl-dialog__actions">
                 <asp:Button ID="btnSave" runat="server" Text="Save Changes" OnClick="Submit_Click" CssClass="mdl-button mdl-js-button mdl-button" />
+                <button id="btnDelete" type="button" onclick="deleteTech()" class="mdl-button mdl-js-button mdl-button">
+                Delete
+            </button>
                 <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="Cancel_Click" CssClass="mdl-button mdl-js-button mdl-button" />
 
             </div>

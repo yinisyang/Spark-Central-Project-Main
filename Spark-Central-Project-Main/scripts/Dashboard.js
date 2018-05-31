@@ -39,6 +39,70 @@
         dialog.close();
     });
 
+
+    var bookOptions = {
+        url: "http://api.sparklib.org/api/book",
+
+        getValue: "title",
+
+
+        ajaxSettings: {
+            method: "GET",
+            headers: {
+                APIKey: "254a2c54-5e21-4e07-b2aa-590bc545a520"
+            }
+        },
+
+        list: {
+            match: {
+                enabled: true
+            },
+            maxNumberOfElements: 8,
+            onSelectItemEvent: function () {
+                var value = $("#txtitemid").getSelectedItemData().item_id;
+
+                $("#txtitemid").val(value).trigger("change");
+            }
+        },
+        theme: "round"
+
+    };
+
+    $("#txtitemid").easyAutocomplete(bookOptions);
+
+    var memberOptions = {
+        url: "http://api.sparklib.org/api/member",
+
+        getValue: "last_name",
+
+
+        ajaxSettings: {
+            method: "GET",
+            headers: {
+                APIKey: "254a2c54-5e21-4e07-b2aa-590bc545a520"
+            }
+        },
+
+        list: {
+            match: {
+                enabled: true
+            },
+            maxNumberOfElements: 8,
+            onSelectItemEvent: function () {
+                var value = $("#txtmemberid").getSelectedItemData().member_id;
+                var valueName = $("txtmemberid").getSelectedItemData().first_name;
+
+                $("#txtmemberid").val(value).trigger("change");
+                $("#memberNameField").val(valueName).trigger("change");
+            }
+        },
+        theme: "round"
+
+    };
+
+    $("#txtmemberid").easyAutocomplete(memberOptions);
+
+
 });
 
 function findMember() {
