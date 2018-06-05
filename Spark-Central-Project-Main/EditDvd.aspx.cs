@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Script.Serialization;
 using SparkAPI.Models;
+using SparkWebSite;
 using System.Net;
 
 public partial class _Default : System.Web.UI.Page
@@ -25,7 +26,7 @@ public partial class _Default : System.Web.UI.Page
     private DVD getDVD(string id)
     {
         var client = new WebClient();
-        client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+        client.Headers.Add(Utilities.getApiKey());
         client.QueryString.Set("item_id", id);
         string url = "http://api.sparklib.org/api/dvd";
 
@@ -45,7 +46,7 @@ public partial class _Default : System.Web.UI.Page
         using (var client = new WebClient())
         {
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            client.Headers.Add(Utilities.getApiKey());
 
             try
             {
@@ -75,7 +76,7 @@ public partial class _Default : System.Web.UI.Page
         using (var client = new WebClient())
         {
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            client.Headers.Add(Utilities.getApiKey());
 
             try
             {

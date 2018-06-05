@@ -37,6 +37,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Assn</th>
                         <th>Title</th>
                         <th>Author</th>
                         <th>Category</th>

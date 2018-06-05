@@ -31,6 +31,11 @@ namespace SparkWebSite
             return ret;
         }
 
+        public static String getApiKey()
+        {
+            return "APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520";
+        }
+
         //Generic method that returns a TableHeaderCell containing the string that is passed to it.
         public static TableHeaderCell addHeaderCell(string content)
         {
@@ -57,12 +62,51 @@ namespace SparkWebSite
         public static List<Member> getMemberList()
         {
             var client = new WebClient();
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            client.Headers.Add(getApiKey());
 
             var response = client.DownloadString("http://api.sparklib.org/api/Member");
 
             return new JavaScriptSerializer().Deserialize<List<Member>>(response);
+        }
 
+        public static int getNextAssn()
+        {
+            int highest = 0;
+            var client = new WebClient();
+            client.Headers.Add(getApiKey());
+
+            var response = client.DownloadString("http://api.sparklib.org/api/book");
+            List<Book> bList = new JavaScriptSerializer().Deserialize<List<Book>>(response);
+
+            response = client.DownloadString("http://api.sparklib.org/api/dvd");
+            List<DVD> dvdList = new JavaScriptSerializer().Deserialize<List<DVD>>(response);
+
+            response = client.DownloadString("http://api.sparklib.org/api/technology");
+            List<Technology> techList = new JavaScriptSerializer().Deserialize<List<Technology>>(response);
+
+            foreach(Book b in bList)
+            {
+                if(b.assn > highest)
+                {
+                    highest = b.assn;
+                }
+            }
+            foreach(DVD d in dvdList)
+            {
+                if(d.assn > highest)
+                {
+                    highest = d.assn;
+                }
+            }
+            foreach(Technology t in techList)
+            {
+                if(t.assn > highest)
+                {
+                    highest = t.assn;
+                }
+            }
+
+            return highest;
         }
         
     }
@@ -160,7 +204,7 @@ namespace SparkWebSite
         public int Column;
         public string Direction;
 
-        private DataTableOrder()
+        public DataTableOrder()
         {
         }
 

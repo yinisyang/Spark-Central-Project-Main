@@ -44,7 +44,7 @@ public partial class Members : System.Web.UI.Page
     private List<Member> getMemberList()
     {
         var client = new WebClient();
-        client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+        client.Headers.Add(Utilities.getApiKey());
 
         var response = client.DownloadString("http://api.sparklib.org/api/Member");
 
@@ -87,7 +87,7 @@ public partial class Members : System.Web.UI.Page
         using (var client = new WebClient())
         {
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            client.Headers.Add(Utilities.getApiKey());
 
             try
             {
@@ -130,7 +130,7 @@ public partial class Members : System.Web.UI.Page
             using (var client = new WebClient())
             {
                 client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-                client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+                client.Headers.Add(Utilities.getApiKey());
 
                 try
                 {
@@ -171,8 +171,8 @@ public partial class Members : System.Web.UI.Page
             resultSet.recordsTotal = data.Count();
 
             string search = req.SearchValue;
-            int order = req.Order[0].Column;
-            string orderDirection = req.Order[0].Direction;
+            int order = req.Order.Values.ElementAt(0).Column;
+            string orderDirection = req.Order.Values.ElementAt(0).Direction;
 
             int startRec = req.Start;
             int pageSize = req.Length;
@@ -267,7 +267,6 @@ public partial class Members : System.Web.UI.Page
                     data = data.OrderByDescending(m => m.member_id).ToList();
                 }
                 break;
-
             case 1:
                 if (orderDir.ToLower().Equals("asc"))
                 {
@@ -278,7 +277,6 @@ public partial class Members : System.Web.UI.Page
                     data = data.OrderByDescending(m => m.last_name).ToList();
                 }
                 break;
-
             case 2:
                 if (orderDir.ToLower().Equals("asc"))
                 {
@@ -312,21 +310,21 @@ public partial class Members : System.Web.UI.Page
             case 5:
                 if (orderDir.ToLower().Equals("asc"))
                 {
-                    data = data.OrderBy(m => m.city).ToList();
+                    data = data.OrderBy(m => m.guardian_name).ToList();
                 }
                 else
                 {
-                    data = data.OrderByDescending(m => m.city).ToList();
+                    data = data.OrderByDescending(m => m.guardian_name).ToList();
                 }
                 break;
             case 6:
                 if (orderDir.ToLower().Equals("asc"))
                 {
-                    data = data.OrderBy(m => m.state).ToList();
+                    data = data.OrderBy(m => m.restricted_to_tech).ToList();
                 }
                 else
                 {
-                    data = data.OrderByDescending(m => m.state).ToList();
+                    data = data.OrderByDescending(m => m.restricted_to_tech).ToList();
                 }
                 break;
             default:
@@ -340,7 +338,6 @@ public partial class Members : System.Web.UI.Page
                 }
                 break;
         }
-
         return data;
     }
 

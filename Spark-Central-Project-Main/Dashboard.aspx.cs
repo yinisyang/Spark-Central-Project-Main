@@ -18,6 +18,14 @@ public partial class Dashboard : System.Web.UI.Page
 
     }
 
+    protected void Submit_ClickCheckOut(object sender, EventArgs e)
+    {
+        Page.Session["CheckOutMemberID"] = txtmemberid.Text;
+        Page.Session["CheckOutItemAssn"] = txtitemassn.Text;
+        Response.Redirect("CheckOutConfirm.aspx");
+    }
+
+
     protected void Submit_ClickMember(object sender, EventArgs e)
     {
         var member = new
@@ -47,7 +55,7 @@ public partial class Dashboard : System.Web.UI.Page
             using (var client = new WebClient())
             {
                 client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-                client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+                client.Headers.Add(Utilities.getApiKey());
 
                 try
                 {
@@ -81,7 +89,7 @@ public partial class Dashboard : System.Web.UI.Page
         using (var client = new WebClient())
         {
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            client.Headers.Add(Utilities.getApiKey());
 
             try
             {
@@ -99,5 +107,4 @@ public partial class Dashboard : System.Web.UI.Page
             }
         }
     }
-
 }

@@ -47,8 +47,8 @@ public partial class Catalog : System.Web.UI.Page
             resultSet.recordsTotal = data.Count();
 
             string search = req.SearchValue;
-            int order = req.Order[0].Column;
-            string orderDirection = req.Order[0].Direction;
+            int order = req.Order.Values.ElementAt(0).Column;
+            string orderDirection = req.Order.Values.ElementAt(0).Direction;
 
             int startRec = req.Start;
             int pageSize = req.Length;
@@ -68,6 +68,7 @@ public partial class Catalog : System.Web.UI.Page
                         Utilities.containsStr(search, b.author) ||
                         Utilities.containsStr(search, b.publisher) ||
                         Utilities.containsStr(search, b.publication_year.ToString()) ||
+                        Utilities.containsStr(search, b.assn.ToString()) ||
                         Utilities.containsStr(search, b.isbn_10) ||
                         Utilities.containsStr(search, b.isbn_13)
                         )
@@ -91,6 +92,7 @@ public partial class Catalog : System.Web.UI.Page
             {
                 var columns = new List<string>();
                 columns.Add(m.item_id.ToString());
+                columns.Add(m.assn.ToString());
                 columns.Add(m.title);
                 columns.Add(m.author);
                 columns.Add(m.category);
@@ -177,7 +179,7 @@ public partial class Catalog : System.Web.UI.Page
             using (var client = new WebClient())
             {
                 client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-                client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+                client.Headers.Add(Utilities.getApiKey());
 
                 try
                 {
@@ -258,7 +260,7 @@ public partial class Catalog : System.Web.UI.Page
             using (var client = new WebClient())
             {
                 client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-                client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+                client.Headers.Add(Utilities.getApiKey());
 
                 try
                 {
@@ -286,7 +288,7 @@ public partial class Catalog : System.Web.UI.Page
     private static List<Book> getBookList()
     {
         var client = new WebClient();
-        client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+        client.Headers.Add(Utilities.getApiKey());
 
         var response = client.DownloadString("http://api.sparklib.org/api/book");
 
@@ -323,7 +325,7 @@ public partial class Catalog : System.Web.UI.Page
         using (var client = new WebClient())
         {
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            client.Headers.Add(Utilities.getApiKey());
 
             try
             {
@@ -343,7 +345,7 @@ public partial class Catalog : System.Web.UI.Page
         using (var client = new WebClient())
         {
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            client.Headers.Add(Utilities.getApiKey());
 
             try
             {
@@ -363,7 +365,7 @@ public partial class Catalog : System.Web.UI.Page
         using (var client = new WebClient())
         {
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            client.Headers.Add(Utilities.getApiKey());
 
             try
             {
@@ -386,7 +388,7 @@ public partial class Catalog : System.Web.UI.Page
         using (var client = new WebClient())
         {
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            client.Headers.Add(Utilities.getApiKey());
 
             try
             {
@@ -407,84 +409,101 @@ public partial class Catalog : System.Web.UI.Page
 
     public static List<Book> SortByColumnWithOrder(int order, string orderDir, List<Book> data)
     {
-        // Initialization.   
+        // Initialization.  
+        List<Book> ret = data;
         // Sorting   
         switch (order)
         {
             case 0:
-                if (orderDir.Equals("ASC"))
+                if (orderDir.ToLower().Equals("asc"))
                 {
-                    data = data.OrderBy(m => m.item_id).ToList();
+                    ret = ret.OrderBy(m => m.item_id).ToList();
                 }
                 else
                 {
-                    data = data.OrderByDescending(m => m.item_id).ToList();
+                    ret = ret.OrderByDescending(m => m.item_id).ToList();
                 }
                 break;
 
             case 1:
                 if (orderDir.ToLower().Equals("asc"))
                 {
-                    data = data.OrderBy(m => m.title).ToList();
+                    ret = ret.OrderBy(m => m.assn).ToList();
                 }
                 else
                 {
-                    data = data.OrderByDescending(m => m.title).ToList();
+                    ret = ret.OrderByDescending(m => m.assn).ToList();
                 }
                 break;
 
             case 2:
                 if (orderDir.ToLower().Equals("asc"))
                 {
-                    data = data.OrderBy(m => m.author).ToList();
+                    ret = ret.OrderBy(m => m.title).ToList();
                 }
                 else
                 {
-                    data = data.OrderByDescending(m => m.author).ToList();
+                    ret = ret.OrderByDescending(m => m.title).ToList();
                 }
                 break;
+
             case 3:
                 if (orderDir.ToLower().Equals("asc"))
                 {
-                    data = data.OrderBy(m => m.category).ToList();
+                    ret = ret.OrderBy(m => m.author).ToList();
                 }
                 else
                 {
-                    data = data.OrderByDescending(m => m.category).ToList();
+                    ret = ret.OrderByDescending(m => m.author).ToList();
                 }
                 break;
+
             case 4:
                 if (orderDir.ToLower().Equals("asc"))
                 {
-                    data = data.OrderBy(m => m.publisher).ToList();
+                    ret = ret.OrderBy(m => m.category).ToList();
                 }
                 else
                 {
-                    data = data.OrderByDescending(m => m.publisher).ToList();
+                    ret = ret.OrderByDescending(m => m.category).ToList();
                 }
                 break;
+
             case 5:
                 if (orderDir.ToLower().Equals("asc"))
                 {
-                    data = data.OrderBy(m => m.publication_year).ToList();
+                    ret = ret.OrderBy(m => m.publisher).ToList();
                 }
                 else
                 {
-                    data = data.OrderByDescending(m => m.publication_year).ToList();
+                    ret = ret.OrderByDescending(m => m.publisher).ToList();
                 }
                 break;
+
+            case 6:
+                if (orderDir.ToLower().Equals("asc"))
+                {
+                    ret = ret.OrderBy(m => m.publication_year).ToList();
+                }
+                else
+                {
+                    ret = ret.OrderByDescending(m => m.publication_year).ToList();
+                }
+                break;
+
+
             default:
                 if (orderDir.ToLower().Equals("asc"))
                 {
-                    data = data.OrderBy(m => m.item_id).ToList();
+                    ret = ret.OrderBy(m => m.item_id).ToList();
                 }
                 else
                 {
-                    data = data.OrderByDescending(m => m.item_id).ToList();
+                    ret = ret.OrderByDescending(m => m.item_id).ToList();
                 }
                 break;
         }
 
-        return data;
+        return ret;
     }
 }

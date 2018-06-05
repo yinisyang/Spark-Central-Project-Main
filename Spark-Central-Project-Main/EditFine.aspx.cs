@@ -13,34 +13,37 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (!Page.IsPostBack)
         {
-            Technology t = getTech(Request.QueryString["item_id"]);
-            techName.Text = t.name;
+            Fine f = getFine(Request.QueryString["fine_id"]);
+            txtFineId.Text = f.fine_id.ToString();
+            txtMemId.Text = f.member_id.ToString();
+            txtAmount.Text = f.amount.ToString("F2");
+            txtFineDescription.Text = f.description;
 
+            txtFineId.ReadOnly = true;
         }
     }
 
-    private Technology getTech(string id)
+    private Fine getFine(string id)
     {
         var client = new WebClient();
         client.Headers.Add(Utilities.getApiKey());
-        client.QueryString.Set("item_id", id);
-        string url = "http://api.sparklib.org/api/technology";
+        client.QueryString.Set("fine_id", id);
+        string url = "http://api.sparklib.org/api/fines";
 
         var response = client.DownloadString(url);
 
-        return new JavaScriptSerializer().Deserialize<Technology>(response);
+        return new JavaScriptSerializer().Deserialize<Fine>(response);
     }
 
     protected void Cancel_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Catalog.aspx");
+        Response.Redirect("Circulations.aspx");
     }
 
     [System.Web.Services.WebMethod]
-    public static void deleteTe(int id)
+    public static void deleteFine(int id)
     {
         using (var client = new WebClient())
         {
@@ -49,7 +52,7 @@ public partial class _Default : System.Web.UI.Page
 
             try
             {
-                String apiString = "http://api.sparklib.org/api/technology?item_id=" + id;
+                String apiString = "http://api.sparklib.org/api/fines?fine_id=" + id;
                 client.UploadString(apiString, "DELETE", "");
 
             }
@@ -62,11 +65,22 @@ public partial class _Default : System.Web.UI.Page
     protected void Submit_Click(object sender, EventArgs e)
     {
 
-        Technology t = new Technology();
-        t.name = techName.Text;
+        Fine f = new Fine();
+        int fid, mid;
+        Int32.TryParse(txtFineId.Text, out fid);
+        Int32.TryParse(txtMemId.Text, out mid);
+        double amount;
+        Double.TryParse(txtAmount.Text, out amount);
+
+        f.fine_id = fid;
+        f.member_id = mid;
+        f.amount = amount;
+        f.description = txtFineDescription.Text;
+
+
 
         JavaScriptSerializer serializer = new JavaScriptSerializer();
-        string json = serializer.Serialize(t);
+        string json = serializer.Serialize(f);
 
         using (var client = new WebClient())
         {
@@ -75,11 +89,11 @@ public partial class _Default : System.Web.UI.Page
 
             try
             {
-                String apiString = "http://api.sparklib.org/api/technology?item_id=" + Request.QueryString["item_id"];
+                String apiString = "http://api.sparklib.org/api/fines?fine_id=" + Request.QueryString["fine_id"];
                 client.UploadString(apiString, "PUT", json);
                 var response = client.ResponseHeaders;
 
-                Response.Redirect("Catalog.aspx");
+                Response.Redirect("Circulations.aspx");
 
             }
             catch (Exception ex)

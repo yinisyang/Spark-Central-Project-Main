@@ -97,7 +97,7 @@ public partial class Catalog : System.Web.UI.Page
             using (var client = new WebClient())
             {
                 client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-                client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+                client.Headers.Add(Utilities.getApiKey());
 
                 try
                 {
@@ -140,7 +140,7 @@ public partial class Catalog : System.Web.UI.Page
             using (var client = new WebClient())
             {
                 client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-                client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+                client.Headers.Add(Utilities.getApiKey());
 
                 try
                 {
@@ -178,7 +178,7 @@ public partial class Catalog : System.Web.UI.Page
             using (var client = new WebClient())
             {
                 client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-                client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+                client.Headers.Add(Utilities.getApiKey());
 
                 try
                 {
@@ -206,7 +206,7 @@ public partial class Catalog : System.Web.UI.Page
     private List<DVD> getDVDList()
     {
         var client = new WebClient();
-        client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+        client.Headers.Add(Utilities.getApiKey());
 
         var response = client.DownloadString("http://api.sparklib.org/api/dvd");
 
@@ -218,6 +218,7 @@ public partial class Catalog : System.Web.UI.Page
         TableHeaderRow ret = new TableHeaderRow();
         ret.TableSection = TableRowSection.TableHeader;
         ret.Cells.Add(Utilities.addHeaderCell("ID"));
+        ret.Cells.Add(Utilities.addHeaderCell("Assn"));
         ret.Cells.Add(Utilities.addHeaderCell("Title"));
         ret.Cells.Add(Utilities.addHeaderCell("Year"));
         ret.Cells.Add(Utilities.addHeaderCell("Rating"));
@@ -232,6 +233,7 @@ public partial class Catalog : System.Web.UI.Page
         TableRow ret = new TableRow();
         ret.TableSection = TableRowSection.TableBody;
         ret.Cells.Add(Utilities.addCell(d.item_id.ToString()));
+        ret.Cells.Add(Utilities.addCell(d.assn.ToString()));
         ret.Cells.Add(Utilities.addCell(d.title));
         ret.Cells.Add(Utilities.addCell(d.release_year.ToString()));
         ret.Cells.Add(Utilities.addCell(d.rating));
@@ -252,7 +254,7 @@ public partial class Catalog : System.Web.UI.Page
         using (var client = new WebClient())
         {
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            client.Headers.Add(Utilities.getApiKey());
 
             try
             {
@@ -292,7 +294,7 @@ public partial class Catalog : System.Web.UI.Page
         using (var client = new WebClient())
         {
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            client.Headers.Add(Utilities.getApiKey());
 
             try
             {

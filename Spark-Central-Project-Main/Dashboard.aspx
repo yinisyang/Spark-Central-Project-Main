@@ -3,9 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="scripts/jquery.easy-autocomplete.min.js"></script>
     <script src="scripts/Dashboard.js"></script>
-    <link href="styles/easy-autocomplete.themes.min.css" rel="stylesheet" />
     <style>
         .mdl-card {
             width: 330px;
@@ -109,32 +107,23 @@
 
             <div class="mdl-cell mdl-cell--6-col">
 
-                <input id="txtmemberid" />
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <asp:Textbox ID="txtmemberid" runat="server" Cssclass="mdl-textfield__input" />
+                    <label class="mdl-textfield__label" for="txtmemberid">Member ID</label>
+                </div>
 
-                <button id="btnFindMember" type="button" onclick="findMember()" class="mdl-button mdl-js-button mdl-button" title="Find">
-                    Find
-                </button>
-
-                <div id="memberNameField"></div>
-                <div id="memberhidden" class="hidden"></div>
-                <label id="memName"></label>
             </div>
             <div class="mdl-cell mdl-cell--6-col">
-                <input id="txtitemid" />
-
-                <button id="btnFindItem" type="button" onclick="findItem()" class="mdl-button mdl-js-button mdl-button" title="Find">
-                    Find
-                </button>
-
-                <div id="itemNameField"></div>
-                <div id="itemhidden" class="hidden"></div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <asp:Textbox ID="txtitemassn" runat="server" Cssclass="mdl-textfield__input" />
+                    <label class="mdl-textfield__label" for="txtitemassn">Item Assn</label>
+                </div>
             </div>
+
         </div>
 
         <div class="mdl-dialog__actions">
-            <button id="btnCheckOut" type="button" class="mdl-button mdl-js-button mdl-button" title="Confirm">
-                Confirm
-            </button>
+            <asp:Button ID="checkOutConfirm" runat="server" Text="Check-Out" OnClick="Submit_ClickCheckOut" CssClass="mdl-button mdl-js-button mdl-button" />
             <button type="button" class="mdl-button close">Cancel</button>
         </div>
     </dialog>
@@ -199,7 +188,7 @@
 
     <div>
 
-        <!---Add Member Smart Dialog-->
+        <!---Add Member Dialog-->
         <dialog id="member-dialog" class="mdl-dialog" style="width: 50%">
             <h4 class="mdl-dialog__title">Add Member</h4>
             <div class="mdl-dialog__content">
@@ -308,7 +297,7 @@
             </div>
         </dialog>
     </div>
-    <!---End Add Member Smart Dialog-->
+    <!---End Add Member Dialog-->
 
 
 

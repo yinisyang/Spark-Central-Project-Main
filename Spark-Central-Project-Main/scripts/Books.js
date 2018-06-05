@@ -76,7 +76,7 @@ $(document).ready(function () {
         processing: true,
         serverSide: true,
         stateSave: true,
-        columnDefs: [{ orderable: false, targets: [1, 2, 3, 4, 5, 6] }],
+        columnDefs: [{ orderable: false, targets: [7] }],
         ajax: {
             type: "POST",
             contentType: "application/json; charset=utf-8",

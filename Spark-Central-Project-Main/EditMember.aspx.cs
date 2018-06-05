@@ -40,7 +40,7 @@ public partial class _Default : System.Web.UI.Page
     private Member getMember(string id)
     {
         var client = new WebClient();
-        client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+        client.Headers.Add(Utilities.getApiKey());
         client.QueryString.Set("member_id", id);
         string url = "http://api.sparklib.org/api/member";
 
@@ -60,7 +60,7 @@ public partial class _Default : System.Web.UI.Page
         using (var client = new WebClient())
         {
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            client.Headers.Add(Utilities.getApiKey());
 
             try
             {
@@ -101,7 +101,7 @@ public partial class _Default : System.Web.UI.Page
         using (var client = new WebClient())
         {
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            client.Headers.Add(Utilities.getApiKey());
 
             try
             {

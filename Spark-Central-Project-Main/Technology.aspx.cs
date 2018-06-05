@@ -94,7 +94,7 @@ public partial class Catalog : System.Web.UI.Page
             using (var client = new WebClient())
             {
                 client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-                client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+                client.Headers.Add(Utilities.getApiKey());
 
                 try
                 {
@@ -137,7 +137,7 @@ public partial class Catalog : System.Web.UI.Page
             using (var client = new WebClient())
             {
                 client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-                client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+                client.Headers.Add(Utilities.getApiKey());
 
                 try
                 {
@@ -175,7 +175,7 @@ public partial class Catalog : System.Web.UI.Page
             using (var client = new WebClient())
             {
                 client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-                client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+                client.Headers.Add(Utilities.getApiKey());
 
                 try
                 {
@@ -203,7 +203,7 @@ public partial class Catalog : System.Web.UI.Page
     private List<Technology> getTechList()
     {
         var client = new WebClient();
-        client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+        client.Headers.Add(Utilities.getApiKey());
 
         var response = client.DownloadString("http://api.sparklib.org/api/technology");
 
@@ -215,6 +215,7 @@ public partial class Catalog : System.Web.UI.Page
         TableHeaderRow ret = new TableHeaderRow();
         ret.TableSection = TableRowSection.TableHeader;
         ret.Cells.Add(Utilities.addHeaderCell("ID"));
+        ret.Cells.Add(Utilities.addHeaderCell("Assn"));
         ret.Cells.Add(Utilities.addHeaderCell("Name"));
         ret.Cells.Add(Utilities.addHeaderCell("Edit"));
 
@@ -227,6 +228,7 @@ public partial class Catalog : System.Web.UI.Page
         TableRow ret = new TableRow();
         ret.TableSection = TableRowSection.TableBody;
         ret.Cells.Add(Utilities.addCell(t.item_id.ToString()));
+        ret.Cells.Add(Utilities.addCell(t.assn.ToString()));
         ret.Cells.Add(Utilities.addCell(t.name));
         ret.Cells.Add(addButtonCell_Tech(t.item_id));
 
@@ -245,7 +247,7 @@ public partial class Catalog : System.Web.UI.Page
         using (var client = new WebClient())
         {
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            client.Headers.Add(Utilities.getApiKey());
 
             try
             {
@@ -285,7 +287,7 @@ public partial class Catalog : System.Web.UI.Page
         using (var client = new WebClient())
         {
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add("APIKey:254a2c54-5e21-4e07-b2aa-590bc545a520");
+            client.Headers.Add(Utilities.getApiKey());
 
             try
             {
