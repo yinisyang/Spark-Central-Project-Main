@@ -17,6 +17,7 @@ namespace SparkAPI
             Member m = new Member();
             m.city = reader.GetString(reader.GetOrdinal("city"));
             m.dob = reader.GetDateTime(reader.GetOrdinal("dob"));
+            m.signup_date = reader.GetDateTime(reader.GetOrdinal("signup_date"));
             m.email = reader.GetString(reader.GetOrdinal("email"));
             m.ethnicity = reader.GetString(reader.GetOrdinal("ethnicity"));
             m.first_name = reader.GetString(reader.GetOrdinal("first_name"));

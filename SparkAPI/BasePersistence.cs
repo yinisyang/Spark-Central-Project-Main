@@ -210,17 +210,17 @@ namespace SparkAPI
 
             cmd.CommandText = sqlString;
 
-            //try
-            //{
+            try
+            {
                 cmd.Prepare();
                 int id = (int)cmd.ExecuteScalar();
                 con.Close();
                 return id;
-            //}
-            //catch (Exception ex)
-            //{
-            //    return -1;
-            //}
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
         }
 
         public bool Update(Modellable item)
