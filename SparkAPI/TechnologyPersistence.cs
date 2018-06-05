@@ -16,6 +16,7 @@ namespace SparkAPI
         {
             Technology t = new Technology();
             t.item_id = reader.GetInt32(reader.GetOrdinal("item_id"));
+            t.assn = reader.GetInt32(reader.GetOrdinal("assn"));
             t.name = reader.GetString(reader.GetOrdinal("name"));
 
             return t;

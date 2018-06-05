@@ -17,6 +17,7 @@ namespace SparkAPI
             DVD item = new DVD();
 
             item.item_id = reader.GetInt32(reader.GetOrdinal("item_id"));
+            item.assn = reader.GetInt32(reader.GetOrdinal("assn"));
             item.rating = reader.GetString(reader.GetOrdinal("rating"));
             item.release_year = reader.GetInt32(reader.GetOrdinal("release_year"));
             item.title = reader.GetString(reader.GetOrdinal("title"));

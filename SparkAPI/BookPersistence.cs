@@ -17,6 +17,7 @@ namespace SparkAPI
         {
             Book b = new Book();
             b.item_id = reader.GetInt32(reader.GetOrdinal("item_id"));
+            b.assn = reader.GetInt32(reader.GetOrdinal("assn"));
             b.author = reader.GetString(reader.GetOrdinal("author"));
             b.isbn_10 = reader.GetString(reader.GetOrdinal("isbn_10"));
             b.category = reader.GetString(reader.GetOrdinal("category"));
