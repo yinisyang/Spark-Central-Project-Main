@@ -83,6 +83,8 @@ public partial class Dashboard : System.Web.UI.Page
     [System.Web.Services.WebMethod]
     public static string Submit_Click(Book b)
     {
+        b.assn = Utilities.getNextAssn();
+        b.image = "";
         JavaScriptSerializer serializer = new JavaScriptSerializer();
         string json = serializer.Serialize(b);
 

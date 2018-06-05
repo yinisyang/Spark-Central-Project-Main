@@ -23,7 +23,7 @@
 
 
         <br />
-        <asp:Label ID="NoteLabel" class="mdl-list__item-primary-content" Style="color: darkcyan" runat="server" Text=""></asp:Label>
+
 
 
 
@@ -32,6 +32,7 @@
 
 
         <div id="tableDiv" style="padding-left: 5%; overflow-x: auto; width: 75%">
+            <asp:Label ID="NoteLabel" class="mdl-list__item-primary-content" Style="color: darkcyan" runat="server" Text=""></asp:Label>
             <asp:Table ID="table" class="mdl-data-table" runat="server">
             </asp:Table>
 

@@ -171,6 +171,9 @@ public partial class Catalog : System.Web.UI.Page
         b.isbn_10 = bookIsnb10.Text;
         b.isbn_13 = bookIsbn13.Text;
 
+        b.assn = Utilities.getNextAssn();
+        b.image = "";
+
         if (!b.title.Equals(""))
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -188,7 +191,7 @@ public partial class Catalog : System.Web.UI.Page
                     string location = response.Get("Location");
                     string id = location.Split('=')[1];
 
-                    Page.Session["cNote"] = "Book Added With ID: " + id;
+                    Page.Session["cNote"] = "Book Added With Assn: " + b.assn;
 
                     Response.Redirect("Catalog.aspx");
 
@@ -213,6 +216,7 @@ public partial class Catalog : System.Web.UI.Page
         Int32.TryParse(dvdYear.Text, out year);
         d.release_year = year;
         d.rating = dvdRating.Text;
+        d.assn = Utilities.getNextAssn();
 
         if (!d.title.Equals(""))
         {
@@ -231,7 +235,7 @@ public partial class Catalog : System.Web.UI.Page
                     string location = response.Get("Location");
                     string id = location.Split('=')[1];
 
-                    Page.Session["cNote"] = "DVD Added With ID: " + id;
+                    Page.Session["cNote"] = "DVD Added With Assn: " + d.assn;
 
                     Response.Redirect("Catalog.aspx");
 
@@ -251,6 +255,7 @@ public partial class Catalog : System.Web.UI.Page
     {
         Technology t = new Technology();
         t.name = techName.Text;
+        t.assn = Utilities.getNextAssn();
 
         if (!t.name.Equals(""))
         {
@@ -269,7 +274,7 @@ public partial class Catalog : System.Web.UI.Page
                     string location = response.Get("Location");
                     string id = location.Split('=')[1];
 
-                    Page.Session["cNote"] = "Technology Added With ID: " + id;
+                    Page.Session["cNote"] = "Technology Added With Assn: " + t.assn;
 
                     Response.Redirect("Catalog.aspx");
 
@@ -294,12 +299,6 @@ public partial class Catalog : System.Web.UI.Page
 
         return new JavaScriptSerializer().Deserialize<List<Book>>(response);
     }
-
-
-
-
-
-
 
     protected void editBookClick(object sender, EventArgs e)
     {
@@ -382,6 +381,7 @@ public partial class Catalog : System.Web.UI.Page
     [System.Web.Services.WebMethod]
     public static string Submit_Click(Book b)
     {
+        b.assn = Utilities.getNextAssn();
         JavaScriptSerializer serializer = new JavaScriptSerializer();
         string json = serializer.Serialize(b);
 

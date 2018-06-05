@@ -106,7 +106,7 @@ namespace SparkWebSite
                 }
             }
 
-            return highest;
+            return highest +1;
         }
         
     }
