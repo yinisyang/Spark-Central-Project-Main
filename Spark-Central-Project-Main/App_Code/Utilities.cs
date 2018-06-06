@@ -15,9 +15,11 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Diagnostics.CodeAnalysis;
 
-/// <summary>
-/// Summary description for Utilities
-/// </summary>
+/*
+ * This code file contains several often-used methods and classes for use with the Spark Central Library project
+ * 
+ * 
+ */ 
 
 namespace SparkWebSite
 {
@@ -59,6 +61,11 @@ namespace SparkWebSite
             }
         }
 
+        /*
+         * Static method for retrieving a full list of members from the API.
+         * 
+         * 
+         */ 
         public static List<Member> getMemberList()
         {
             var client = new WebClient();
@@ -69,6 +76,17 @@ namespace SparkWebSite
             return new JavaScriptSerializer().Deserialize<List<Member>>(response);
         }
 
+        /*
+         * getNextAssn()
+         * 
+         * This methods traverses the Catalog tables(Books, DVD, and Technology) and determines the largest ASSN number out of all items.
+         * It then increments this value and returns it.
+         * 
+         * This method is often used when assigning an ASSN number to a new Catalog item.
+         * 
+         * Returns: The int which represents one higher than the highest ASSN number in the database.
+         * 
+         */ 
         public static int getNextAssn()
         {
             int highest = 0;
@@ -111,6 +129,7 @@ namespace SparkWebSite
         
     }
 
+    //This class is used to interface with the DataTables javascript library.
     public class DataTableParameters
     {
         public Dictionary<int, DataTableColumn> Columns;
@@ -158,6 +177,7 @@ namespace SparkWebSite
         }
     }
 
+    //This class is used to interface with the DataTables javascript library.
     public class DataTableColumn
     {
         public int Data;
@@ -199,6 +219,7 @@ namespace SparkWebSite
         }
     }
 
+    //This class is used to interface with the DataTables javascript library.
     public class DataTableOrder
     {
         public int Column;
@@ -227,6 +248,7 @@ namespace SparkWebSite
         }
     }
 
+    //This class is used to interface with the DataTables javascript library.
     [Serializable]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class DataTableResultSet
@@ -249,6 +271,7 @@ namespace SparkWebSite
         }
     }
 
+    //This class is used to interface with the DataTables javascript library.
     [Serializable]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class DataTableResultError : DataTableResultSet

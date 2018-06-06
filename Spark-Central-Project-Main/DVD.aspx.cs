@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.Net;
-using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using SparkAPI.Models;
 using SparkWebSite;
@@ -27,6 +24,13 @@ public partial class Catalog : System.Web.UI.Page
         }
     }
 
+    /*
+     * loadDvd()
+     * 
+     * this method initializes the DVD table and fills it with data gained from the API.
+     * 
+     * 
+     */ 
     protected void loadDvd()
     {
         BookImage.ImageUrl = "images/book.png";
@@ -47,21 +51,23 @@ public partial class Catalog : System.Web.UI.Page
         }
     }
 
-
+    /*
+     *  The below 3 methods handle when the user clicks one of the Picture buttons
+     *  They will navigate the user to the corresponding page.
+     * 
+     */
     protected void buttonBooks_Click(object sender, EventArgs e)
     {
         Session["CatalogMode"] = "Books";
         Response.Redirect("Books.aspx");
 
     }
-
     protected void buttonDVD_Click(object sender, EventArgs e)
     {
         Session["CatalogMode"] = "DVD";
         Response.Redirect("DVD.aspx");
 
     }
-
     protected void buttonTech_Click(object sender, EventArgs e)
     {
         Session["CatalogMode"] = "Technology";
@@ -69,6 +75,14 @@ public partial class Catalog : System.Web.UI.Page
 
     }
 
+    /*
+     * SubmitBook_Click()
+     * 
+     * This method fires when the user clicks the submit button inside the standard add book dialiog.
+     * It retrieves data from the add book dialog and creates a book object
+     * and then sends this object to the API via a POST request.
+     * 
+     */
     protected void SubmitBook_Click(object sender, EventArgs e)
     {
         int year;
@@ -125,6 +139,14 @@ public partial class Catalog : System.Web.UI.Page
         }
     }
 
+    /*
+     * SubmitDVD_Click()
+     * 
+     * This method fires when the user clicks the submit button inside the add dvd dialiog.
+     * It retrieves data from the add dvd dialog and creates a dvd object
+     * and then sends this object to the API via a POST request.
+     * 
+     */
     protected void SubmitDvd_Click(object sender, EventArgs e)
     {
         int year;
@@ -169,6 +191,14 @@ public partial class Catalog : System.Web.UI.Page
         }
     }
 
+    /*
+     * SubmitTech_Click()
+     * 
+     * This method fires when the user clicks the submit button inside the add technology dialiog.
+     * It retrieves data from the add technology dialog and creates a technology object
+     * and then sends this object to the API via a POST request.
+     * 
+     */
     protected void SubmitTech_Click(object sender, EventArgs e)
     {
         Technology t = new Technology();
@@ -270,6 +300,16 @@ public partial class Catalog : System.Web.UI.Page
         return ret;
     }
 
+    /*
+     *  SubmitClick()
+     *  
+     *  Params: Book b -> a book object to be added to the database
+     * 
+     *  This method is fired when the user clicks the submit button on the smart add dialog.
+     *  Takes a book object and serializes it into a Request and sends it to the API.
+     * 
+     * 
+     */
     [System.Web.Services.WebMethod]
     public static string Submit_Click(Book b)
     {

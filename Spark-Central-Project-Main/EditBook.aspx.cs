@@ -37,6 +37,16 @@ public partial class _Default : System.Web.UI.Page
         }
     }
 
+    /*
+     * getBook()
+     * 
+     * Params: string id -> The Id number of the Book item to return.
+     * 
+     * This method simply creates a GET request for the Book item with the specified id.
+     * 
+     * Returns: A Book Object retrieved from the API.
+     * 
+     */
     private Book getBook(string id)
     {
         var client = new WebClient();
@@ -54,6 +64,16 @@ public partial class _Default : System.Web.UI.Page
         Response.Redirect("Catalog.aspx");
     }
 
+    /*Delete Button Click WebMethod
+     * 
+     * Params: int id -> the id of the Book record to be removed
+     * 
+     * This method sends a delete request to the API to remove a specific Book from the database.
+     * It is a static WebMethod so that it can be called asyncronously from javascript.
+     * 
+     * returns: void
+     * 
+     */
     [System.Web.Services.WebMethod]
     public static void deleteBk(int id)
     {
@@ -74,6 +94,14 @@ public partial class _Default : System.Web.UI.Page
         }
     }
 
+    /*
+     * Submit_Click()
+     * 
+     * This method fires when the Submit button is clicked.
+     * It takes the data from the edit fields and constructs a Book object.
+     * Then it makes a PUT request to the API to update that record with the new data. 
+     * 
+     */
     protected void Submit_Click(object sender, EventArgs e)
     {
         int year;

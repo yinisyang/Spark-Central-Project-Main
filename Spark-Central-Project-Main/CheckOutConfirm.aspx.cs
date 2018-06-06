@@ -35,6 +35,10 @@ public partial class _Default : System.Web.UI.Page
      */ 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if(Page.Session["CheckoutMemberID"] == null || Page.Session["CheckOutItemAssn"] == null)
+        {
+            Response.Redirect("Circulations.aspx");
+        }
 
         string memberid = Page.Session["CheckOutMemberID"].ToString();
         int itemAssn;

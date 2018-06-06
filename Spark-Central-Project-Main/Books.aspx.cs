@@ -31,6 +31,14 @@ public partial class Catalog : System.Web.UI.Page
         }
     }
 
+
+    /*
+     * GetData()
+     * 
+     * This method is called when the server recieves a request from the DataTables library.
+     * It parses the information received and creates a response corresponding to the DataTables requirements.
+     * 
+     */ 
     [WebMethod(Description = "Server Side DataTables support", EnableSession = true)]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public static void GetData(object parameters)
@@ -130,20 +138,23 @@ public partial class Catalog : System.Web.UI.Page
         response.End();
     }
 
+    /*
+     *  The below 3 methods handle when the user clicks one of the Picture buttons
+     *  They will navigate the user to the corresponding page.
+     * 
+     */
     protected void buttonBooks_Click(object sender, EventArgs e)
     {
         Session["CatalogMode"] = "Books";
         Response.Redirect("Books.aspx");
 
     }
-
     protected void buttonDVD_Click(object sender, EventArgs e)
     {
         Session["CatalogMode"] = "DVD";
         Response.Redirect("DVD.aspx");
 
     }
-
     protected void buttonTech_Click(object sender, EventArgs e)
     {
         Session["CatalogMode"] = "Technology";
@@ -151,6 +162,14 @@ public partial class Catalog : System.Web.UI.Page
 
     }
 
+    /*
+     * SubmitBook_Click()
+     * 
+     * This method fires when the user clicks the submit button inside the standard add book dialiog.
+     * It retrieves data from the add book dialog and creates a book object
+     * and then sends this object to the API via a POST request.
+     * 
+     */
     protected void SubmitBook_Click(object sender, EventArgs e)
     {
         int year;
@@ -207,6 +226,14 @@ public partial class Catalog : System.Web.UI.Page
         }
     }
 
+    /*
+     * SubmitDVD_Click()
+     * 
+     * This method fires when the user clicks the submit button inside the add dvd dialiog.
+     * It retrieves data from the add dvd dialog and creates a dvd object
+     * and then sends this object to the API via a POST request.
+     * 
+     */
     protected void SubmitDvd_Click(object sender, EventArgs e)
     {
         int year;
@@ -251,6 +278,14 @@ public partial class Catalog : System.Web.UI.Page
         }
     }
 
+    /*
+     * SubmitTech_Click()
+     * 
+     * This method fires when the user clicks the submit button inside the add technology dialiog.
+     * It retrieves data from the add technology dialog and creates a technology object
+     * and then sends this object to the API via a POST request.
+     * 
+     */
     protected void SubmitTech_Click(object sender, EventArgs e)
     {
         Technology t = new Technology();
@@ -298,26 +333,6 @@ public partial class Catalog : System.Web.UI.Page
         var response = client.DownloadString("http://api.sparklib.org/api/book");
 
         return new JavaScriptSerializer().Deserialize<List<Book>>(response);
-    }
-
-    [System.Web.Services.WebMethod]
-    public static void deleteBookClick(int id)
-    {
-        using (var client = new WebClient())
-        {
-            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add(Utilities.getApiKey());
-
-            try
-            {
-                String apiString = "http://api.sparklib.org/api/book?item_id=" + id.ToString();
-                client.UploadString(new Uri(apiString), "DELETE", "");
-
-            }
-            catch (Exception ex)
-            {
-            }
-        }
     }
 
     /*

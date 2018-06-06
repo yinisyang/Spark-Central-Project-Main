@@ -68,39 +68,6 @@ public partial class Members : System.Web.UI.Page
 
     }
 
-
-
-    /*Delete Button Click WebMethod
-     * 
-     * Params: int id -> the id of the Member record to be removed
-     * 
-     * This method sends a delete request to the API to remove a specific member from the database.
-     * It is a static WebMethod so that it can be called asyncronously from javascript.
-     * 
-     * returns: void
-     * 
-     */
-    [WebMethod]
-    public static void deleteClick(int id)
-    {
-
-        using (var client = new WebClient())
-        {
-            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add(Utilities.getApiKey());
-
-            try
-            {
-                String apiString = "http://api.sparklib.org/api/member?member_id=" + id.ToString();
-                client.UploadString(new Uri(apiString), "DELETE", "");
-
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-    }
-
     /*
      * Submit_Click()
      * 
@@ -164,6 +131,16 @@ public partial class Members : System.Web.UI.Page
         }
     }
 
+
+    /*
+     * GetData()
+     * 
+     * This method is called when the server recieves a request from the DataTables library.
+     * It parses the information received and creates a response corresponding to the DataTables requirements.
+     * 
+     * 
+     * 
+     */
     [WebMethod(Description = "Server Side DataTables support", EnableSession = true)]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public static void GetData(object parameters)

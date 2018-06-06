@@ -58,6 +58,16 @@ public partial class _Default : System.Web.UI.Page
         Response.Redirect("Catalog.aspx");
     }
 
+    /*Delete Button Click WebMethod
+     * 
+     * Params: int id -> the id of the DVD record to be removed
+     * 
+     * This method sends a delete request to the API to remove a specific DVD from the database.
+     * It is a static WebMethod so that it can be called asyncronously from javascript.
+     * 
+     * returns: void
+     * 
+     */
     [System.Web.Services.WebMethod]
     public static void deleteDv(int id)
     {
@@ -78,6 +88,14 @@ public partial class _Default : System.Web.UI.Page
         }
     }
 
+    /*
+     * Submit_Click()
+     * 
+     * This method fires when the Submit button is clicked.
+     * It takes the data from the edit fields and constructs a DVD object.
+     * Then it makes a PUT request to the API to update that record with the new data. 
+     * 
+     */
     protected void Submit_Click(object sender, EventArgs e)
     {
         int year, assn;
