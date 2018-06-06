@@ -13,15 +13,23 @@ using SparkWebSite;
 
 public partial class Circulations : System.Web.UI.Page
 {
+    /*
+     * Page_Load()
+     * 
+     * This page initializes the Check-Out and Fines Tables when it loads.
+     * 
+     * 
+     * 
+     */
     protected void Page_Load(object sender, EventArgs e)
     {
-        table.Rows.Add(addTitleRow());
-
+        //Initialize WebClient
         var client = new WebClient();
         client.Headers.Add(Utilities.getApiKey());
 
+        //Generate CheckOut Table
         var response = client.DownloadString("http://api.sparklib.org/api/checkout");
-
+        table.Rows.Add(addTitleRow());
         foreach (Checkout cur in new JavaScriptSerializer().Deserialize<List<Checkout>>(response))
         {
             if (cur.resolved == false)
@@ -30,16 +38,21 @@ public partial class Circulations : System.Web.UI.Page
             }
         }
 
-
-        finetable.Rows.Add(addFineTitleRow());
+        //Generate Fines Table
         response = client.DownloadString("http://api.sparklib.org/api/fines");
-
+        finetable.Rows.Add(addFineTitleRow());
         foreach (Fine cur in new JavaScriptSerializer().Deserialize<List<Fine>>(response))
         {
             finetable.Rows.Add(addFineRow(cur));
         }
     }
 
+    /*
+     * addTitleRow()
+     * 
+     * This method returns a TableHeaderRow for the CheckOut Table.
+     * 
+     */
     private TableHeaderRow addTitleRow()
     {
         TableHeaderRow ret = new TableHeaderRow();
@@ -51,13 +64,18 @@ public partial class Circulations : System.Web.UI.Page
         ret.Cells.Add(Utilities.addHeaderCell("Member Name"));
         ret.Cells.Add(Utilities.addHeaderCell("Issue Date"));
         ret.Cells.Add(Utilities.addHeaderCell("Due Date"));
-        //ret.Cells.Add(Utilities.addHeaderCell("Resolved"));
         ret.Cells.Add(Utilities.addHeaderCell("Check-In"));
 
         ret.BorderWidth = 3;
         return ret;
     }
 
+    /*
+     * addFineTitleRow()
+     * 
+     * This method returns a TableHeaderRow for the Fines Table.
+     * 
+     */
     private TableHeaderRow addFineTitleRow()
     {
         TableHeaderRow ret = new TableHeaderRow();
@@ -73,6 +91,18 @@ public partial class Circulations : System.Web.UI.Page
         return ret;
     }
 
+    /*
+     * addCheckInCell()
+     * 
+     * Params:  int itemid -> the id of the checked out item for the current row.
+     *          int memberid -> the id of the member of the current row.
+     *          string type -> the item type, be it book, dvd, or technology.
+     * 
+     * This method adds the Check-In Button for each row in the Check-Out table.
+     * It stores important item and member data inside of the button for use when the button is clicked.
+     * 
+     * 
+     */
     private TableCell addCheckInCell(int itemid, int memberid, string type)
     {
         TableCell ret = new TableCell();
@@ -90,20 +120,49 @@ public partial class Circulations : System.Web.UI.Page
         return ret;
     }
 
+    /*
+     * checkInClick()
+     * 
+     * This method fires when a check-in button is clicked. It retrieves data from the button object,
+     * and uses it to create a DELETE request to the API.
+     * 
+     * This removes the Check-out from the database.
+     * 
+     * TODO: instead of deleting the checkout, make the method do a PUT request that switches the Resolved attribute to true.
+     * This will allow past check-out data to reside on the database for reports.
+     * 
+     */
     protected void checkInClick(object sender, EventArgs e)
     {
+        //Retrieve Data from the Button
         string memberid = ((HtmlButton)sender).Attributes["memberid"];
         string itemid = ((HtmlButton)sender).Attributes["itemid"];
-        string type = ((HtmlButton)sender).Attributes["typetype"];
+        string itemtype = ((HtmlButton)sender).Attributes["itemtype"];
 
-        using (var client = new WebClient())
+        //Initialize WebClient
+        var client = new WebClient();
+        client.Headers.Add(Utilities.getApiKey());
+
+        client.QueryString.Set("item_id", itemid);
+        client.QueryString.Set("member_id", memberid);
+        client.QueryString.Set("item_type", itemtype);
+
+        var response = client.DownloadString("http://api.sparklib.org/api/checkout");
+        Checkout cur = new JavaScriptSerializer().Deserialize<Checkout>(response);
+
+        cur.resolved = true;
+
+        JavaScriptSerializer serializer = new JavaScriptSerializer();
+        string json = serializer.Serialize(cur);
+
+        using (client = new WebClient())
         {
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
             client.Headers.Add(Utilities.getApiKey());
 
             try
             {
-                String apiString = "http://api.sparklib.org/api/checkout?member_id=" + memberid + "&item_id=" + itemid + "&item_type=" + type;
+                String apiString = "http://api.sparklib.org/api/checkout?item_id="+itemid+"&member_id="+memberid+"&item_type="+itemtype;
                 client.UploadString(apiString, "DELETE", "");
 
             }
@@ -115,6 +174,16 @@ public partial class Circulations : System.Web.UI.Page
 
     }
 
+    /*
+     * addFineRow()
+     * 
+     * Params: Fine f -> The fine object with which to derive data for the row to be returned.
+     * 
+     * This method takes a fine object and uses it to create a Row for the fine table.
+     * 
+     * Returns: A TableRow constructed from the Fine object passed in.
+     * 
+     */ 
     private TableRow addFineRow(Fine f)
     {
         TableRow ret = new TableRow();
@@ -125,17 +194,34 @@ public partial class Circulations : System.Web.UI.Page
 
         var client = new WebClient();
         client.Headers.Add(Utilities.getApiKey());
-        var response = client.DownloadString("http://api.sparklib.org/api/member?member_id=" + f.member_id.ToString());
-        Member m = new JavaScriptSerializer().Deserialize<Member>(response);
-        ret.Cells.Add(Utilities.addCell(m.first_name + " " + m.last_name));
+        try
+        {
+            var response = client.DownloadString("http://api.sparklib.org/api/member?member_id=" + f.member_id.ToString());
+            Member m = new JavaScriptSerializer().Deserialize<Member>(response);
+            ret.Cells.Add(Utilities.addCell(m.first_name + " " + m.last_name));
+        }
+        catch(Exception error)
+        {
+            Console.WriteLine(error.Message);
+            ret.Cells.Add(Utilities.addCell("N/A"));
+        }
 
         ret.Cells.Add(Utilities.addCell(f.description));
-        ret.Cells.Add(Utilities.addCell("$"+f.amount.ToString("F2")));
+        ret.Cells.Add(Utilities.addCell("$" + f.amount.ToString("F2")));
         ret.Cells.Add(addButtonCell_Fine(f.fine_id));
 
         return ret;
     }
 
+
+    /*
+     * addButtonCell_Fine()
+     * 
+     * Params: int id -> the Fine ID of the current row.
+     * 
+     * This method creates an edit fine button for the current row in the Fines Table.
+     * 
+     */ 
     private TableCell addButtonCell_Fine(int id)
     {
         TableCell ret = new TableCell();
@@ -153,6 +239,14 @@ public partial class Circulations : System.Web.UI.Page
         return ret;
     }
 
+
+    /*
+     * editFineClick()
+     * 
+     * This method fires when an edit fine button is clicked. 
+     * It retrieves the Fine Id from the button and redirects the user to the EditFine page.
+     * 
+     */ 
     protected void editFineClick(object sender, EventArgs e)
     {
         string id = ((HtmlButton)sender).Attributes["id"];
@@ -160,14 +254,27 @@ public partial class Circulations : System.Web.UI.Page
     }
 
 
+    /*
+     * addRow()
+     * 
+     * Params: Checkout c -> the Checkout object from which to construct the TableRow
+     * 
+     * This method creates a TableRow for the Check-Out table using data from the passed-in Checkout object.
+     * 
+     * Returns: the TableRow created.
+     * 
+     */ 
     private TableRow addRow(Checkout c)
     {
+        //Initialize WebClient
         var client = new WebClient();
         client.Headers.Add(Utilities.getApiKey());
 
+        //Initialize Row
         TableRow ret = new TableRow();
         ret.TableSection = TableRowSection.TableBody;
 
+        //Depending on item type, it will need to proceed differently for retrieving the information.
         if (c.item_type.Equals("book"))
         {
             try
@@ -179,6 +286,7 @@ public partial class Circulations : System.Web.UI.Page
             }
             catch (Exception e)
             {
+                ret.Cells.Add(Utilities.addCell("N/A"));
                 ret.Cells.Add(Utilities.addCell("N/A"));
             }
         }
@@ -195,6 +303,7 @@ public partial class Circulations : System.Web.UI.Page
             catch (Exception e)
             {
                 ret.Cells.Add(Utilities.addCell("N/A"));
+                ret.Cells.Add(Utilities.addCell("N/A"));
             }
         }
 
@@ -210,11 +319,13 @@ public partial class Circulations : System.Web.UI.Page
             catch (Exception e)
             {
                 ret.Cells.Add(Utilities.addCell("N/A"));
+                ret.Cells.Add(Utilities.addCell("N/A"));
             }
         }
 
         else
         {
+            ret.Cells.Add(Utilities.addCell("N/A"));
             ret.Cells.Add(Utilities.addCell("N/A"));
         }
 
@@ -232,16 +343,21 @@ public partial class Circulations : System.Web.UI.Page
         {
             ret.Cells.Add(Utilities.addCell("N/A"));
         }
-
-
         ret.Cells.Add(Utilities.addCell(c.checkout_date.ToShortDateString()));
 
         ret.Cells.Add(Utilities.addCell(c.due_date.ToShortDateString()));
-        //ret.Cells.Add(Utilities.addCell(c.resolved.ToString()));
         ret.Cells.Add(addCheckInCell(c.item_id, c.member_id, c.item_type));
         return ret;
     }
 
+    /*
+     * Submit_ClickCheckOut()
+     * 
+     * This method fires when the user clickes the checkout button.
+     * It stores the information from the dialog into the Session State and redirects the user
+     * to the Checkout Confirm page.
+     * 
+     */ 
     protected void Submit_ClickCheckOut(object sender, EventArgs e)
     {
         Page.Session["CheckOutMemberID"] = txtmemid.Text;
@@ -249,7 +365,14 @@ public partial class Circulations : System.Web.UI.Page
         Response.Redirect("CheckOutConfirm.aspx");
     }
 
-
+    /*
+     * SubmitFine_Click()
+     * 
+     * This method fires when the user clicks the submit fine button in the Add Fine dialog.
+     * It takes the information from the dialog boxes and creates a Fine object,
+     * then it performs a PUT request on the API to add it to the database.
+     * 
+     */ 
     protected void SubmitFine_Click(object sender, EventArgs e)
     {
         Fine f = new Fine();

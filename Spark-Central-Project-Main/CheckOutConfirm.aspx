@@ -19,29 +19,19 @@
     <div class="mdl-grid" style="width: 50%">
 
         <div class="mdl-cell mdl-cell--6-col">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <asp:TextBox ID="TxtMemberId" runat="server" CssClass="mdl-textfield__input" />
-                <label class="mdl-textfield__label" for="TxtMemberId">Member ID</label>
-            </div>
-            <br />
+            <br /><br /><br /><br />
+            <asp:Label ID="lblMemberNumber" runat="server" Text=""></asp:Label>
             <br />
             <asp:Label ID="lblName" runat="server" Text=""></asp:Label>
-
-
-
         </div>
         <div class="mdl-cell mdl-cell--6-col">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <asp:TextBox ID="TxtItemAssn" runat="server" CssClass="mdl-textfield__input" />
-                <label class="mdl-textfield__label" for="TxtItemAssn">Item Assn</label>
-            </div>
-            <br />
+            <br /><br /><br /><br />
+            <asp:Label ID="lblItemNumber" runat="server" Text=""></asp:Label>
             <br />
             <asp:Label ID="lblItem" runat="server" Text=""></asp:Label>
         </div>
         <div class="mdl-cell mdl-cell--12-col">
             <br /><br /><br /><br />
-            <br />
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <asp:TextBox ID="TxtDate" runat="server" CssClass="mdl-textfield__input" />
                 <label class="mdl-textfield__label" for="TxtDate">Due Date</label>

@@ -13,16 +13,34 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack)
+
+        if (Request.QueryString["item_id"] != null)
         {
             DVD d = getDVD(Request.QueryString["item_id"]);
             dvdTitle.Text = d.title;
             dvdRating.Text = d.rating;
             dvdYear.Text = d.release_year.ToString();
+            dvdAssn.Text = d.assn.ToString();
 
         }
+        else
+        {
+            Response.Redirect("DVD.aspx");
+        }
+
+
     }
 
+    /*
+     * getDVD()
+     * 
+     * Params: string id -> The Id number of the DVD item to return.
+     * 
+     * This method simply creates a GET request for the DVD item with the specified id.
+     * 
+     * Returns: A DVD Object retrieved from the API.
+     * 
+     */
     private DVD getDVD(string id)
     {
         var client = new WebClient();
@@ -62,12 +80,14 @@ public partial class _Default : System.Web.UI.Page
 
     protected void Submit_Click(object sender, EventArgs e)
     {
-        int year;
+        int year, assn;
 
         DVD d = new DVD();
         d.title = dvdTitle.Text;
         Int32.TryParse(dvdYear.Text, out year);
+        Int32.TryParse(dvdAssn.Text, out assn);
         d.release_year = year;
+        d.assn = assn;
         d.rating = dvdRating.Text;
 
         JavaScriptSerializer serializer = new JavaScriptSerializer();

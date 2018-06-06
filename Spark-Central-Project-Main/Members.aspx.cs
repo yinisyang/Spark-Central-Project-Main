@@ -59,7 +59,7 @@ public partial class Members : System.Web.UI.Page
      * handler for clicking any of the dynamically created edit buttons.
      * Retrieves the member_id from the sender object.
      * 
-     */ 
+     */
     public void editClick(object sender, EventArgs e)
     {
         int id = Int32.Parse(((HtmlButton)sender).Attributes["id"]);
@@ -101,7 +101,16 @@ public partial class Members : System.Web.UI.Page
         }
     }
 
-    //Add New Member Submit Click
+    /*
+     * Submit_Click()
+     * 
+     * This method fires when the user clicks the Submit Member button in the add Member dialog.
+     * 
+     * It retrieves the data from the dialog fields and uses it to construct a member object.
+     * Then it sends a POST request to the API in order to add the member to the database.
+     * 
+     * 
+     */
     protected void Submit_Click(object sender, EventArgs e)
     {
         var member = new
@@ -186,7 +195,7 @@ public partial class Members : System.Web.UI.Page
 
                 foreach (Member m in data)
                 {
-                    if(
+                    if (
                         Utilities.containsStr(search, m.member_id.ToString()) ||
                         Utilities.containsStr(search, m.last_name) ||
                         Utilities.containsStr(search, m.first_name) ||
@@ -205,13 +214,13 @@ public partial class Members : System.Web.UI.Page
 
             //Sorting
             data = SortByColumnWithOrder(order, orderDirection, data);
-            
-  
+
+
             // Apply pagination.   
             data = data.Skip(startRec).Take(pageSize).ToList();
 
             foreach (Member m in data)
-            { 
+            {
                 var columns = new List<string>();
                 columns.Add(m.member_id.ToString());
                 columns.Add(m.last_name);
@@ -230,7 +239,7 @@ public partial class Members : System.Web.UI.Page
 
 
 
-            
+
         }
         catch (Exception ex)
         {
@@ -238,7 +247,7 @@ public partial class Members : System.Web.UI.Page
             Console.Write(ex);
         }
         // Return info.   
-        
+
     }
     private static void SendResponse(HttpResponse response, DataTableResultSet result)
     {
@@ -251,6 +260,13 @@ public partial class Members : System.Web.UI.Page
         response.End();
     }
 
+
+
+    /*
+        * This Method is used to sort the Member Table serverside
+ *  
+ * 
+ */
     public static List<Member> SortByColumnWithOrder(int order, string orderDir, List<Member> data)
     {
         // Initialization.   

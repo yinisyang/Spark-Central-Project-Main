@@ -16,7 +16,7 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(!Page.IsPostBack)
+        if(Request.QueryString["memberid"] != null)
         {
             Member mem = getMember(Request.QueryString["memberid"]);
             firstName.Text = mem.first_name;
@@ -35,8 +35,22 @@ public partial class _Default : System.Web.UI.Page
             isRestrictedToTech.Checked = mem.restricted_to_tech;
             isWestCentralResident.Checked = mem.west_central_resident;
         }
+        else
+        {
+            Response.Redirect("Members.aspx");
+        }
     }
 
+    /*
+     * getMember()
+     * 
+     * Params: string id -> The Id number of the Member item to return.
+     * 
+     * This method simply creates a GET request for the Member item with the specified id.
+     * 
+     * Returns: A Member Object retrieved from the API.
+     * 
+     */
     private Member getMember(string id)
     {
         var client = new WebClient();
@@ -49,6 +63,14 @@ public partial class _Default : System.Web.UI.Page
         return new JavaScriptSerializer().Deserialize<Member>(response);
     }
 
+    /*
+     * Cancel_Click()
+     * 
+     * This method occurs when the user clicks the cancel button.
+     * It simply returns the user to the Members page.
+     * 
+     * 
+     */
     protected void Cancel_Click(object sender, EventArgs e)
     {
         Response.Redirect("Members.aspx");

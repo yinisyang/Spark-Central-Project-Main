@@ -4,6 +4,7 @@
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="scripts/Dashboard.js"></script>
+    <script src="scripts/SmartAdd.js"></script>
     <style>
         .mdl-card {
             width: 330px;
@@ -71,7 +72,7 @@
                         Check-Out
                     </button>
 
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" title="Check-In">Check-In
+                    <a href="Circulations.aspx" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" title="Check-In">Check-In
                     </a>
                 </div>
             </div>
@@ -127,10 +128,7 @@
             <button type="button" class="mdl-button close">Cancel</button>
         </div>
     </dialog>
-
-
-
-
+    <!-- End Check Out Dialog -->
 
 
     <!-- Smart Add Dialog -->
@@ -151,26 +149,26 @@
 
                 <div class="mdl-cell mdl-cell--4-col"></div>
                 <div class="mdl-cell mdl-cell--4-col">
-                    <img id="bookPic" src="images/empty.png" />
+                    <img id="sbookPic" src="images/empty.png" />
                 </div>
                 <div class="mdl-cell mdl-cell--4-col"></div>
 
                 <div class="mdl-cell mdl-cell--6-col">
-                    <div id="bookTitle"></div>
-                    <div id="bookAuthor"></div>
-                    <div id="bookPublisher"></div>
-                    <div id="bookYear"></div>
+                    <div id="sbookTitle"></div>
+                    <div id="sbookAuthor"></div>
+                    <div id="sbookPublisher"></div>
+                    <div id="sbookYear"></div>
 
                 </div>
                 <div class="mdl-cell mdl-cell--6-col">
-                    <div id="bookPages"></div>
-                    <div id="bookCategory"></div>
-                    <div id="bookIsbn10"></div>
-                    <div id="bookIsbn13"></div>
+                    <div id="sbookPages"></div>
+                    <div id="sbookCategory"></div>
+                    <div id="sbookIsbn10"></div>
+                    <div id="sbookIsbn13"></div>
 
                 </div>
                 <div class="mdl-cell mdl-cell--12-col">
-                    <div id="bookDescription"></div>
+                    <div id="sbookDescription"></div>
                 </div>
             </div>
         </div>
@@ -185,6 +183,7 @@
         </div>
     </dialog>
     <!---End Smart Add Dialog-->
+
 
     <div>
 

@@ -19,6 +19,7 @@
     <div id="tableDiv" style="padding-left: 5%; overflow-x: auto; width: 75%">
 
         <br />
+        <asp:Label ID="lblHelp" runat="server" Text=""></asp:Label>
         <h2>Check-Outs</h2>
         <button id="btnAddCo" type="button" class="mdl-button mdl-js-button mdl-button--icon" title="Check-Out">
             <i class="material-icons">add_shopping_cart</i>

@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script src="scripts/DVD.js"></script>
+    <script src="scripts/SmartAdd.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="PanelPlaceHolder" runat="Server">
     <asp:Panel ID="pane" class="mdl-layout__tab-bar mdl-js-ripple-effect" runat="server">

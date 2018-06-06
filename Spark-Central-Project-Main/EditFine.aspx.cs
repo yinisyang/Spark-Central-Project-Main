@@ -13,7 +13,7 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack)
+        if (Request.QueryString["fine_id"] != null)
         {
             Fine f = getFine(Request.QueryString["fine_id"]);
             txtFineId.Text = f.fine_id.ToString();
@@ -23,8 +23,22 @@ public partial class _Default : System.Web.UI.Page
 
             txtFineId.ReadOnly = true;
         }
+        else
+        {
+            Response.Redirect("Circulations.aspx");
+        }
     }
 
+    /*
+     * getFine()
+     * 
+     * Params: string id -> The Id number of the Fine item to return.
+     * 
+     * This method simply creates a GET request for the Fine item with the specified id.
+     * 
+     * Returns: A Fine Object retrieved from the API.
+     * 
+     */
     private Fine getFine(string id)
     {
         var client = new WebClient();

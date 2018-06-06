@@ -300,24 +300,6 @@ public partial class Catalog : System.Web.UI.Page
         return new JavaScriptSerializer().Deserialize<List<Book>>(response);
     }
 
-    protected void editBookClick(object sender, EventArgs e)
-    {
-        string id = ((HtmlButton)sender).Attributes["id"];
-        Response.Redirect("EditBook.aspx?item_id=" + id);
-    }
-
-    protected void editDVDClick(object sender, EventArgs e)
-    {
-        string id = ((HtmlButton)sender).Attributes["id"];
-        Response.Redirect("EditDvd.aspx?item_id=" + id);
-    }
-
-    protected void editTechClick(object sender, EventArgs e)
-    {
-        string id = ((HtmlButton)sender).Attributes["id"];
-        Response.Redirect("EditTechnology.aspx?item_id=" + id);
-    }
-
     [System.Web.Services.WebMethod]
     public static void deleteBookClick(int id)
     {
@@ -338,46 +320,16 @@ public partial class Catalog : System.Web.UI.Page
         }
     }
 
-    [System.Web.Services.WebMethod]
-    public static void deleteDVDClick(int id)
-    {
-        using (var client = new WebClient())
-        {
-            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add(Utilities.getApiKey());
-
-            try
-            {
-                String apiString = "http://api.sparklib.org/api/dvd?item_id=" + id.ToString();
-                client.UploadString(new Uri(apiString), "DELETE", "");
-
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-    }
-
-    [System.Web.Services.WebMethod]
-    public static void deleteTechClick(int id)
-    {
-        using (var client = new WebClient())
-        {
-            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add(Utilities.getApiKey());
-
-            try
-            {
-                String apiString = "http://api.sparklib.org/api/technology?item_id=" + id.ToString();
-                client.UploadString(new Uri(apiString), "DELETE", "");
-
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-    }
-
+    /*
+     *  SubmitClick()
+     *  
+     *  Params: Book b -> a book object to be added to the database
+     * 
+     *  This method is fired when the user clicks the submit button on the smart add dialog.
+     *  Takes a book object and serializes it into a Request and sends it to the API.
+     * 
+     * 
+     */ 
     [System.Web.Services.WebMethod]
     public static string Submit_Click(Book b)
     {
@@ -407,6 +359,12 @@ public partial class Catalog : System.Web.UI.Page
         }
     }
 
+
+    /*
+     * This Method is used to sort the Book Table serverside
+     *  
+     * 
+     */ 
     public static List<Book> SortByColumnWithOrder(int order, string orderDir, List<Book> data)
     {
         // Initialization.  

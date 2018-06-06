@@ -18,6 +18,14 @@ public partial class Dashboard : System.Web.UI.Page
 
     }
 
+    /*
+     * Submit_ClickCheckOut()
+     * 
+     * This method fires when the user clickes the checkout button.
+     * It stores the information from the dialog into the Session State and redirects the user
+     * to the Checkout Confirm page.
+     * 
+     */
     protected void Submit_ClickCheckOut(object sender, EventArgs e)
     {
         Page.Session["CheckOutMemberID"] = txtmemberid.Text;
@@ -25,7 +33,16 @@ public partial class Dashboard : System.Web.UI.Page
         Response.Redirect("CheckOutConfirm.aspx");
     }
 
-
+    /*
+     * Submit_ClickMember()
+     * 
+     * This method fires when the user clicks the Submit Member button in the add Member dialog.
+     * 
+     * It retrieves the data from the dialog fields and uses it to construct a member object.
+     * Then it sends a POST request to the API in order to add the member to the database.
+     * 
+     * 
+     */ 
     protected void Submit_ClickMember(object sender, EventArgs e)
     {
         var member = new
@@ -80,6 +97,17 @@ public partial class Dashboard : System.Web.UI.Page
         }
     }
 
+
+    /*
+     *  SubmitClick()
+     *  
+     *  Params: Book b -> a book object to be added to the database
+     * 
+     *  This method is fired when the user clicks the submit button on the smart add dialog.
+     *  Takes a book object and serializes it into a Request and sends it to the API.
+     * 
+     * 
+     */
     [System.Web.Services.WebMethod]
     public static string Submit_Click(Book b)
     {

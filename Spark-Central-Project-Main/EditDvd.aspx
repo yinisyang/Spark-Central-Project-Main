@@ -19,6 +19,13 @@
 
     <div class="mdl-grid" style="width: 50%">
 
+        <div class="mdl-cell mdl-cell--12-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <asp:TextBox ID="dvdAssn" runat="server" CssClass="mdl-textfield__input"></asp:TextBox>
+                <label class="mdl-textfield__label" for="dvdAssn">ASSN</label>
+            </div>
+        </div>
+
         <div class="mdl-cell mdl-cell--6-col">
 
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -38,8 +45,8 @@
             <div class="mdl-dialog__actions">
                 <asp:Button ID="btnSave" runat="server" Text="Save Changes" OnClick="Submit_Click" CssClass="mdl-button mdl-js-button mdl-button" />
                 <button id="btnDelete" type="button" onclick="deleteDVD()" class="mdl-button mdl-js-button mdl-button">
-                Delete
-            </button>
+                    Delete
+                </button>
                 <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="Cancel_Click" CssClass="mdl-button mdl-js-button mdl-button" />
 
             </div>

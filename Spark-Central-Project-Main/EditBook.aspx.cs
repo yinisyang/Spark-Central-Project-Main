@@ -13,18 +13,27 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack)
+        try
         {
-            Book b = getBook(Request.QueryString["item_id"]);
-            bookTitle.Text = b.title;
-            bookAuthor.Text = b.author;
-            bookCategory.Text = b.category;
-            bookDescription.Text = b.description;
-            bookIsbn13.Text = b.isbn_13;
-            bookIsnb10.Text = b.isbn_10;
-            bookPages.Text = b.pages.ToString();
-            bookPublisher.Text = b.publisher;
-            bookYear.Text = b.publication_year.ToString();
+            if (!Page.IsPostBack)
+            {
+                Book b = getBook(Request.QueryString["item_id"]);
+                bookTitle.Text = b.title;
+                bookAuthor.Text = b.author;
+                bookCategory.Text = b.category;
+                bookDescription.Text = b.description;
+                bookIsbn13.Text = b.isbn_13;
+                bookIsnb10.Text = b.isbn_10;
+                bookPages.Text = b.pages.ToString();
+                bookPublisher.Text = b.publisher;
+                bookYear.Text = b.publication_year.ToString();
+                bookAssn.Text = b.assn.ToString();
+            }
+        }
+        catch(Exception error)
+        {
+            Console.WriteLine(error.Message);
+            Response.Redirect("Books.aspx");
         }
     }
 
@@ -69,6 +78,7 @@ public partial class _Default : System.Web.UI.Page
     {
         int year;
         int pages;
+        int assn;
 
         Book b = new Book();
         b.title = bookTitle.Text;
@@ -77,8 +87,10 @@ public partial class _Default : System.Web.UI.Page
 
         Int32.TryParse(bookYear.Text, out year);
         Int32.TryParse(bookPages.Text, out pages);
+        Int32.TryParse(bookAssn.Text, out assn);
         b.publication_year = year;
         b.pages = pages;
+        b.assn = assn;
 
         b.category = bookCategory.Text;
         b.description = bookDescription.Text;

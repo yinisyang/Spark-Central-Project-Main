@@ -253,26 +253,6 @@ public partial class Catalog : System.Web.UI.Page
         Response.Redirect("EditDvd.aspx?item_id=" + id);
     }
 
-    [System.Web.Services.WebMethod]
-    public static void deleteDVDClick(int id)
-    {
-        using (var client = new WebClient())
-        {
-            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add(Utilities.getApiKey());
-
-            try
-            {
-                String apiString = "http://api.sparklib.org/api/dvd?item_id=" + id.ToString();
-                client.UploadString(new Uri(apiString), "DELETE", "");
-
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-    }
-
     private TableCell addButtonCell_DVD(int id)
     {
         TableCell ret = new TableCell();

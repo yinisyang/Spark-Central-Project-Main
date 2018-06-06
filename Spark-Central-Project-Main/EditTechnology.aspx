@@ -19,7 +19,10 @@
 
     <div class="mdl-grid" style="width: 50%">
         <div class="mdl-cell mdl-cell--6-col">
-
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <asp:TextBox ID="techAssn" runat="server" CssClass="mdl-textfield__input"></asp:TextBox>
+                <label class="mdl-textfield__label" for="techAssn">ASSN</label>
+            </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <asp:TextBox ID="techName" runat="server" CssClass="mdl-textfield__input"></asp:TextBox>
                 <label class="mdl-textfield__label" for="techName">Name</label>
